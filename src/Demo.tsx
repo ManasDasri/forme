@@ -4,10 +4,10 @@ import { SilkShader } from "./registry/silk-shader";
 import { DitherShader } from "./registry/dither-shader";
 import { HorizonShader } from "./registry/horizon-shader";
 import { WarpShader } from "./registry/warp-shader";
-import { HologramShader } from "./registry/hologram-shader";
+import { ChromeShader } from "./registry/chrome-shader";
 import { PrismButton } from "./registry/prism-button";
 import { MagneticButton } from "./registry/magnetic-button";
-import { GlitchButton } from "./registry/glitch-button";
+import { LensButton } from "./registry/lens-button";
 import { PlasmaButton } from "./registry/plasma-button";
 import { HoldButton } from "./registry/hold-button";
 import { ScrambleButton } from "./registry/scramble-button";
@@ -16,7 +16,7 @@ import { AsciiImage } from "./registry/ascii-image";
 import { AsciiRain } from "./registry/ascii-rain";
 import { AsciiGlobe } from "./registry/ascii-globe";
 import { AsciiDecode } from "./registry/ascii-decode";
-import { HudFrame } from "./registry/hud-frame";
+import { TelemetryCard } from "./registry/telemetry-card";
 import { RadarSweep } from "./registry/radar-sweep";
 import { Oscilloscope } from "./registry/oscilloscope";
 
@@ -31,7 +31,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "dither-shader": (p) => <DitherShader color={p.color} speed={p.speed} />,
   "horizon-shader": (p) => <HorizonShader color={p.color} speed={p.speed} />,
   "warp-shader": (p) => <WarpShader color={p.color} speed={p.speed} />,
-  "hologram-shader": (p) => <HologramShader color={p.color} speed={p.speed} />,
+  "chrome-shader": (p) => <ChromeShader color={p.color} speed={p.speed} />,
   "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
   "ascii-rain": (p) => <AsciiRain color={p.color} speed={p.speed} />,
   "ascii-globe": (p) => <AsciiGlobe color={p.color} speed={p.speed} />,
@@ -42,20 +42,11 @@ const live: Record<string, (p: Props) => ReactNode> = {
     return <AsciiImage src={src} alt={images[src]} color={p.color} />;
   },
   "ascii-decode": (p) => (
-    <div className="decode-specimen" style={{ color: p.color }}>
+    <div className="decode-specimen">
       <AsciiDecode as="h3" text={p.title || "Signal acquired."} />
     </div>
   ),
-  "hud-frame": () => (
-    <div className="hud-specimen">
-      <HudFrame label="Uplink" status="Live" code="SIG-01">
-        <div className="hud-specimen-readout">
-          <strong>42.7</strong>
-          <span>kHz carrier</span>
-        </div>
-      </HudFrame>
-    </div>
-  ),
+  "telemetry-card": (p) => <TelemetryDemo color={p.color} />,
 };
 const buttons: Record<
   string,
@@ -63,11 +54,31 @@ const buttons: Record<
 > = {
   "prism-button": (l, s) => <PrismButton onClick={s}>{l}</PrismButton>,
   "magnetic-button": (l, s) => <MagneticButton onClick={s}>{l}</MagneticButton>,
-  "glitch-button": (l, s) => <GlitchButton onClick={s}>{l}</GlitchButton>,
+  "lens-button": (l, s) => <LensButton onClick={s}>{l}</LensButton>,
   "plasma-button": (l, s) => <PlasmaButton onClick={s}>{l}</PlasmaButton>,
   "scramble-button": (l, s) => <ScrambleButton onClick={s}>{String(l)}</ScrambleButton>,
   "hold-button": (l, s) => <HoldButton onConfirm={s}>{l}</HoldButton>,
 };
+
+/** Feeds the card a gentle random walk so the preview shows real updates. */
+function TelemetryDemo({ color }: { color?: string }) {
+  const [history, setHistory] = useState(() => {
+    let v = 820;
+    return Array.from({ length: 28 }, () => (v = Math.max(600, Math.min(999, v + (Math.random() - 0.45) * 40))));
+  });
+  useEffect(() => {
+    const id = setInterval(
+      () => setHistory((h) => [...h.slice(-39), Math.max(600, Math.min(999, h[h.length - 1] + (Math.random() - 0.45) * 40))]),
+      1800,
+    );
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="telemetry-specimen">
+      <TelemetryCard label="Throughput" value={history[history.length - 1]} history={history} unit="MB/s" color={color} />
+    </div>
+  );
+}
 
 /** Studio pieces ship as recordings: their source never enters this bundle. */
 export function StudioPreview({ slug }: { slug: string }) {

@@ -6,8 +6,8 @@
     {
       "name": "horizon-shader",
       "type": "registry:component",
-      "title": "Neon horizon",
-      "description": "An endless grid racing toward a glowing horizon.",
+      "title": "Horizon",
+      "description": "Dawn breaking along the curve of a planet.",
       "files": [
         {
           "path": "src/registry/horizon-shader.tsx",
@@ -27,20 +27,20 @@
       ]
     },
     {
-      "name": "glitch-button",
+      "name": "lens-button",
       "type": "registry:component",
-      "title": "Glitch button",
-      "description": "Chromatic split and signal tearing on a chamfered plate.",
+      "title": "Lens button",
+      "description": "Dark glass with a spotlight edge that follows your pointer.",
       "files": [
         {
-          "path": "src/registry/glitch-button.tsx",
+          "path": "src/registry/lens-button.tsx",
           "type": "registry:component",
-          "target": "@components/forme/glitch-button.tsx"
+          "target": "@components/forme/lens-button.tsx"
         },
         {
-          "path": "src/registry/glitch-button.css",
+          "path": "src/registry/lens-button.css",
           "type": "registry:file",
-          "target": "@components/forme/glitch-button.css"
+          "target": "@components/forme/lens-button.css"
         }
       ]
     },
@@ -84,7 +84,7 @@
       "name": "radar-sweep",
       "type": "registry:component",
       "title": "Radar sweep",
-      "description": "A live scope. Contacts flare as the beam passes. Click to mark.",
+      "description": "A scope with a phosphor sweep. Contacts ping as the beam passes.",
       "files": [
         {
           "path": "src/registry/radar-sweep.tsx",
@@ -158,33 +158,33 @@
       ]
     },
     {
-      "name": "hud-frame",
+      "name": "telemetry-card",
       "type": "registry:component",
-      "title": "HUD frame",
-      "description": "Targeting brackets, a scan line, and readouts around anything.",
+      "title": "Telemetry card",
+      "description": "A glass readout with rolling digits and a live sparkline.",
       "files": [
         {
-          "path": "src/registry/hud-frame.tsx",
+          "path": "src/registry/telemetry-card.tsx",
           "type": "registry:component",
-          "target": "@components/forme/hud-frame.tsx"
+          "target": "@components/forme/telemetry-card.tsx"
         },
         {
-          "path": "src/registry/hud-frame.css",
+          "path": "src/registry/telemetry-card.css",
           "type": "registry:file",
-          "target": "@components/forme/hud-frame.css"
+          "target": "@components/forme/telemetry-card.css"
         }
       ]
     },
     {
-      "name": "hologram-shader",
+      "name": "chrome-shader",
       "type": "registry:component",
-      "title": "Hologram",
-      "description": "Interference bands, split channels, and the odd corrupted line.",
+      "title": "Liquid chrome",
+      "description": "Polished metal that flows, reflecting a studio you never see.",
       "files": [
         {
-          "path": "src/registry/hologram-shader.tsx",
+          "path": "src/registry/chrome-shader.tsx",
           "type": "registry:component",
-          "target": "@components/forme/hologram-shader.tsx"
+          "target": "@components/forme/chrome-shader.tsx"
         },
         {
           "path": "src/registry/shader-canvas.tsx",

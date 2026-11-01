@@ -4,12 +4,12 @@ import "./radar-sweep.css";
 
 type Contact = { a: number; r: number; lit: number };
 const rgba = (hex: string, alpha: number) => {
-  const h = /^#[0-9a-f]{6}$/i.test(hex) ? hex : "#4dffa6";
+  const h = /^#[0-9a-f]{6}$/i.test(hex) ? hex : "#6ee7b7";
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
   return `rgba(${r},${g},${b},${alpha})`;
 };
 export function RadarSweep({
-  color = "#4dffa6",
+  color = "#6ee7b7",
   speed = 1,
   label = "Radar sweep",
 }: {
@@ -40,61 +40,97 @@ export function RadarSweep({
       height = 0;
     const paint = (now: number) => {
       const moving = !paused && !media.matches;
-      if (moving) sweep = (sweep + ((now - last) / 1000) * 1.3 * Math.max(0, Math.min(speed, 3))) % (Math.PI * 2);
+      if (moving) sweep = (sweep + ((now - last) / 1000) * 1.1 * Math.max(0, Math.min(speed, 3))) % (Math.PI * 2);
       last = now;
-      const cx = width / 2, cy = height / 2, R = Math.min(width, height) * 0.42;
+      const cx = width / 2,
+        cy = height / 2,
+        R = Math.min(width, height) * 0.4;
       context.clearRect(0, 0, width, height);
-      context.strokeStyle = rgba(color, 0.22);
+      // Scope glass: a faint lit disc that falls off toward the rim.
+      const glass = context.createRadialGradient(cx, cy, 0, cx, cy, R);
+      glass.addColorStop(0, rgba(color, 0.07));
+      glass.addColorStop(1, rgba(color, 0.015));
+      context.fillStyle = glass;
+      context.beginPath();
+      context.arc(cx, cy, R, 0, Math.PI * 2);
+      context.fill();
       context.lineWidth = 1;
       for (let i = 1; i <= 4; i++) {
+        context.strokeStyle = rgba(color, i === 4 ? 0.32 : 0.1);
         context.beginPath();
         context.arc(cx, cy, (R * i) / 4, 0, Math.PI * 2);
         context.stroke();
       }
+      context.strokeStyle = rgba(color, 0.07);
       context.beginPath();
-      context.moveTo(cx - R, cy);
-      context.lineTo(cx + R, cy);
-      context.moveTo(cx, cy - R);
-      context.lineTo(cx, cy + R);
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI;
+        context.moveTo(cx - Math.cos(a) * R, cy - Math.sin(a) * R);
+        context.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
+      }
       context.stroke();
-      for (let i = 0; i < 72; i++) {
-        const a = (i / 72) * Math.PI * 2, inner = R * (i % 6 ? 1.02 : 0.98);
+      context.font = "500 9px system-ui, sans-serif";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      for (let deg = 0; deg < 360; deg += 5) {
+        const a = (deg / 180) * Math.PI - Math.PI / 2,
+          major = deg % 30 === 0;
+        context.strokeStyle = rgba(color, major ? 0.45 : 0.18);
         context.beginPath();
-        context.moveTo(cx + Math.cos(a) * inner, cy + Math.sin(a) * inner);
-        context.lineTo(cx + Math.cos(a) * R * 1.05, cy + Math.sin(a) * R * 1.05);
+        context.moveTo(cx + Math.cos(a) * (R + 4), cy + Math.sin(a) * (R + 4));
+        context.lineTo(cx + Math.cos(a) * (R + (major ? 11 : 7)), cy + Math.sin(a) * (R + (major ? 11 : 7)));
         context.stroke();
+        if (major) {
+          context.fillStyle = rgba(color, 0.4);
+          context.fillText(String(deg).padStart(3, "0"), cx + Math.cos(a) * (R + 22), cy + Math.sin(a) * (R + 22));
+        }
       }
-      if (moving) {
-        const trail = 1.1;
-        const gradient = context.createConicGradient(sweep - trail, cx, cy);
-        gradient.addColorStop(0, rgba(color, 0));
-        gradient.addColorStop(trail / (Math.PI * 2), rgba(color, 0.42));
-        gradient.addColorStop(trail / (Math.PI * 2) + 0.001, rgba(color, 0));
-        context.fillStyle = gradient;
-        context.beginPath();
-        context.arc(cx, cy, R, 0, Math.PI * 2);
-        context.fill();
-      }
-      context.strokeStyle = color;
-      context.lineWidth = 1.5;
+      context.save();
+      context.beginPath();
+      context.arc(cx, cy, R, 0, Math.PI * 2);
+      context.clip();
+      context.globalCompositeOperation = "lighter";
+      const tail = 1.7;
+      const gradient = context.createConicGradient(sweep - tail, cx, cy);
+      gradient.addColorStop(0, rgba(color, 0));
+      gradient.addColorStop((tail / (Math.PI * 2)) * 0.75, rgba(color, 0.06));
+      gradient.addColorStop(tail / (Math.PI * 2), rgba(color, 0.32));
+      gradient.addColorStop(tail / (Math.PI * 2) + 0.0005, rgba(color, 0));
+      context.fillStyle = gradient;
+      context.fillRect(cx - R, cy - R, R * 2, R * 2);
+      context.shadowColor = color;
+      context.shadowBlur = 12;
+      context.strokeStyle = rgba(color, 0.9);
+      context.lineWidth = 1.25;
       context.beginPath();
       context.moveTo(cx, cy);
       context.lineTo(cx + Math.cos(sweep) * R, cy + Math.sin(sweep) * R);
       context.stroke();
       for (const c of contacts.current) {
         const behind = (sweep - c.a + Math.PI * 4) % (Math.PI * 2);
-        if (moving && behind < 0.08) c.lit = now;
-        const glow = moving ? Math.exp(-(now - c.lit) / 1800) : 0.8;
-        const x = cx + Math.cos(c.a) * c.r * R, y = cy + Math.sin(c.a) * c.r * R;
-        context.fillStyle = rgba(color, 0.15 + glow * 0.85);
+        if (moving && behind < 0.06) c.lit = now;
+        const age = (now - c.lit) / 1000;
+        const glow = moving ? Math.exp(-age / 2.2) : 0.7;
+        const x = cx + Math.cos(c.a) * c.r * R,
+          y = cy + Math.sin(c.a) * c.r * R;
+        context.shadowBlur = 10 * glow;
+        context.fillStyle = rgba(color, 0.12 + glow * 0.88);
         context.beginPath();
-        context.arc(x, y, 3.2, 0, Math.PI * 2);
+        context.arc(x, y, 2.4, 0, Math.PI * 2);
         context.fill();
-        context.strokeStyle = rgba(color, glow * 0.6);
-        context.beginPath();
-        context.arc(x, y, 6 + (1 - glow) * 10, 0, Math.PI * 2);
-        context.stroke();
+        if (moving && age < 1.4) {
+          context.shadowBlur = 0;
+          context.strokeStyle = rgba(color, (1 - age / 1.4) * 0.55);
+          context.beginPath();
+          context.arc(x, y, 3 + age * 16, 0, Math.PI * 2);
+          context.stroke();
+        }
       }
+      context.restore();
+      context.fillStyle = rgba(color, 0.9);
+      context.beginPath();
+      context.arc(cx, cy, 2, 0, Math.PI * 2);
+      context.fill();
     };
     const tick = (now: number) => {
       paint(now);

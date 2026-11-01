@@ -23,10 +23,10 @@ npm run build
 
 | Channel | Free | Studio |
 | ------- | ---- | ------ |
-| Buttons | Glitch, Plasma, Hold to confirm, Scramble, Prism, Magnetic | Shutter |
-| Shaders | Horizon, Warp field, Hologram, Silk field, Dither terrain | Singularity, Caustic glass |
+| Buttons | Lens, Plasma, Hold to confirm, Scramble, Prism, Magnetic | Shutter |
+| Shaders | Horizon, Liquid chrome, Warp field, Silk field, Dither terrain | Singularity, Caustic glass |
 | ASCII | ASCII globe, Glyph rain, Decode text, ASCII orbit, ASCII reveal | ASCII tunnel, ASCII surface |
-| HUD | Radar sweep, Oscilloscope, HUD frame | Holo card |
+| HUD | Telemetry card, Radar sweep, Oscilloscope | Holo card |
 
 ## The edge: verifiable quality
 
@@ -39,7 +39,7 @@ npm run build
 In a React project with shadcn and import aliases configured:
 
 ```sh
-npx shadcn@latest add https://forme.vercel.app/r/glitch-button.json
+npx shadcn@latest add https://forme.vercel.app/r/lens-button.json
 npx shadcn@latest add https://forme.vercel.app/r/horizon-shader.json
 ```
 

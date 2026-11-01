@@ -1,6 +1,6 @@
 "use client";
 import type { ButtonHTMLAttributes } from "react";
-import { useDecode } from "./ascii-decode";
+import { DecodeCells, useDecode } from "./ascii-decode";
 import "./ascii-decode.css";
 import "./scramble-button.css";
 
@@ -12,7 +12,7 @@ export function ScrambleButton({
 }: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
   children: string;
 }) {
-  const [shown, run] = useDecode(children, 520);
+  const [cells, run] = useDecode(children, 560);
   return (
     <button
       {...props}
@@ -29,9 +29,7 @@ export function ScrambleButton({
     >
       <span className="forme-decode">
         <span className="forme-decode-final">{children}</span>
-        <span className="forme-decode-live" aria-hidden="true">
-          {shown}
-        </span>
+        <DecodeCells cells={cells} />
       </span>
     </button>
   );

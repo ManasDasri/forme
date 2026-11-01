@@ -305,7 +305,7 @@ function Quality() {
 }
 
 function Guide({ slug }: { slug: string }) {
-  const command = installCommand("glitch-button");
+  const command = installCommand("lens-button");
   if (slug === "quality") return <Quality />;
   if (slug === "theming")
     return (
@@ -315,12 +315,12 @@ function Guide({ slug }: { slug: string }) {
           Shaders, ASCII pieces, and HUD instruments accept a six-digit hex color and, where animated, a speed from 0 to 3.
           Their container controls the size. Shader color and speed update a uniform without recompiling the program.
         </p>
-        <Code text={'<div style={{ height: 480 }}>\n  <HorizonShader color="#ff4fd8" speed={0.6} />\n</div>'} />
+        <Code text={'<div style={{ height: 480 }}>\n  <ChromeShader color="#ff9b5c" speed={0.6} />\n</div>'} />
         <h2>Buttons</h2>
         <p>Buttons inherit your font. Most expose CSS variables for their accents; everything else lives in the scoped CSS file.</p>
         <Code
           text={
-            '.launch {\n  --forme-plasma-a: #39e6ff;\n  --forme-plasma-b: #8a5cff;\n  --forme-plasma-c: #ff4fd8;\n}\n.danger {\n  --forme-hold-accent: #ff5a5f;\n}\n.terminal {\n  --forme-glitch-a: #ff2bd6;\n  --forme-glitch-b: #2bf0ff;\n}'
+            '.launch {\n  --forme-plasma-a: #6ee7ff;\n  --forme-plasma-b: #8b7bff;\n  --forme-plasma-c: #ff7ad9;\n}\n.danger {\n  --forme-hold-fill: #f87171;\n}\n.cta {\n  --forme-lens-tint: #ff9b5c;\n}'
           }
         />
         <h2>The site theme</h2>
@@ -333,7 +333,7 @@ function Guide({ slug }: { slug: string }) {
         <h2>Reduced motion</h2>
         <p>
           Every component handles the reduced-motion preference. Shaders render one still frame. ASCII pieces and HUD
-          instruments freeze. Glitch, plasma, and scramble effects switch off. Hold to confirm keeps its progress bar,
+          instruments freeze. Plasma, lens, and scramble effects hold still. Hold to confirm keeps its progress bar,
           because the bar carries information.
         </p>
         <h2>Pause, keyboard, and touch</h2>
@@ -366,7 +366,7 @@ function Guide({ slug }: { slug: string }) {
         <h2>What goes into your project</h2>
         <Code
           text={
-            "components/forme/\n  glitch-button.tsx\n  glitch-button.css\n\n# Shaders also include the shared runtime:\n  shader-canvas.tsx\n  shader-canvas.css\n\n# Scramble button also includes:\n  ascii-decode.tsx\n  ascii-decode.css"
+            "components/forme/\n  lens-button.tsx\n  lens-button.css\n\n# Shaders also include the shared runtime:\n  shader-canvas.tsx\n  shader-canvas.css\n\n# Scramble button also includes:\n  ascii-decode.tsx\n  ascii-decode.css"
           }
         />
         <p>Magnetic button installs Motion. Every other component uses React and browser APIs only.</p>
@@ -384,15 +384,15 @@ function Guide({ slug }: { slug: string }) {
       <Code text={command} />
       <Code
         text={
-          'import { GlitchButton } from "@/components/forme/glitch-button"\n\nexport function Launch() {\n  return <GlitchButton onClick={() => start()}>Jack in</GlitchButton>\n}'
+          'import { LensButton } from "@/components/forme/lens-button"\n\nexport function Launch() {\n  return <LensButton onClick={() => start()}>Request access</LensButton>\n}'
         }
       />
       <p>
         Components that use browser APIs include a use client directive for frameworks with server components. Styles are
         imported by the component.
       </p>
-      <a className="btn" href="/docs/glitch-button/">
-        Try Glitch button
+      <a className="btn" href="/docs/lens-button/">
+        Try Lens button
       </a>
     </div>
   );

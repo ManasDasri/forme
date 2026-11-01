@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { catalog, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
-import { Demo, StudioPreview } from "./Demo";
+import { StudioPreview } from "./Demo";
+import { HorizonShader } from "./registry/horizon-shader";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
@@ -12,29 +13,14 @@ const groups = [
   { name: "ASCII", slug: "ascii" },
   { name: "HUD", slug: "hud" },
 ];
-const showcase = ["horizon-shader", "ascii-globe", "hold-button", "radar-sweep", "hologram-shader"];
-const proofRows = ["hold-button", "ascii-globe", "hologram-shader", "radar-sweep", "glitch-button", "ascii-decode"];
+const proofRows = ["hold-button", "ascii-globe", "chrome-shader", "radar-sweep", "lens-button", "telemetry-card"];
 const proofTraits: Trait[] = ["reduced-motion", "keyboard", "offscreen-pause", "zero-deps"];
 
 function Stage() {
-  const [active, setActive] = useState(showcase[0]);
-  const item = catalog.find((c) => c.slug === active)!;
   return (
     <div className="stage">
       <div className="stage-frame">
-        <Demo key={active} slug={active} hint />
-      </div>
-      <div className="stage-bar">
-        <div className="stage-switcher" role="group" aria-label="Showcase">
-          {showcase.map((slug) => (
-            <button key={slug} aria-pressed={active === slug} onClick={() => setActive(slug)}>
-              {catalog.find((c) => c.slug === slug)!.name}
-            </button>
-          ))}
-        </div>
-        <p className="stage-caption">
-          {item.description} <a href={`/docs/${item.slug}/`}>Open {item.name}</a>
-        </p>
+        <HorizonShader speed={0.8} />
       </div>
     </div>
   );

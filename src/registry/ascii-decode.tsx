@@ -2,29 +2,34 @@
 import { createElement, useCallback, useEffect, useRef, useState } from "react";
 import "./ascii-decode.css";
 
-const glyphs = "!<>-_/[]{}=+*^?#%@01ABCDEFXZ";
-/** Returns the visible text and a function that decodes it from noise. */
+// Glyphs from the same face as the text, so the noise reads as type, not symbols.
+const glyphs = "abcdeghknopqrsuvxyz0123456789";
+type Cell = { ch: string; done: boolean };
+const settled = (text: string): Cell[] => Array.from(text, (ch) => ({ ch, done: true }));
+
+/** Returns the current cells and a function that decodes the text from noise.
+ * Each character resolves on its own staggered schedule, roughly left to right. */
 export function useDecode(text: string, duration = 900) {
-  const [shown, setShown] = useState(text);
+  const [cells, setCells] = useState<Cell[]>(() => settled(text));
   const frame = useRef(0);
   const run = useCallback(() => {
     cancelAnimationFrame(frame.current);
-    if (matchMedia("(prefers-reduced-motion:reduce)").matches)
-      return setShown(text);
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return setCells(settled(text));
+    const chars = Array.from(text);
+    const at = chars.map((_, i) => (i / Math.max(1, chars.length)) * 0.7 + Math.random() * 0.3);
     const start = performance.now();
     let step = -1;
     const tick = (now: number) => {
       const progress = Math.min(1, (now - start) / duration);
-      // New noise every 45 ms reads as decoding instead of flicker.
-      if (Math.floor((now - start) / 45) !== step || progress === 1) {
-        step = Math.floor((now - start) / 45);
-        const solved = progress * text.length;
-        setShown(
-          Array.from(text, (ch, i) =>
-            i < solved || ch === " "
-              ? ch
-              : glyphs[Math.floor(Math.random() * glyphs.length)],
-          ).join(""),
+      // Fresh noise every 50 ms reads as decoding rather than flicker.
+      if (Math.floor((now - start) / 50) !== step || progress === 1) {
+        step = Math.floor((now - start) / 50);
+        setCells(
+          chars.map((ch, i) =>
+            progress >= at[i] || ch === " "
+              ? { ch, done: true }
+              : { ch: glyphs[Math.floor(Math.random() * glyphs.length)], done: false },
+          ),
         );
       }
       if (progress < 1) frame.current = requestAnimationFrame(tick);
@@ -32,17 +37,29 @@ export function useDecode(text: string, duration = 900) {
     frame.current = requestAnimationFrame(tick);
   }, [text, duration]);
   useEffect(() => {
-    setShown(text);
+    setCells(settled(text));
     return () => cancelAnimationFrame(frame.current);
   }, [text]);
-  return [shown, run] as const;
+  return [cells, run] as const;
+}
+
+export function DecodeCells({ cells }: { cells: Cell[] }) {
+  return (
+    <span className="forme-decode-live" aria-hidden="true">
+      {cells.map((cell, i) => (
+        <span key={i} data-scrambling={cell.done ? undefined : ""}>
+          {cell.ch}
+        </span>
+      ))}
+    </span>
+  );
 }
 
 export function AsciiDecode({
   text,
   as = "span",
   className = "",
-  duration = 900,
+  duration = 1100,
   replayOnHover = true,
 }: {
   text: string;
@@ -52,7 +69,7 @@ export function AsciiDecode({
   replayOnHover?: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
-  const [shown, run] = useDecode(text, duration);
+  const [cells, run] = useDecode(text, duration);
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
@@ -70,8 +87,6 @@ export function AsciiDecode({
       onPointerEnter: replayOnHover ? run : undefined,
     },
     <span className="forme-decode-final">{text}</span>,
-    <span className="forme-decode-live" aria-hidden="true">
-      {shown}
-    </span>,
+    <DecodeCells cells={cells} />,
   );
 }

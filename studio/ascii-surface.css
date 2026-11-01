@@ -4,8 +4,8 @@
   height: 100%;
   min-height: 240px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 70%, #15252b, #0c1118 75%);
-  color: #a6c4cc;
+  background: #04060a;
+  color: #a1a1aa;
 }
 .forme-ascii-surface-canvas {
   position: absolute;
@@ -26,7 +26,7 @@
   height: 100%;
 }
 .forme-ascii-surface-canvas:focus-visible {
-  outline: 2px solid #a6d5df;
+  outline: 2px solid #e4e4e7;
   outline-offset: -5px;
 }
 .forme-ascii-surface-footer {

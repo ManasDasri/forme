@@ -70,16 +70,17 @@ export const catalog: CatalogItem[] = [
     speed: true,
   },
   {
-    slug: "glitch-button",
-    name: "Glitch button",
+    slug: "lens-button",
+    name: "Lens button",
     category: "Buttons",
-    description: "Chromatic split and signal tearing on a chamfered plate.",
-    usage: '<GlitchButton onClick={() => launch()}>\n  Jack in\n</GlitchButton>',
+    description: "Dark glass with a spotlight edge that follows your pointer.",
+    usage: '<LensButton onClick={() => launch()}>\n  Request access\n</LensButton>',
     props:
-      "Accepts native button props. Hover or keyboard focus tears the label into offset color channels; the duplicate layers are hidden from assistive technology. Reduced motion removes the tearing. Recolor with --forme-glitch-a and --forme-glitch-b.",
+      "Accepts native button props. A one-pixel edge brightens where the pointer is, and a soft tint bleeds through from below on hover or focus. Keyboard focus centers the light. Set --forme-lens-tint to change the glow.",
     traits: button,
-    text: "Jack in",
+    text: "Request access",
   },
+
   {
     slug: "ascii-globe",
     name: "ASCII globe",
@@ -108,12 +109,12 @@ export const catalog: CatalogItem[] = [
     slug: "radar-sweep",
     name: "Radar sweep",
     category: "HUD",
-    description: "A live scope. Contacts flare as the beam passes. Click to mark.",
-    usage: '<RadarSweep color="#4dffa6" speed={1} />',
+    description: "A scope with a phosphor sweep. Contacts ping as the beam passes.",
+    usage: '<RadarSweep color="#6ee7b7" speed={1} />',
     props:
       "color, speed, and label are optional. Click inside the scope to place a contact, or press Enter for a random one. Holds up to twelve contacts. Includes pause, stops offscreen and in hidden tabs, and freezes the beam for reduced motion.",
     traits: canvas,
-    color: "#4dffa6",
+    color: "#6ee7b7",
     speed: true,
   },
   {
@@ -151,27 +152,30 @@ export const catalog: CatalogItem[] = [
     speed: true,
   },
   {
-    slug: "hud-frame",
-    name: "HUD frame",
+    slug: "telemetry-card",
+    name: "Telemetry card",
     category: "HUD",
-    description: "Targeting brackets, a scan line, and readouts around anything.",
+    description: "A glass readout with rolling digits and a live sparkline.",
     usage:
-      '<HudFrame label="Telemetry" status="Live" code="SIG-01">\n  <YourContent />\n</HudFrame>',
+      '<TelemetryCard label="Throughput" value={rate} unit="MB/s" />',
     props:
-      "Wraps any children. label, status, and code set the readouts. Corners lock in on mount and a scan line loops; reduced motion removes both. Recolor with --forme-hud-accent.",
+      "Pass value as it changes; the card keeps the last 40 values for the sparkline and shows the change from the previous one. Pass history to seed or control the sparkline. label, unit, decimals, status, and color are optional. Digits roll to each new value; reduced motion swaps them instantly. The value is exposed as text to assistive technology.",
     traits: ["reduced-motion", "zero-deps"],
+    color: "#8ab4ff",
   },
+
   {
-    slug: "hologram-shader",
-    name: "Hologram",
+    slug: "chrome-shader",
+    name: "Liquid chrome",
     category: "Shaders",
-    description: "Interference bands, split channels, and the odd corrupted line.",
-    usage: '<HologramShader color="#5cf2d6" speed={1} />',
-    props: `${shaderProps} The pointer moves the interference source.`,
+    description: "Polished metal that flows, reflecting a studio you never see.",
+    usage: '<ChromeShader color="#7c9cff" speed={1} />',
+    props: `${shaderProps} color tints the reflected floor light; the pointer shifts the surface.`,
     traits: shader,
-    color: "#5cf2d6",
+    color: "#7c9cff",
     speed: true,
   },
+
   {
     slug: "scramble-button",
     name: "Scramble button",
@@ -200,12 +204,12 @@ export const catalog: CatalogItem[] = [
     slug: "oscilloscope",
     name: "Oscilloscope",
     category: "HUD",
-    description: "A phosphor trace you can tune by hand or by keyboard.",
-    usage: '<Oscilloscope color="#ffd23f" speed={1} />',
+    description: "A phosphor trace with persistence. Tune it by hand or keyboard.",
+    usage: '<Oscilloscope color="#7dd3fc" speed={1} />',
     props:
       "color, speed, and label are optional. Pointer position sets frequency and amplitude; with focus, arrow keys do the same. A live readout shows both. Includes pause, stops offscreen and in hidden tabs, and freezes for reduced motion.",
     traits: canvas,
-    color: "#ffd23f",
+    color: "#7dd3fc",
     speed: true,
   },
   {
@@ -235,12 +239,11 @@ export const catalog: CatalogItem[] = [
     slug: "ascii-decode",
     name: "Decode text",
     category: "ASCII",
-    description: "Headlines that resolve out of noise as they scroll into view.",
+    description: "Headlines that resolve letter by letter as they scroll into view.",
     usage: '<AsciiDecode as="h2" text="Signal acquired." />',
     props:
-      "text is required. as picks the element (span, h1, h2, h3, or p). Decodes once on entering the viewport and again on hover. The real text holds the layout and remains readable to assistive technology. useDecode is exported for your own triggers. Reduced motion shows the text directly.",
+      "text is required. as picks the element (span, h1, h2, h3, or p). Decodes once on entering the viewport and again on hover. The real text holds the layout and remains readable to assistive technology. Each letter settles on its own staggered schedule; unresolved letters glow in --forme-decode-noise. useDecode and DecodeCells are exported for your own triggers. Reduced motion shows the text directly.",
     traits: ["reduced-motion", "zero-deps"],
-    color: "#e6ecff",
     text: "Signal acquired.",
   },
   {
@@ -304,10 +307,10 @@ export const catalog: CatalogItem[] = [
     name: "ASCII tunnel",
     category: "ASCII",
     access: "studio",
-    description: "An endless corridor of characters that leans toward the pointer.",
+    description: "Rings of characters rush toward you, glowing at the far end.",
     usage: '<AsciiTunnel color="#ffb86b" speed={1} />',
     props:
-      "color, speed, and label are optional. The tunnel steers toward the pointer. Includes pause, stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
+      "color, speed, and label are optional. Glyph size, brightness, and color follow depth; the far end steers toward the pointer with parallax. Includes pause, stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
     traits: ["reduced-motion", "offscreen-pause", "pause-control", "zero-deps"],
   },
   {
@@ -339,10 +342,10 @@ export const catalog: CatalogItem[] = [
     category: "ASCII",
     access: "studio",
     description:
-      "A fabric of characters. Bend the wave or send a ripple through it.",
+      "A terrain of characters in perspective. Press into it or send a ripple.",
     usage: '<AsciiSurface color="#a6d5df" speed={1} />',
     props:
-      "color, speed, and accessible label are optional. A projected character surface reacts to pointer movement; click, tap, Enter, or Space sends a ripple. Includes pause and reduced motion. Rendering stops offscreen and in hidden tabs.",
+      "color, speed, and label are optional. Glyphs are lit by the surface normal and shrink and fade with distance. The pointer presses a lens into the ground where it points; click, tap, Enter, or Space sends a ripple. Includes pause, stops offscreen and in hidden tabs, and holds still for reduced motion.",
     traits: canvas,
   },
 ];

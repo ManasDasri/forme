@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "horizon-shader",
   "type": "registry:component",
-  "title": "Neon horizon",
-  "description": "An endless grid racing toward a glowing horizon.",
+  "title": "Horizon",
+  "description": "Dawn breaking along the curve of a planet.",
   "files": [
     {
       "path": "src/registry/horizon-shader.tsx",
