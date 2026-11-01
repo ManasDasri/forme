@@ -1,0 +1,65 @@
+.forme-shutter {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  padding: 18px 27px;
+  border: 1px solid #ada2fa66;
+  border-radius: 4px;
+  background: #c8b9ff;
+  color: #f1ebff;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.3;
+  cursor: pointer;
+  overflow: hidden;
+}
+.forme-shutter-panels {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+}
+.forme-shutter-panels > i {
+  display: block;
+  width: 20%;
+  height: 100%;
+  background: #30214e;
+  transform-origin: top;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.forme-shutter:hover .forme-shutter-panels > i,
+.forme-shutter:focus-visible .forme-shutter-panels > i {
+  transform: translateY(-105%);
+}
+.forme-shutter:hover,
+.forme-shutter:focus-visible {
+  color: #271c40;
+}
+.forme-shutter-label,
+.forme-shutter-symbol {
+  position: relative;
+  transition: color 0.3s;
+}
+.forme-shutter-symbol {
+  font-size: 19px;
+}
+.forme-shutter:focus-visible {
+  outline: 3px solid #a991ff;
+  outline-offset: 5px;
+}
+.forme-shutter:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-shutter-panels > i,
+  .forme-shutter-label,
+  .forme-shutter-symbol {
+    transition: none;
+  }
+}

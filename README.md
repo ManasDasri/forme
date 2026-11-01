@@ -1,12 +1,12 @@
 # Forme
 
-An independent interaction studio for developers building distinctive client websites.
+Experimental React buttons, interactive shaders, and ASCII components for designers building distinctive websites.
 
-Editorial is the first release. This revision centers the five strongest initial pieces and adds four project-presentation interactions. Object and Kinetic remain coming-soon releases with photography-led studies rather than placeholder graphics.
+Live preview: https://forme.vercel.app
 
 ## Develop and verify
 
-Requires Node.js 22.12+ or newer and npm.
+Use Node.js 24+ and npm.
 
 ```sh
 npm ci
@@ -15,71 +15,61 @@ npm test
 npm run build
 ```
 
-`dist/` contains a static site with refreshable entry documents for all 18 subpages. The build verifies page entries and Studio distribution boundaries. The Vercel configuration builds this directory directly.
+The Vite build creates refreshable static entries for all public pages, generates the public registry, and checks Studio source distribution boundaries. CI runs tests and the production build.
 
-## The active collection
+## Signal, the first drop
 
-| Free preview — six pieces | Planned Studio edition — three compositions |
-| --- | --- |
-| Project index | Case-study stage |
-| Form & structure gallery | Project reel |
-| Focus cursor | Preview navigation |
-| Magnetic button | |
-| Image reveal | |
-| Image compare | |
+| Category | Free components               | Studio previews |
+| -------- | ----------------------------- | --------------- |
+| Buttons  | Prism button, Magnetic button | Shutter button  |
+| Shaders  | Silk field, Dither terrain    | Orbital field   |
+| ASCII    | ASCII orbit, ASCII reveal     | Signal text     |
 
-Previous experiments remain in source history and in unused component files; they are excluded from the active catalog, public registry, documentation raw imports, and runtime demo imports.
+The previous portfolio collection remains as unused source. It is excluded from the active catalog, runtime imports, documentation source, and public registry.
 
-Studio demos run compiled client code. Editable TypeScript and CSS are excluded from public registry payloads and raw-source documentation; this is source distribution control, not DRM. Purchasing and authenticated customer downloads are not yet implemented.
+Studio previews run compiled browser code. Editable TypeScript is excluded from public registry payloads and raw-source documentation; this is distribution control, not DRM. Purchasing and customer downloads are not open yet.
 
-## Install a free piece
+## Install a free component
 
-Use the current public site origin, or run Forme locally and use its printed URL:
+In a React project with shadcn and import aliases configured:
 
 ```sh
-npx shadcn@latest add http://localhost:5173/r/image-compare.json
+npx shadcn@latest add https://forme.vercel.app/r/prism-button.json
+npx shadcn@latest add https://forme.vercel.app/r/silk-shader.json
 ```
 
-The CLI uses the consumer's configured components alias and installs TypeScript and scoped CSS together. Motion is installed where required. Image compare uses native range input and CSS without an animation dependency. Fonts and demo photos are not distributed with components.
+The CLI follows your configured components alias and installs scoped CSS beside the TypeScript. Shaders share `shader-canvas.tsx` and `shader-canvas.css`; the registry includes both. Magnetic button installs Motion. Other current pieces use React and native browser APIs. Demo fonts and photographs are not installed.
 
-## Pages
+The public registry builder reads the private root `registry.json`, omits Studio items, and removes stale generated payloads. Free documentation uses an explicit raw-source allowlist.
 
-- `/` — full-width working project index, selected interactions, Studio preview, and release studies
-- `/collections/` — the release series
-- `/collections/editorial/` — live component library, filters, search, tier separation
-- `/collections/object/`, `/collections/kinetic/` — forthcoming directions
-- `/studio/` — complete project-presentation previews
-- `/docs/` — installation and usage
-- `/docs/theming/`, `/docs/accessibility/`, `/docs/registry/` — implementation guides
-- `/docs/<slug>/` — interactive workbench, usage, props, and free source
+## Pages and behavior
 
-Light and dark themes follow system preference initially, with an explicit choice remembered locally. Pointer, keyboard, touch, and reduced-motion behavior are part of the component implementations.
+- `/` — shader hero and interactive library
+- `/components/` — search, category and access filters, sort, bookmarks, live previews
+- `/bookmarks/` — saved components, persisted in this browser
+- `/collections/` — Signal categories and next-drop status
+- `/collections/buttons/`, `/collections/shaders/`, `/collections/ascii/` — filtered category libraries
+- `/collections/next/` — coming soon, with no promised release date
+- `/studio/` — the three Studio previews
+- `/docs/` — usage, customization, accessibility, registry, and individual component playgrounds
 
-## Implementation
+Dark mode is the initial theme; the explicit choice persists across pages. Header search supports Cmd/Ctrl+K. Shaders support pointer movement, color and speed controls, a WebGL fallback, context restoration, reduced motion, and rendering suspension offscreen or in hidden tabs. ASCII orbit includes pause. ASCII reveal supports mouse, keyboard and touch. Source tabs include every file required by the selected free component.
 
-`src/App.tsx` contains the pages, `src/ui.tsx` the shared navigation/theme controls, `src/Docs.tsx` the documentation, `src/Demo.tsx` the real component examples, and `src/catalog.ts` the active catalog. Exact source lives in `src/registry/`.
-
-`registry.json` is the private source manifest. The registry builder emits only free pieces and removes stale generated payloads. Public docs use an explicit source allowlist. Tests check source fidelity and the production build checks the Studio boundary.
-
-[Product direction and research](docs/product-direction.md) records the evidence, hypotheses, and visual decisions behind this revision. Buyer willingness to pay has not been validated.
+`src/App.tsx` owns pages, `src/Library.tsx` browsing, `src/library-state.ts` filtering/bookmarks, `src/Docs.tsx` playgrounds and guides, and `src/registry/` installable components. No new runtime dependency was added for this revision.
 
 ## Deploy
 
-The Vercel project is `forme`. Authentication and project linking are machine-local and ignored by Git.
-
-Live demo: https://forme.vercel.app
+The linked Vercel project is `forme`. Machine-local linking and authentication are ignored by Git.
 
 ```sh
-vercel deploy --prod
-vercel alias set <deployment-url-returned-above> forme.vercel.app
+vercel deploy --prod --yes
+vercel alias set <deployment-url> forme.vercel.app
 ```
 
-`vercel.json` sets Vite, the build command, static output, and clean paths. `.vercelignore` excludes local environment files, browser artifacts, Git, and research files from uploads. Do not publish the repository or customer source as part of a static deploy.
+Repeat the alias step after each CLI deployment. The project permits anonymous access so visitors and the shadcn CLI can use the preview and registry. Repository visibility remains private. `.vercelignore` excludes environment files, browser artifacts, Git, and research notes from uploads.
 
-The short alias is assigned manually; repeat the alias step after a new CLI deployment. This demo project's Vercel authentication is disabled so visitors and the shadcn CLI can use the public site. Repository source visibility remains private, and Studio source payloads are excluded from the static build.
+## Commercial release
 
-## Before commercial launch
+Pricing, commercial terms, payments, and authenticated customer downloads are planned for the paid launch. Validate the offer with prospective studio buyers and test the assembled components across target browsers and assistive technology before that launch. Free describes source availability in this preview; the private pre-release repository does not grant commercial licensing.
 
-Finalize commercial terms and pricing; connect payments and authenticated downloads; conduct broader browser and assistive-technology testing; validate the offer with studio buyers. Free-preview designation describes the planned launch tier. Commercial licensing is not granted by this private pre-release repository.
-
-Original source: Copyright © 2026 ManasDasri. All rights reserved. Third-party assets retain their licenses. See [LICENSE](LICENSE), [CREDITS.md](CREDITS.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Example brands and projects are fictional.
+Copyright © 2026 ManasDasri. All rights reserved. Third-party assets retain their licenses. See [LICENSE](LICENSE), [CREDITS.md](CREDITS.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

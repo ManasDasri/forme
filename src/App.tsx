@@ -1,286 +1,177 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  catalog,
-  categories,
-  freeCount,
-  studioCount,
-  type Category,
-} from "./catalog";
+import { useEffect, useState } from "react";
+import { catalog } from "./catalog";
 import { Demo } from "./Demo";
+import { SilkShader } from "./registry/silk-shader";
+import { LibraryBrowser } from "./Library";
+import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
 import { Arrow, Footer, Header } from "./ui";
 
-const launches = [
+const groups = [
   {
-    slug: "editorial",
-    name: "Editorial",
-    caption: "Project presentation, considered.",
-    description:
-      "Image-led interactions for selected work, case studies, and studio websites.",
-    image: "/images/architecture.jpg",
-    alt: "A stepped glass building seen from below",
-    status: "Explore the release",
+    name: "Buttons",
+    slug: "buttons",
+    demo: "prism-button",
+    description: "Small surfaces. Big personalities.",
+    count: 3,
   },
   {
-    slug: "object",
-    name: "Object",
-    caption: "Material, made interactive.",
-    description:
-      "A forthcoming study of products, finishes, and the details that make them tangible.",
-    image: "/images/object.jpg",
-    alt: "A sculptural dark metal desk lamp against a pale background",
-    status: "In development",
+    name: "Shaders",
+    slug: "shaders",
+    demo: "orbital-shader",
+    description: "Light, noise, and a little distortion.",
+    count: 3,
   },
   {
-    slug: "kinetic",
-    name: "Kinetic",
-    caption: "An exploration of time.",
-    description:
-      "A forthcoming study of responsive type, transitions, and visual rhythm.",
-    image: "/images/light-study.jpg",
-    alt: "Light illuminating the architecture and tram lines of a city at night",
-    status: "In development",
+    name: "ASCII",
+    slug: "ascii",
+    demo: "ascii-orbit",
+    description: "A different language for the web.",
+    count: 3,
   },
 ];
-function ReleaseArt({ slug }: { slug: string }) {
-  const item = launches.find((x) => x.slug === slug)!;
+function CategoryCards() {
   return (
-    <div className={`release-art release-${slug}`}>
-      <img src={item.image} alt={item.alt} loading="lazy" />
-      <span>
-        {slug === "editorial"
-          ? "Selected perspectives"
-          : slug === "object"
-            ? "Studies in material"
-            : "Studies in time"}
-      </span>
-    </div>
-  );
-}
-function Releases({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className={`release-list${compact ? " release-list-compact" : ""}`}>
-      {launches.map((item, i) => (
-        <a
-          key={item.slug}
-          href={`/collections/${item.slug}/`}
-          className="release-item"
-        >
-          <ReleaseArt slug={item.slug} />
-          <div className="release-caption">
-            <span>Collection {String(i + 1).padStart(2, "0")}</span>
-            <h3>{item.name}</h3>
-            <p>{item.caption}</p>
-            <span className="release-status">
-              {item.status}
-              <Arrow diagonal />
-            </span>
+    <div className="category-collection-grid">
+      {groups.map((group) => (
+        <article className="category-collection" key={group.slug}>
+          <div className="category-collection-preview">
+            <Demo slug={group.demo} />
           </div>
-        </a>
+          <div>
+            <a href={`/collections/${group.slug}/`}>
+              <h3>{group.name}</h3>
+              <span>{group.count} experiments</span>
+              <Arrow diagonal />
+            </a>
+            <p>{group.description}</p>
+          </div>
+        </article>
       ))}
     </div>
   );
 }
-function PieceCard({ slug }: { slug: string }) {
-  const item = catalog.find((x) => x.slug === slug)!;
-  return (
-    <article className="component-card">
-      <div className={`component-preview preview-${slug}`}>
-        <Demo slug={slug} />
-        {item.access === "studio" && (
-          <a href="/studio/" className="studio-badge">
-            Studio
-          </a>
-        )}
-        <a
-          className="expand-preview"
-          href={`/docs/${slug}/`}
-          aria-label={`Open ${item.name} preview`}
-        >
-          <Arrow diagonal />
-        </a>
-      </div>
-      <div className="component-meta">
-        <div>
-          <a className="component-title" href={`/docs/${slug}/`}>
-            {item.name}
-          </a>
-          <span>{item.category}</span>
-        </div>
-        <a
-          className="component-code"
-          href={`/docs/${slug}/?view=source`}
-          aria-label={`View ${item.name} source`}
-        >
-          〈/〉
-        </a>
-      </div>
-      <p className="component-description">{item.description}</p>
-    </article>
-  );
-}
 function HomePage() {
   return (
-    <main id="main">
-      <section className="home-intro shell">
-        <div className="intro-topline">
-          <span>Independent interaction studio</span>
-          <span>React components / Release 01</span>
+    <main id="main" className="discovery-home">
+      <section className="future-hero">
+        <div className="hero-shader" aria-hidden="true">
+          <SilkShader speed={0.45} />
         </div>
-        <div className="home-headline">
-          <h1>
-            Make the details
-            <br />
-            unforgettable.
-          </h1>
-          <div>
-            <p>
-              Distinctive interactions for the websites you put your name on.
-              Designed as a system. Built to become your own.
-            </p>
-            <a className="button" href="/collections/editorial/">
-              Explore the collection
-              <Arrow />
-            </a>
-          </div>
-        </div>
-        <div className="signature-stage">
-          <div className="signature-bar">
-            <a href="/docs/project-index/">
-              Project index<span>Live specimen</span>
-            </a>
-            <span>
-              Select a project to explore
-              <Arrow diagonal />
-            </span>
-          </div>
-          <Demo slug="project-index" />
-          <div className="signature-footer">
-            <span>Every interaction on this site is the component itself.</span>
-            <a href="/docs/project-index/">
-              Make it yours
-              <Arrow />
-            </a>
-          </div>
-        </div>
-      </section>
-      <section className="selected-pieces shell">
-        <div className="section-heading">
-          <div>
-            <span className="section-kicker">The Editorial release</span>
-            <h2>
-              Small details.
-              <br />A lasting impression.
-            </h2>
-          </div>
-          <div>
-            <p>
-              Image, intent, and interaction.
-              <br />
-              Made for the work between the sections.
-            </p>
-            <a className="text-link" href="/collections/editorial/">
-              View all {catalog.length} pieces
-              <Arrow diagonal />
-            </a>
-          </div>
-        </div>
-        <div className="home-piece-grid">
-          {[
-            "expanding-gallery",
-            "focus-cursor",
-            "magnetic-button",
-            "image-compare",
-          ].map((slug) => (
-            <PieceCard key={slug} slug={slug} />
-          ))}
-        </div>
-      </section>
-      <section className="studio-feature shell">
-        <div className="studio-feature-stage">
-          <Demo slug="case-study" />
-        </div>
-        <div className="studio-feature-copy">
-          <span className="section-kicker">For the whole story</span>
-          <h2>
-            Your work deserves
-            <br />a better entrance.
-          </h2>
-          <p>
-            A project should feel connected from its first impression to its
-            final detail. Studio brings those moments together: case-study
-            entrances, photographic reels, and navigation with context.
-          </p>
-          <a className="text-link" href="/studio/">
-            Discover Forme Studio
-            <Arrow diagonal />
+        <div className="future-hero-content shell">
+          <a className="drop-badge" href="/collections/experimental/">
+            <span />
+            Signal / The first drop
+            <Arrow />
           </a>
-          <span className="release-note">
-            Working previews. Paid source access coming later.
-          </span>
+          <h1>
+            The future looks
+            <br />
+            interactive.
+          </h1>
+          <p>
+            Experimental buttons. Living shaders. ASCII with dimension.
+            <br />
+            Thoughtfully crafted React components for a less ordinary web.
+          </p>
+          <div className="future-hero-actions">
+            <a className="button" href="/components/">
+              Explore components
+              <Arrow />
+            </a>
+            <a className="button button-secondary" href="/docs/">
+              Read the docs
+            </a>
+          </div>
+          <div className="hero-technology">
+            <span>React</span>
+            <span>TypeScript</span>
+            <span>Copy the source. Make it yours.</span>
+          </div>
         </div>
       </section>
-      <section className="releases-section shell">
+      <section
+        className="hero-library shell"
+        aria-label="Explore the live component library"
+      >
+        <div className="app-preview-frame">
+          <LibraryBrowser embedded />
+        </div>
+      </section>
+      <section className="experiments-section shell">
         <div className="section-heading">
           <div>
             <span className="section-kicker">
-              Different directions. A shared standard.
+              A few different ways to be different
             </span>
-            <h2>The next chapters.</h2>
+            <h2>Find your frequency.</h2>
           </div>
           <a className="text-link" href="/collections/">
-            All collections
+            Explore the collection
             <Arrow diagonal />
           </a>
         </div>
-        <Releases compact />
+        <CategoryCards />
       </section>
-      <section id="approach" className="approach shell">
+      <section className="studio-callout shell">
+        <div className="studio-callout-icon" aria-hidden="true">
+          ✦
+        </div>
         <div>
-          <span className="section-kicker">What comes with the craft</span>
-          <h2>
-            Considered beyond
-            <br />
-            the first impression.
-          </h2>
+          <span>For the beautifully unexpected.</span>
+          <h2>Meet the Studio side.</h2>
+          <p>
+            More expressive experiments. Working previews now, paid source
+            access later.
+          </p>
         </div>
-        <div className="principles">
-          <div>
-            <h3>Made to be adapted.</h3>
-            <p>
-              Readable TypeScript, scoped CSS, and content structures you can
-              actually put to work.
-            </p>
-          </div>
-          <div>
-            <h3>Every way of using it.</h3>
-            <p>
-              Touch, keyboard, and reduced motion. An interaction should respect
-              the person using it.
-            </p>
-          </div>
-          <div>
-            <h3>A coherent starting point.</h3>
-            <p>
-              Components that share a visual and motion language, with room for
-              your own art direction.
-            </p>
-          </div>
-        </div>
+        <a className="button button-secondary" href="/studio/">
+          Explore Studio
+          <Arrow />
+        </a>
       </section>
-      <Closing />
+      <section className="build-strip shell">
+        <div>
+          <span className="build-strip-symbol" aria-hidden="true">
+            〈/〉
+          </span>
+          <h2>Find it. Try it. Make it yours.</h2>
+          <p>Live previews, real source, and docs that get you started.</p>
+        </div>
+        <a className="text-link" href="/docs/">
+          Start building
+          <Arrow />
+        </a>
+      </section>
     </main>
   );
 }
-function Closing() {
+function LibraryPage({
+  saved = false,
+  category,
+}: {
+  saved?: boolean;
+  category?: string;
+}) {
   return (
-    <section className="closing shell">
-      <span>Good work lives in the details.</span>
-      <a href="/collections/editorial/">
-        Find your next interaction
-        <Arrow diagonal />
-      </a>
-    </section>
+    <main id="main" className="library-page shell">
+      <div className="library-page-heading">
+        <span className="section-kicker">The Forme library</span>
+        <h1>
+          {saved
+            ? "Saved for your next idea."
+            : category
+              ? `${category}. A little unexpected.`
+              : "Components with character."}
+        </h1>
+        <p>
+          {saved
+            ? "Your personal collection, saved in this browser."
+            : "Explore the first drop. Every preview is live, every detail is yours to take further."}
+        </p>
+      </div>
+      <LibraryBrowser savedOnly={saved} initialCategory={category} />
+    </main>
   );
 }
 function CollectionsPage() {
@@ -291,350 +182,152 @@ function CollectionsPage() {
         <span>/</span>Collections
       </div>
       <div className="page-intro">
-        <span className="section-kicker">An ongoing series</span>
+        <a className="drop-badge" href="/components/">
+          <span />
+          Signal / Drop 01
+        </a>
         <h1>
-          A distinct perspective.
+          Three kinds of
           <br />
-          With every release.
+          beautifully unusual.
         </h1>
         <p>
-          Editorial is our first collection. Object and Kinetic are taking shape
-          as separate explorations, each with its own purpose and point of view.
+          Buttons with presence. Shaders with a life of their own. ASCII that
+          moves beyond the terminal. This is where Forme begins.
         </p>
       </div>
-      <Releases />
-      <div className="collections-note">
-        <h2>Built one release at a time.</h2>
-        <p>
-          A focused collection now, with new interactions added as the studio
-          develops. Future releases have no announced dates.
-        </p>
-        <a className="text-link" href="/docs/">
-          Start with Editorial
-          <Arrow diagonal />
-        </a>
-      </div>
-    </main>
-  );
-}
-function EditorialPage() {
-  const params = new URLSearchParams(location.search);
-  const [category, setCategory] = useState<Category>(
-    categories.includes(params.get("category") as Category)
-      ? (params.get("category") as Category)
-      : "All components",
-  );
-  const [access, setAccess] = useState(params.get("access") || "all");
-  const [query, setQuery] = useState("");
-  const [roomy, setRoomy] = useState(false);
-  const search = useRef<HTMLInputElement>(null);
-  const visible = catalog.filter(
-    (c) =>
-      (access === "all" ||
-        (access === "studio"
-          ? c.access === "studio"
-          : c.access !== "studio")) &&
-      (category === "All components" || c.category === category) &&
-      `${c.name} ${c.description} ${c.category}`
-        .toLowerCase()
-        .includes(query.toLowerCase()),
-  );
-  useEffect(() => {
-    const fn = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        search.current?.focus();
-        search.current?.scrollIntoView({ block: "center" });
-      }
-    };
-    window.addEventListener("keydown", fn);
-    return () => window.removeEventListener("keydown", fn);
-  }, []);
-  function filter(value: Category) {
-    setCategory(value);
-    history.replaceState(
-      null,
-      "",
-      `${location.pathname}${value === "All components" ? "" : "?category=" + encodeURIComponent(value)}`,
-    );
-  }
-  return (
-    <main id="main">
-      <section className="editorial-intro shell">
-        <div className="breadcrumbs">
-          <a href="/collections/">Collections</a>
-          <span>/</span>Editorial
+      <CategoryCards />
+      <a className="next-drop-banner" href="/collections/next/">
+        <div>
+          <span>The next signal</span>
+          <h2>More experiments are taking shape.</h2>
+          <p>New drops over time. No release date announced yet.</p>
         </div>
-        <div className="collection-page-heading">
-          <div>
-            <span className="section-kicker">Collection 01</span>
-            <h1>Editorial.</h1>
-          </div>
-          <p>
-            Present your work with intention.
-            <br />
-            Nine interactions for images, projects,
-            <br />
-            and the way people move between them.
-          </p>
-        </div>
-        <div className="editorial-banner">
-          <Demo slug="expanding-gallery" />
-        </div>
-      </section>
-      <section id="components" className="library shell">
-        <div className="library-heading">
-          <div>
-            <h2>
-              The collection<span>{catalog.length}</span>
-            </h2>
-            <p>Every preview is live. Take your time with it.</p>
-          </div>
-          <div
-            className="library-view"
-            role="group"
-            aria-label="Gallery density"
-          >
-            <button aria-pressed={!roomy} onClick={() => setRoomy(false)}>
-              Grid
-            </button>
-            <button aria-pressed={roomy} onClick={() => setRoomy(true)}>
-              Large
-            </button>
-          </div>
-        </div>
-        <div className="access-bar">
-          <div
-            className="access-tabs"
-            role="group"
-            aria-label="Component access"
-          >
-            {[
-              { key: "all", name: "All pieces", count: catalog.length },
-              { key: "free", name: "Free preview", count: freeCount },
-              { key: "studio", name: "Studio preview", count: studioCount },
-            ].map((item) => (
-              <button
-                key={item.key}
-                aria-pressed={access === item.key}
-                onClick={() => setAccess(item.key)}
-              >
-                {item.name}
-                <span>{item.count}</span>
-              </button>
-            ))}
-          </div>
-          <a href="/studio/">
-            About Studio
-            <Arrow diagonal />
-          </a>
-        </div>
-        <div className="collection-toolbar">
-          <div
-            className="filter-tabs"
-            role="group"
-            aria-label="Filter components"
-          >
-            {categories.map((c) => (
-              <button
-                key={c}
-                aria-pressed={category === c}
-                onClick={() => filter(c)}
-              >
-                {c === "All components" ? "All" : c}
-                <span>
-                  {c === "All components"
-                    ? catalog.length
-                    : catalog.filter((x) => x.category === c).length}
-                </span>
-              </button>
-            ))}
-          </div>
-          <label className="search">
-            <span aria-hidden="true">⌕</span>
-            <input
-              ref={search}
-              aria-label="Search components"
-              placeholder="Find an interaction"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <kbd>⌘ K</kbd>
-          </label>
-        </div>
-        <p className="sr-only" role="status">
-          {visible.length} components
-        </p>
-        <div className={`component-grid${roomy ? " roomy" : ""}`}>
-          {visible.map((c) => (
-            <PieceCard key={c.slug} slug={c.slug} />
-          ))}
-        </div>
-        {!visible.length && (
-          <div className="empty-state">
-            <h3>No interactions found.</h3>
-            <p>Try another search or explore the full collection.</p>
-            <button
-              className="button"
-              onClick={() => {
-                filter("All components");
-                setAccess("all");
-                setQuery("");
-              }}
-            >
-              Show all components
-            </button>
-          </div>
-        )}
-        <div className="collection-end">
-          <span>Made to become part of your work.</span>
-          <a href="/docs/">
-            Start building
-            <Arrow diagonal />
-          </a>
-        </div>
-      </section>
-      <section className="next-collections shell">
-        <span>Next in the series</span>
-        {launches.slice(1).map((item) => (
-          <a href={`/collections/${item.slug}/`} key={item.slug}>
-            <h2>{item.name}</h2>
-            <span>Coming soon</span>
-            <Arrow diagonal />
-          </a>
-        ))}
-      </section>
+        <span className="coming-badge">Coming soon</span>
+        <Arrow diagonal />
+      </a>
     </main>
   );
 }
 function StudioPage() {
   return (
     <main id="main" className="studio-page shell">
-      <div className="breadcrumbs">
-        <a href="/collections/">Collections</a>
-        <span>/</span>Studio
-      </div>
-      <div className="studio-intro">
-        <div>
-          <span className="section-kicker">The complete interaction</span>
-          <h1>
-            Give your work
-            <br />
-            the whole stage.
-          </h1>
-          <p>
-            Deeper compositions for client projects: from choosing a piece of
-            work to exploring the story behind it. Three working previews for
-            our forthcoming paid edition.
-          </p>
-          <a className="text-link" href="/collections/editorial/?access=free">
-            Explore the free pieces
-            <Arrow diagonal />
-          </a>
-        </div>
-        <div className="studio-intro-demo">
-          <Demo slug="case-study" />
-        </div>
+      <div className="library-page-heading">
+        <span className="section-kicker">Forme Studio</span>
+        <h1>
+          A little further
+          <br />
+          from the ordinary.
+        </h1>
+        <p>
+          Our most expressive experiments. Explore the live previews while the
+          paid edition takes shape.
+        </p>
       </div>
       <div className="studio-release-note">
-        <span className="status-dot" />
+        <span className="live-indicator" />
         <p>
-          Studio is in development. Preview the compositions now; pricing,
-          commercial terms, and purchasing will follow.
+          Studio purchasing is not open yet. Pricing, commercial terms, and
+          editable source access will be announced before launch.
         </p>
       </div>
-      <div className="component-grid studio-grid">
-        {catalog
-          .filter((c) => c.access === "studio")
-          .map((c) => (
-            <PieceCard key={c.slug} slug={c.slug} />
-          ))}
-      </div>
-      <div className="studio-roadmap">
-        <h2>
-          A better starting point
-          <br />
-          for the projects that matter.
-        </h2>
-        <p>
-          Editable compositions, content patterns, and a consistent motion
-          language. Paid downloads and customer access will be connected before
-          the commercial launch.
-        </p>
-      </div>
+      <LibraryBrowser studioOnly />
     </main>
   );
 }
-function ComingSoonPage({ slug }: { slug: string }) {
-  const item = launches.find((x) => x.slug === slug)!;
+function NextDropPage() {
   return (
-    <main id="main" className="coming-page shell">
+    <main id="main" className="next-drop-page shell">
       <div className="breadcrumbs">
         <a href="/collections/">Collections</a>
-        <span>/</span>
-        {item.name}
+        <span>/</span>Next drop
       </div>
-      <div className="coming-layout">
-        <div>
-          <span className="section-kicker">
-            Next in the series / In development
-          </span>
-          <h1>{item.name}.</h1>
-          <h2>{item.caption}</h2>
-          <p>{item.description}</p>
-          <span className="coming-note">
-            Coming soon. No release date announced yet.
-          </span>
-          <a className="button" href="/collections/editorial/">
-            Explore Editorial now
-            <Arrow />
-          </a>
-        </div>
-        <ReleaseArt slug={slug} />
-      </div>
-      <div className="coming-footer">
-        <span>A new direction, held to the same standard.</span>
-        <a href="/collections/">
-          All collections
-          <Arrow diagonal />
+      <div className="next-drop-art">
+        <span className="next-drop-orbit" aria-hidden="true" />
+        <span className="coming-badge">In development</span>
+        <h1>
+          Another signal
+          <br />
+          is out there.
+        </h1>
+        <p>
+          We’re exploring what comes next for buttons, shaders, and ASCII. New
+          experiments will arrive in focused drops.
+        </p>
+        <a className="button" href="/components/">
+          Explore the first drop
+          <Arrow />
         </a>
+        <span className="next-drop-note">No release date announced yet.</span>
       </div>
     </main>
   );
 }
 export default function App() {
+  const [search, setSearch] = useState(false);
   const path = location.pathname.replace(/\/+$/, "") || "/";
-  const page =
-    path === "/" ? (
-      <HomePage />
-    ) : path === "/collections" ? (
-      <CollectionsPage />
-    ) : path === "/collections/editorial" ? (
-      <EditorialPage />
-    ) : path === "/studio" ? (
-      <StudioPage />
-    ) : path === "/collections/object" || path === "/collections/kinetic" ? (
-      <ComingSoonPage slug={path.split("/")[2]} />
-    ) : path === "/docs" || path.startsWith("/docs/") ? (
-      <DocsPage slug={path.slice(5).replace(/^\//, "")} />
-    ) : (
+  useEffect(() => {
+    const key = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setSearch(true);
+      }
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, []);
+  let page;
+  if (path === "/") page = <HomePage />;
+  else if (
+    path === "/components" ||
+    path === "/collections/experimental" ||
+    path === "/collections/editorial"
+  )
+    page = <LibraryPage />;
+  else if (path === "/bookmarks") page = <LibraryPage saved />;
+  else if (path === "/collections") page = <CollectionsPage />;
+  else if (groups.some((g) => path === `/collections/${g.slug}`))
+    page = (
+      <LibraryPage
+        category={groups.find((g) => path === `/collections/${g.slug}`)!.name}
+      />
+    );
+  else if (path === "/studio") page = <StudioPage />;
+  else if (
+    [
+      "/collections/next",
+      "/collections/object",
+      "/collections/kinetic",
+    ].includes(path)
+  )
+    page = <NextDropPage />;
+  else if (path === "/docs" || path.startsWith("/docs/"))
+    page = <DocsPage slug={path.slice(5).replace(/^\//, "")} />;
+  else
+    page = (
       <main id="main" className="not-found shell">
-        <h1>A different direction?</h1>
-        <a className="button" href="/collections/">
-          Explore the collections
+        <h1>
+          A little too far
+          <br />
+          into the unknown.
+        </h1>
+        <p>This page isn’t part of the current drop.</p>
+        <a className="button" href="/components/">
+          Explore the library
           <Arrow />
         </a>
       </main>
     );
   useEffect(() => {
-    const part = catalog.find((c) => path === `/docs/${c.slug}`);
-    document.title = `${part?.name || (path === "/studio" ? "Studio" : path.startsWith("/docs") ? "Documentation" : path.includes("editorial") ? "Editorial" : path.includes("collections") ? "Collections" : "Independent interaction studio")} — Forme`;
+    const component = catalog.find((c) => path === `/docs/${c.slug}`);
+    document.title = `${component?.name || (path === "/studio" ? "Studio" : path.startsWith("/docs") ? "Documentation" : path === "/bookmarks" ? "Bookmarks" : path.startsWith("/collections") ? "Collections" : path === "/components" ? "Component library" : "The future looks interactive")} — Forme`;
   }, [path]);
   return (
     <>
-      <Header />
+      <Header onSearch={() => setSearch(true)} />
       {page}
       <Footer />
+      {search && <SearchDialog close={() => setSearch(false)} />}
     </>
   );
 }

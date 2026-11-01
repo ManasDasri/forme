@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "prism-button",
+  "type": "registry:component",
+  "title": "Prism Button",
+  "files": [
+    {
+      "path": "src/registry/prism-button.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/prism-button.tsx",
+      "content": "\"use client\";\nimport type { ButtonHTMLAttributes, CSSProperties } from \"react\";\nimport \"./prism-button.css\";\nexport function PrismButton({\n  children,\n  className = \"\",\n  type = \"button\",\n  ...props\n}: ButtonHTMLAttributes<HTMLButtonElement>) {\n  return (\n    <button\n      {...props}\n      type={type}\n      className={`forme-prism ${className}`}\n      onPointerMove={(e) => {\n        if (\n          e.pointerType !== \"mouse\" ||\n          matchMedia(\"(prefers-reduced-motion:reduce)\").matches\n        ) {\n          props.onPointerMove?.(e);\n          return;\n        }\n        const r = e.currentTarget.getBoundingClientRect();\n        e.currentTarget.style.setProperty(\"--px\", `${e.clientX - r.left}px`);\n        e.currentTarget.style.setProperty(\"--py\", `${e.clientY - r.top}px`);\n        props.onPointerMove?.(e);\n      }}\n      style={{ ...props.style } as CSSProperties}\n    >\n      <span>{children}</span>\n      <span aria-hidden=\"true\">↗</span>\n    </button>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/prism-button.css",
+      "type": "registry:file",
+      "target": "@components/forme/prism-button.css",
+      "content": ".forme-prism {\n  --px: 50%;\n  --py: 50%;\n  position: relative;\n  isolation: isolate;\n  display: inline-flex;\n  align-items: center;\n  gap: 32px;\n  border: 1px solid #ffffff45;\n  border-radius: 11px;\n  padding: 16px 24px;\n  background:\n    radial-gradient(\n      120px circle at var(--px) var(--py),\n      #8f9bcf80,\n      transparent\n    ),\n    linear-gradient(135deg, #3b414b, #171a22 45%, #343c4d);\n  box-shadow:\n    inset 0 1px 1px #ffffff60,\n    0 5px 25px #0005;\n  color: #f4f5fd;\n  font-family: inherit;\n  font-weight: 500;\n  font-size: 14px;\n  line-height: 1.3;\n  cursor: pointer;\n  transition:\n    box-shadow 0.25s,\n    transform 0.25s;\n  overflow: hidden;\n}\n.forme-prism:before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  z-index: -1;\n  background: linear-gradient(\n    100deg,\n    transparent 10%,\n    #a9c6ff40 30%,\n    #f3c9ff30 45%,\n    transparent 65%\n  );\n  transform: translateX(-100%);\n  transition: transform 0.65s;\n}\n.forme-prism:hover:before,\n.forme-prism:focus-visible:before {\n  transform: translateX(40%);\n}\n.forme-prism:hover {\n  box-shadow:\n    inset 0 1px 1px #fff8,\n    0 6px 28px #9aafff25;\n}\n.forme-prism > span:last-child {\n  font-size: 18px;\n}\n.forme-prism:focus-visible {\n  outline: 3px solid #8aabff;\n  outline-offset: 5px;\n}\n.forme-prism:disabled {\n  opacity: 0.4;\n  cursor: not-allowed;\n  pointer-events: none;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-prism,\n  .forme-prism:before {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

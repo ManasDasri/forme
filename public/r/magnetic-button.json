@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "magnetic-button",
   "type": "registry:component",
-  "title": "Magnetic button",
-  "description": "Magnetic button for expressive editorial websites.",
-  "dependencies": [
-    "motion"
-  ],
+  "title": "Magnetic Button",
   "files": [
     {
       "path": "src/registry/magnetic-button.tsx",
@@ -20,5 +16,8 @@
       "target": "@components/forme/magnetic-button.css",
       "content": ".forme-magnet {\n  display: inline-flex;\n  padding: 18px;\n  max-width: 100%;\n}\n.forme-magnet > span {\n  display: inline-flex;\n  max-width: 100%;\n}\n.forme-magnet-button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 28px;\n  max-width: 100%;\n  padding: 18px 25px;\n  border: 1px solid currentColor;\n  border-radius: 50px;\n  background: var(--forme-button-bg, #242d25);\n  color: var(--forme-button-color, #f3f3e8);\n  font: inherit;\n  font-size: 16px;\n  cursor: pointer;\n}\n.forme-magnet-button > span:first-child {\n  overflow-wrap: anywhere;\n  text-align: left;\n}\n.forme-magnet-arrow {\n  display: grid;\n  place-items: center;\n  flex-shrink: 0;\n  font-size: 22px;\n  transition: transform 0.35s;\n}\n.forme-magnet-button:hover .forme-magnet-arrow {\n  transform: rotate(45deg);\n}\n.forme-magnet-button:focus-visible {\n  outline: 3px solid #617cf5;\n  outline-offset: 5px;\n}\n.forme-magnet-button:disabled {\n  opacity: 0.45;\n  cursor: not-allowed;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-magnet-arrow {\n    transition: none;\n  }\n  .forme-magnet-button:hover .forme-magnet-arrow {\n    transform: none;\n  }\n}\n"
     }
+  ],
+  "dependencies": [
+    "motion"
   ]
 }

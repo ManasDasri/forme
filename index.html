@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f8f9fc" />
+    <meta name="theme-color" content="#09090b" />
     <script>
       (() => {
         let saved;
@@ -11,28 +11,21 @@
           saved = localStorage.getItem("forme-theme");
         } catch {}
         document.documentElement.dataset.theme =
-          saved === "dark" || saved === "light"
-            ? saved
-            : matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
+          saved === "dark" || saved === "light" ? saved : "dark";
       })();
     </script>
     <meta
       name="description"
-      content="Thoughtfully animated React components for distinctive brand websites. Explore the Editorial collection by Forme."
+      content="Experimental buttons, interactive shaders, and ASCII components for React. Explore the first Forme drop."
     />
-    <meta
-      property="og:title"
-      content="Forme — Give the web a little feeling."
-    />
+    <meta property="og:title" content="Forme — The future looks interactive." />
     <meta
       property="og:description"
-      content="A motion component studio for independent designers and ambitious studios."
+      content="Experimental React buttons, interactive shaders, and ASCII art. Explore the first Forme drop."
     />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Forme — Motion with a point of view</title>
+    <title>Forme — The future looks interactive.</title>
   </head>
   <body>
     <div id="root"></div>

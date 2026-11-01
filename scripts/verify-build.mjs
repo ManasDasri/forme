@@ -5,6 +5,13 @@ const registry = JSON.parse(
   await readFile(new URL("../registry.json", import.meta.url), "utf8"),
 );
 for (const path of [
+  "components",
+  "bookmarks",
+  "collections/experimental",
+  "collections/buttons",
+  "collections/shaders",
+  "collections/ascii",
+  "collections/next",
   "collections",
   "collections/editorial",
   "collections/object",
@@ -47,9 +54,9 @@ const bundle = (
   )
 ).join("\n");
 for (const marker of [
-  "export interface CaseStudyItem",
-  "export interface ReelFrame",
-  "export interface PreviewNavLink",
+  "export function OrbitalShader",
+  "export function ShutterButton",
+  "export function AsciiText",
 ])
   assert.ok(
     !bundle.includes(marker),

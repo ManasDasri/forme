@@ -1,11 +1,8 @@
 export const categories = [
   "All components",
-  "Imagery",
-  "Interactions",
-  "Navigation",
   "Buttons",
-  "Cursors",
-  "Layouts",
+  "Shaders",
+  "ASCII",
 ] as const;
 export type Category = (typeof categories)[number];
 export const catalog: {
@@ -18,98 +15,115 @@ export const catalog: {
   props: string;
 }[] = [
   {
-    slug: "project-index",
-    name: "Project index",
-    category: "Interactions",
-    description: "A body of work, one considered selection at a time.",
-    usage: `<ProjectIndex projects={[\n  { title: "Forma", category: "Architecture",\n    image: "/project.jpg", alt: "A sculptural building",\n    description: "A study of light and structure." }\n]} />`,
+    slug: "silk-shader",
+    name: "Silk field",
+    category: "Shaders",
+    description: "A flowing field of light. Bend the folds with your pointer.",
+    usage: '<SilkShader color="#385dff" speed={1} />',
     props:
-      "projects is an array with title, category, image, and alt. description is optional. Hover, focus, or select a project to update its image. Empty arrays render nothing.",
+      "color is a six-digit hex value; speed is clamped to 0–3. Uses WebGL with a static CSS fallback, pauses offscreen and in hidden tabs, and renders a still frame for reduced motion.",
   },
   {
-    slug: "expanding-gallery",
-    name: "Form & structure",
-    category: "Imagery",
-    description: "A gallery that gives your selected image room to breathe.",
-    usage: `<ExpandingGallery images={[\n  { src: "/one.jpg", alt: "Building facade", title: "Structure" },\n  { src: "/two.jpg", alt: "Interior detail", title: "Space" }\n]} />`,
+    slug: "prism-button",
+    name: "Prism button",
+    category: "Buttons",
+    description: "Brushed metal, refracted light, and a responsive highlight.",
+    usage:
+      '<PrismButton onClick={() => console.log("Connect your action")}>\n  Enter the experience\n</PrismButton>',
     props:
-      "images is an array of src, alt, and title objects. Click, tap, or use the keyboard to expand an image. Selected state is exposed through aria-pressed.",
+      "Accepts native button props and children. Defaults to type=button. The highlight follows the pointer; reduced motion removes animated sweeps. Native disabled and focus states are supported.",
   },
   {
-    slug: "focus-cursor",
-    name: "Focus cursor",
-    category: "Cursors",
-    description: "Move through an image. Discover a different layer.",
-    usage: `<FocusCursor src="/landscape.jpg"\n  alt="A mountain lake" label="Look closer" />`,
+    slug: "ascii-orbit",
+    name: "ASCII orbit",
+    category: "ASCII",
+    description: "A dimensional object, drawn entirely from characters.",
+    usage:
+      '<AsciiOrbit color="#d2d7e3" speed={1} label="Rotating ASCII torus" />',
     props:
-      "src and alt are required; label is optional. The local lens reveals color under the pointer. Click, tap, Enter, or Space pins a centered lens. The native pointer is preserved. Pointer following is disabled for reduced motion.",
+      "color, speed, and accessible label are optional. The ASCII torus responds to pointer movement, includes a pause control, stops offscreen, and becomes still for reduced motion.",
+  },
+  {
+    slug: "dither-shader",
+    name: "Dither terrain",
+    category: "Shaders",
+    description: "A changing topography of pixels, noise, and light.",
+    usage: '<DitherShader color="#c5dacb" speed={0.8} />',
+    props:
+      "color is a six-digit hex value; speed is clamped to 0–3. A WebGL fragment shader with pointer interaction and a static fallback. Rendering stops offscreen and follows reduced-motion preferences.",
   },
   {
     slug: "magnetic-button",
     name: "Magnetic button",
     category: "Buttons",
-    description: "A precise interaction with just enough attraction.",
-    usage: `<MagneticButton onClick={() => console.log("Connect your action")}>\n  Discuss a project\n</MagneticButton>`,
+    description: "A little attraction. A satisfying response.",
+    usage:
+      '<MagneticButton onClick={() => console.log("Connect your action")}>\n  Make contact\n</MagneticButton>',
     props:
       "Accepts native button props including onClick, disabled, and type. Defaults to type=button. Pointer attraction is disabled for touch and reduced motion. Customize --forme-button-bg and --forme-button-color.",
   },
   {
-    slug: "image-reveal",
-    name: "Image reveal",
-    category: "Imagery",
-    description: "A deliberate change of frame, controlled by the viewer.",
-    usage: `<ImageReveal src="/project.jpg" alt="Architectural detail"\n  title="Forma" caption="Explore the perspective" />`,
+    slug: "ascii-image",
+    name: "ASCII reveal",
+    category: "ASCII",
+    description: "An image hidden in plain text. Move to find what’s beneath.",
+    usage:
+      '<AsciiImage src="/your-image.jpg" alt="Your image description"\n  color="#b7c3df" />',
     props:
-      "src, alt, and title are required strings; caption is optional. Click, tap, Enter, or Space toggles the mask. aria-pressed communicates the state.",
+      "src and alt are required; color is optional. Supply a same-origin or CORS-enabled image for canvas sampling. Move the pointer to reveal the photograph; click, tap, Enter, or Space pins a centered reveal. Reduced motion uses the centered reveal.",
   },
   {
-    slug: "image-compare",
-    name: "Image compare",
-    category: "Imagery",
-    description:
-      "Make an art-direction decision visible. Slide between two views.",
-    usage: `<ImageCompare before="/before.jpg" after="/after.jpg"\n  beforeAlt="Original treatment" afterAlt="Revised treatment"\n  beforeLabel="Original" afterLabel="Direction" initial={50} />`,
+    slug: "orbital-shader",
+    name: "Orbital field",
+    category: "Shaders",
+    access: "studio",
+    description: "An orbit of light, pulled into a luminous singularity.",
+    usage: '<OrbitalShader color="#b398f3" speed={1} />',
     props:
-      "before, after, beforeAlt, and afterAlt are required. beforeLabel and afterLabel default to Before and After. initial is clamped to 0–100. The native range control supports touch and arrow keys. Images share the same object-fit crop.",
+      "color is a six-digit hex value; speed is clamped to 0–3. The shared WebGL runtime handles lifecycle, pointer interaction, reduced motion, and static fallback. Part of the planned Studio edition.",
   },
   {
-    slug: "case-study",
-    name: "Case-study stage",
-    category: "Layouts",
+    slug: "shutter-button",
+    name: "Shutter button",
+    category: "Buttons",
+    access: "studio",
+    description: "A mechanical reveal. Five panels, perfectly sequenced.",
+    usage:
+      '<ShutterButton onClick={() => console.log("Connect your action")}>\n  Open the future\n</ShutterButton>',
+    props:
+      "Accepts native button props and children. Hover and keyboard focus open the panels. Activation calls your onClick. Defaults to type=button; reduced motion switches without a transition.",
+  },
+  {
+    slug: "ascii-text",
+    name: "Signal text",
+    category: "ASCII",
     access: "studio",
     description:
-      "From selected work to the full story, without losing context.",
-    usage: `<CaseStudy project={{\n  title: "Forma", category: "Architecture", year: "2026",\n  image: "/project.jpg", alt: "Project architecture",\n  description: "The thinking behind the work.",\n  credits: "Architecture and art direction by your studio."\n}} />`,
+      "From interference to intent. A headline that assembles itself.",
+    usage:
+      '<AsciiText text="HELLO, FUTURE." duration={0.85}\n  characters="01/<>_-=+*#" />',
     props:
-      "project contains title, category, image, alt, and description; year and credits are optional. Opens a full-viewport native dialog with image reveal, content, Escape, focus trapping, and focus restoration. It does not navigate to a new URL.",
-  },
-  {
-    slug: "project-reel",
-    name: "Project reel",
-    category: "Layouts",
-    access: "studio",
-    description:
-      "A photographic narrative at your visitor’s pace. No autoplay.",
-    usage: `<ProjectReel frames={[\n  { src: "/one.jpg", alt: "Project exterior", title: "Arrival", caption: "A sense of place" },\n  { src: "/two.jpg", alt: "Project interior", title: "Inside" }\n]} />`,
-    props:
-      "frames is an array of src, alt, title, and optional caption objects. A scrub control and previous/next buttons select frames. Controls announce the active frame. No autoplay or scroll interception; reduced motion switches immediately.",
-  },
-  {
-    slug: "preview-navigation",
-    name: "Preview navigation",
-    category: "Navigation",
-    access: "studio",
-    description: "Navigation with a preview of where you’re going.",
-    usage: `<PreviewNavigation brand="Your studio" links={[\n  { label: "Work", href: "/work", image: "/work.jpg",\n    alt: "Selected project", description: "Selected projects" },\n  { label: "Studio", href: "/about", image: "/studio.jpg",\n    alt: "Studio interior", description: "People and practice" }\n]} />`,
-    props:
-      "links is an array of label, href, image, alt, and optional description objects. brand is optional. A native dialog contains navigable links and an image preview that responds to hover and focus. Links stay directly usable on touch.",
+      "text, duration in seconds, and scramble characters are optional. Pointer entry, focus, and selection replay the reveal. Reduced motion shows the final text immediately. Animation frames are cleaned up on unmount.",
   },
 ];
 export const freeCount = catalog.filter((c) => c.access !== "studio").length;
 export const studioCount = catalog.length - freeCount;
 export function exportName(slug: string) {
-  return slug
-    .split("-")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join("");
+  const names: Record<string, string> = {
+    "silk-shader": "SilkShader",
+    "dither-shader": "DitherShader",
+    "orbital-shader": "OrbitalShader",
+  };
+  return (
+    names[slug] ||
+    slug
+      .split("-")
+      .map((w) => w[0].toUpperCase() + w.slice(1))
+      .join("")
+  );
+}
+export function componentFiles(slug: string) {
+  return slug.endsWith("-shader")
+    ? [`${slug}.tsx`, "shader-canvas.tsx", "shader-canvas.css"]
+    : [`${slug}.tsx`, `${slug}.css`];
 }

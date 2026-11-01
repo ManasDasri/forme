@@ -4,68 +4,87 @@
   "homepage": "https://github.com/ManasDasri/forme",
   "items": [
     {
-      "name": "project-index",
+      "name": "silk-shader",
       "type": "registry:component",
-      "title": "Project index",
-      "description": "An interactive project list with image previews.",
-      "dependencies": ["motion"],
+      "title": "Silk Shader",
       "files": [
         {
-          "path": "src/registry/project-index.tsx",
+          "path": "src/registry/silk-shader.tsx",
           "type": "registry:component",
-          "target": "@components/forme/project-index.tsx"
+          "target": "@components/forme/silk-shader.tsx"
         },
         {
-          "path": "src/registry/project-index.css",
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
           "type": "registry:file",
-          "target": "@components/forme/project-index.css"
+          "target": "@components/forme/shader-canvas.css"
         }
       ]
     },
     {
-      "name": "expanding-gallery",
+      "name": "prism-button",
       "type": "registry:component",
-      "title": "Expanding gallery",
-      "description": "An image gallery with selectable expanding panels.",
-      "dependencies": ["motion"],
+      "title": "Prism Button",
       "files": [
         {
-          "path": "src/registry/expanding-gallery.tsx",
+          "path": "src/registry/prism-button.tsx",
           "type": "registry:component",
-          "target": "@components/forme/expanding-gallery.tsx"
+          "target": "@components/forme/prism-button.tsx"
         },
         {
-          "path": "src/registry/expanding-gallery.css",
+          "path": "src/registry/prism-button.css",
           "type": "registry:file",
-          "target": "@components/forme/expanding-gallery.css"
+          "target": "@components/forme/prism-button.css"
         }
       ]
     },
     {
-      "name": "focus-cursor",
+      "name": "ascii-orbit",
       "type": "registry:component",
-      "title": "Focus cursor",
-      "description": "Focus cursor for expressive editorial websites.",
-      "dependencies": ["motion"],
+      "title": "Ascii Orbit",
       "files": [
         {
-          "path": "src/registry/focus-cursor.tsx",
+          "path": "src/registry/ascii-orbit.tsx",
           "type": "registry:component",
-          "target": "@components/forme/focus-cursor.tsx"
+          "target": "@components/forme/ascii-orbit.tsx"
         },
         {
-          "path": "src/registry/focus-cursor.css",
+          "path": "src/registry/ascii-orbit.css",
           "type": "registry:file",
-          "target": "@components/forme/focus-cursor.css"
+          "target": "@components/forme/ascii-orbit.css"
+        }
+      ]
+    },
+    {
+      "name": "dither-shader",
+      "type": "registry:component",
+      "title": "Dither Shader",
+      "files": [
+        {
+          "path": "src/registry/dither-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/dither-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
         }
       ]
     },
     {
       "name": "magnetic-button",
       "type": "registry:component",
-      "title": "Magnetic button",
-      "description": "Magnetic button for expressive editorial websites.",
-      "dependencies": ["motion"],
+      "title": "Magnetic Button",
       "files": [
         {
           "path": "src/registry/magnetic-button.tsx",
@@ -77,107 +96,87 @@
           "type": "registry:file",
           "target": "@components/forme/magnetic-button.css"
         }
-      ]
+      ],
+      "dependencies": ["motion"]
     },
     {
-      "name": "image-reveal",
+      "name": "ascii-image",
       "type": "registry:component",
-      "title": "Image reveal",
-      "description": "A touch and keyboard accessible image reveal.",
-      "dependencies": ["motion"],
+      "title": "Ascii Image",
       "files": [
         {
-          "path": "src/registry/image-reveal.tsx",
+          "path": "src/registry/ascii-image.tsx",
           "type": "registry:component",
-          "target": "@components/forme/image-reveal.tsx"
+          "target": "@components/forme/ascii-image.tsx"
         },
         {
-          "path": "src/registry/image-reveal.css",
+          "path": "src/registry/ascii-image.css",
           "type": "registry:file",
-          "target": "@components/forme/image-reveal.css"
+          "target": "@components/forme/ascii-image.css"
         }
       ]
     },
     {
-      "name": "image-compare",
+      "name": "orbital-shader",
       "type": "registry:component",
-      "title": "Image compare",
-      "description": "Image compare for client project presentation.",
+      "title": "Orbital Shader",
       "files": [
         {
-          "path": "src/registry/image-compare.tsx",
+          "path": "src/registry/orbital-shader.tsx",
           "type": "registry:component",
-          "target": "@components/forme/image-compare.tsx"
+          "target": "@components/forme/orbital-shader.tsx"
         },
         {
-          "path": "src/registry/image-compare.css",
-          "type": "registry:file",
-          "target": "@components/forme/image-compare.css"
-        }
-      ]
-    },
-    {
-      "name": "case-study",
-      "type": "registry:component",
-      "title": "Case-study stage",
-      "description": "Case-study stage for client project presentation.",
-      "files": [
-        {
-          "path": "src/registry/case-study.tsx",
+          "path": "src/registry/shader-canvas.tsx",
           "type": "registry:component",
-          "target": "@components/forme/case-study.tsx"
+          "target": "@components/forme/shader-canvas.tsx"
         },
         {
-          "path": "src/registry/case-study.css",
+          "path": "src/registry/shader-canvas.css",
           "type": "registry:file",
-          "target": "@components/forme/case-study.css"
+          "target": "@components/forme/shader-canvas.css"
         }
       ],
-      "dependencies": ["motion"],
       "meta": {
         "access": "studio"
       }
     },
     {
-      "name": "project-reel",
+      "name": "shutter-button",
       "type": "registry:component",
-      "title": "Project reel",
-      "description": "Project reel for client project presentation.",
+      "title": "Shutter Button",
       "files": [
         {
-          "path": "src/registry/project-reel.tsx",
+          "path": "src/registry/shutter-button.tsx",
           "type": "registry:component",
-          "target": "@components/forme/project-reel.tsx"
+          "target": "@components/forme/shutter-button.tsx"
         },
         {
-          "path": "src/registry/project-reel.css",
+          "path": "src/registry/shutter-button.css",
           "type": "registry:file",
-          "target": "@components/forme/project-reel.css"
+          "target": "@components/forme/shutter-button.css"
         }
       ],
-      "dependencies": ["motion"],
       "meta": {
         "access": "studio"
       }
     },
     {
-      "name": "preview-navigation",
+      "name": "ascii-text",
       "type": "registry:component",
-      "title": "Preview navigation",
-      "description": "Preview navigation for client project presentation.",
+      "title": "Ascii Text",
       "files": [
         {
-          "path": "src/registry/preview-navigation.tsx",
+          "path": "src/registry/ascii-text.tsx",
           "type": "registry:component",
-          "target": "@components/forme/preview-navigation.tsx"
+          "target": "@components/forme/ascii-text.tsx"
         },
         {
-          "path": "src/registry/preview-navigation.css",
+          "path": "src/registry/ascii-text.css",
           "type": "registry:file",
-          "target": "@components/forme/preview-navigation.css"
+          "target": "@components/forme/ascii-text.css"
         }
       ],
-      "dependencies": ["motion"],
       "meta": {
         "access": "studio"
       }

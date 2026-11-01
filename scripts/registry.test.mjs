@@ -31,7 +31,7 @@ test("registry items include current portable source and styles", async () => {
       ),
     );
     assert.equal(built.name, item.name);
-    assert.equal(built.files.length, 2);
+    assert.ok(built.files.length >= 2);
     for (const file of built.files) {
       assert.equal(
         file.content,

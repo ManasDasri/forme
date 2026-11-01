@@ -9,6 +9,13 @@ const html = await readFile(
   "utf8",
 );
 const pages = [
+  "components",
+  "bookmarks",
+  "collections/experimental",
+  "collections/buttons",
+  "collections/shaders",
+  "collections/ascii",
+  "collections/next",
   "collections",
   "collections/editorial",
   "collections/object",

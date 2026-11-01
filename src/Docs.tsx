@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { catalog, exportName } from "./catalog";
+import { catalog, exportName, componentFiles } from "./catalog";
 import { Demo } from "./Demo";
-import { Arrow, Code, repo } from "./ui";
+import { Arrow, Code } from "./ui";
 
 const sources = import.meta.glob(
   [
-    "./registry/project-index.{tsx,css}",
-    "./registry/expanding-gallery.{tsx,css}",
-    "./registry/focus-cursor.{tsx,css}",
+    "./registry/silk-shader.tsx",
+    "./registry/dither-shader.tsx",
+    "./registry/shader-canvas.{tsx,css}",
+    "./registry/prism-button.{tsx,css}",
     "./registry/magnetic-button.{tsx,css}",
-    "./registry/image-reveal.{tsx,css}",
-    "./registry/image-compare.{tsx,css}",
+    "./registry/ascii-orbit.{tsx,css}",
+    "./registry/ascii-image.{tsx,css}",
   ],
   { query: "?raw", import: "default", eager: true },
 ) as Record<string, string>;
@@ -30,9 +31,19 @@ export function Workbench({ slug }: { slug: string }) {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("/images/interior.jpg");
   const [customImage, setCustomImage] = useState(false);
+  const defaultColor =
+    slug === "dither-shader"
+      ? "#c5dacb"
+      : slug === "orbital-shader"
+        ? "#b398f3"
+        : slug.startsWith("ascii")
+          ? "#b7c3df"
+          : "#5376ff";
+  const [color, setColor] = useState(defaultColor);
+  const [speed, setSpeed] = useState(1);
   const [mobile, setMobile] = useState(false);
   const [replay, setReplay] = useState(0);
-  const [file, setFile] = useState("tsx");
+  const [file, setFile] = useState(`${slug}.tsx`);
   const [copied, setCopied] = useState("");
   const component = catalog.find((c) => c.slug === slug)!;
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -47,7 +58,7 @@ export function Workbench({ slug }: { slug: string }) {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setCopied(""), 2500);
   }
-  const source = sources[`./registry/${slug}.${file}`];
+  const source = sources[`./registry/${file}`];
   const studio = component.access === "studio";
   return (
     <div className="workbench">
@@ -96,25 +107,52 @@ export function Workbench({ slug }: { slug: string }) {
                 title={title}
                 expanded
                 image={customImage ? image : undefined}
+                color={color}
+                speed={speed}
               />
             </div>
           </div>
           <div className="workbench-controls">
-            <label>
-              Make it your own
-              <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Try a title, a label, a different point of view…"
-                maxLength={80}
-              />
-            </label>
-            {[
-              "image-compare",
-              "project-index",
-              "image-reveal",
-              "focus-cursor",
-            ].includes(slug) && (
+            {(component.category === "Buttons" || slug === "ascii-text") && (
+              <label>
+                {slug === "ascii-text" ? "Text" : "Button label"}
+                <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder={
+                    slug === "ascii-text"
+                      ? "HELLO, FUTURE."
+                      : "Enter the experience"
+                  }
+                  maxLength={40}
+                />
+              </label>
+            )}
+            {(component.category === "Shaders" ||
+              ["ascii-orbit", "ascii-image"].includes(slug)) && (
+              <label className="control-color">
+                Color
+                <input
+                  type="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                />
+              </label>
+            )}
+            {(component.category === "Shaders" || slug === "ascii-orbit") && (
+              <label className="control-speed">
+                Speed / {speed.toFixed(1)}×
+                <input
+                  type="range"
+                  min="0"
+                  max="3"
+                  step="0.1"
+                  value={speed}
+                  onChange={(e) => setSpeed(Number(e.target.value))}
+                />
+              </label>
+            )}
+            {["ascii-image"].includes(slug) && (
               <label>
                 Image
                 <select
@@ -139,6 +177,8 @@ export function Workbench({ slug }: { slug: string }) {
                 setTitle("");
                 setCustomImage(false);
                 setMobile(false);
+                setColor(defaultColor);
+                setSpeed(1);
                 setReplay((n) => n + 1);
               }}
             >
@@ -146,8 +186,9 @@ export function Workbench({ slug }: { slug: string }) {
             </button>
           </div>
           <p className="docs-hint">
-            Interact with the preview. Fictional brands and example photography
-            are for demonstration.
+            {component.category === "Shaders"
+              ? "Move your pointer across the canvas. Adjust the color and speed to explore."
+              : "Hover, focus, or select the preview. Use the controls to make it your own."}
           </p>
         </>
       )}
@@ -173,8 +214,8 @@ export function Workbench({ slug }: { slug: string }) {
         <div className="usage-panel">
           <h2>Install the component</h2>
           <p>
-            Run the local Forme preview, then use the CLI in your configured
-            React project.
+            Run this command in a React project with shadcn and import aliases
+            configured.
           </p>
           <div className="code-toolbar">
             <span>Terminal</span>
@@ -228,13 +269,13 @@ export function Workbench({ slug }: { slug: string }) {
         <>
           <div className="code-toolbar">
             <div className="file-tabs" role="group" aria-label="Source file">
-              {["tsx", "css"].map((ext) => (
+              {componentFiles(slug).map((ext) => (
                 <button
                   key={ext}
                   onClick={() => setFile(ext)}
                   aria-pressed={file === ext}
                 >
-                  {slug}.{ext}
+                  {ext}
                 </button>
               ))}
             </div>
@@ -258,8 +299,8 @@ export function DocsPage({ slug }: { slug: string }) {
   return (
     <main id="main" className="docs-layout shell">
       <aside className="docs-sidebar">
-        <a className="docs-back" href="/collections/editorial/">
-          <span aria-hidden="true">←</span> Back to Editorial
+        <a className="docs-back" href="/components/">
+          <span aria-hidden="true">←</span> Back to Signal
         </a>
         <nav aria-label="Documentation">
           <p>Start here</p>
@@ -273,7 +314,7 @@ export function DocsPage({ slug }: { slug: string }) {
             </a>
           ))}
           <p>
-            Editorial components <span>{catalog.length}</span>
+            Signal components <span>{catalog.length}</span>
           </p>
           {catalog.map((c) => (
             <a
@@ -288,8 +329,8 @@ export function DocsPage({ slug }: { slug: string }) {
         </nav>
         <div className="docs-sidebar-note">
           <span className="status-dot" /> Development preview
-          <a href={repo} target="_blank" rel="noreferrer">
-            View source on GitHub <Arrow diagonal />
+          <a href="/registry.json" target="_blank" rel="noreferrer">
+            View the public registry <Arrow diagonal />
           </a>
         </div>
       </aside>
@@ -297,7 +338,7 @@ export function DocsPage({ slug }: { slug: string }) {
         <div className="breadcrumbs">
           <a href="/docs/">Documentation</a>
           <span>/</span>
-          {component ? "Editorial" : "Guides"}
+          {component ? "Signal" : "Guides"}
         </div>
         <header className="docs-page-heading">
           <h1>{component?.name || guide?.title || "Page not found"}</h1>
@@ -312,8 +353,8 @@ export function DocsPage({ slug }: { slug: string }) {
           <>
             <Workbench key={slug} slug={slug} />
             <div className="component-doc-footer">
-              <span>Part of the Editorial collection</span>
-              <a href="/collections/editorial/">
+              <span>Part of the Signal collection</span>
+              <a href="/components/">
                 Explore all nine <Arrow />
               </a>
             </div>
@@ -331,40 +372,44 @@ export function DocsPage({ slug }: { slug: string }) {
 }
 
 function Guide({ slug }: { slug: string }) {
+  const command = `npx shadcn@latest add ${window.location.origin}/r/prism-button.json`;
   if (slug === "theming")
     return (
       <div className="guide-prose">
-        <h2>A canvas for your own identity.</h2>
+        <h2>Your palette. Your personality.</h2>
         <p>
-          The Forme showcase follows your system theme on first visit. Use the
-          sun or moon in the header to choose a theme; your preference is saved
-          locally and shared across pages.
+          The Forme website opens in dark mode. The theme toggle saves your
+          preference in this browser. Installed components have their own styles
+          and do not depend on the website’s theme.
         </p>
-        <h2>Bring your own typography</h2>
+        <h2>Color and speed</h2>
         <p>
-          Components inherit the surrounding font where possible. Use a
-          consistent brand typeface across the assembled experience. Set your
-          font at the app root or override the component’s scoped class in your
-          own stylesheet.
-        </p>
-        <Code
-          text={`.my-project {\n  font-family: "Your brand font", sans-serif;\n}\n\n.forme-index {\n  background: #e2e7df;\n  color: #17231c;\n}`}
-        />
-        <h2>Use component color tokens</h2>
-        <p>
-          New components expose CSS variables for their main surfaces. Set these
-          on a wrapper or theme root. The component CSS files are editable
-          source, so every remaining color is yours to change.
+          Shaders accept a six-digit hex color and a speed between 0 and 3.
+          Their container controls the size. ASCII orbit and ASCII reveal also
+          accept a color. Try these controls on the component’s Preview tab.
         </p>
         <Code
-          text={`[data-theme="dark"] {\n  --forme-button-bg: #e2e9d5;\n  --forme-button-color: #243327;\n  --forme-case-bg: #17191b;\n  --forme-case-ink: #edf0eb;\n  --forme-reel-bg: #24272a;\n  --forme-reel-ink: #e6eae8;\n}`}
+          text={
+            '<div style={{ height: 480 }}>\n  <SilkShader color="#8566ff" speed={0.6} />\n</div>'
+          }
         />
-        <h2>Content and imagery</h2>
+        <h2>Typography and button colors</h2>
         <p>
-          Pass your own title, descriptions, alt text, and image URLs through
-          props. Multi-image components accept arrays of items. The interactive
-          preview on each component page lets you try text and test the layout
-          at a narrower width.
+          Buttons inherit your font. Magnetic button exposes two color
+          variables. For other changes, edit the component’s scoped CSS file
+          directly.
+        </p>
+        <Code
+          text={
+            '.contact-action {\n  font-family: "Your brand font", sans-serif;\n  --forme-button-bg: #ecebff;\n  --forme-button-color: #201a40;\n}'
+          }
+        />
+        <h2>Images and text</h2>
+        <p>
+          ASCII reveal needs your own image URL and descriptive alt text. Use a
+          same-origin image or a remote image that permits cross-origin canvas
+          access. It shows the photograph if the image cannot be sampled. Signal
+          text accepts your headline and the characters used during its reveal.
         </p>
       </div>
     );
@@ -373,41 +418,38 @@ function Guide({ slug }: { slug: string }) {
       <div className="guide-prose">
         <h2>Motion with good manners.</h2>
         <p>
-          All animated pieces consult the operating system’s reduced-motion
-          preference. Pointer attraction and layout movement switch off; image
-          changes and state changes remain usable. No component needs an
-          animation to communicate its state.
+          Shaders render a still frame for the operating system’s reduced-motion
+          preference. ASCII orbit stops rotating, Signal text shows its final
+          text immediately, and button movement switches off. The previews
+          remain usable.
         </p>
-        <h2>Keyboard and touch</h2>
+        <h2>Pause, keyboard, and touch</h2>
         <p>
-          Interactive controls use native buttons and links. Tab to a control
-          and use Enter or Space to activate a button. Preview navigation uses a
-          native dialog for focus trapping and Escape. Gallery and accordion
-          controls expose their selected or expanded states.
+          ASCII orbit includes a pause control. Shaders and the orbit stop
+          rendering when offscreen or in a hidden tab. Buttons use native button
+          elements with focus and disabled states. Magnetic attraction runs only
+          for a mouse pointer.
         </p>
-        <h2>The cursor stays yours</h2>
         <p>
-          Focus cursor adds a local lens inside one image. It preserves the
-          native pointer and offers a centered lens that can be pinned with
-          keyboard or touch. Magnetic button behaves as a regular button on
-          touch screens.
+          ASCII reveal supports a centered reveal through click, tap, Enter, or
+          Space. Its canvas is decorative; the photograph keeps your alt text.
+          Signal text has a fixed accessible name while its visual characters
+          change.
         </p>
-        <h2>Respect the user’s preference in your app</h2>
-        <Code
-          text={`import { MotionConfig } from "motion/react"\n\n<MotionConfig reducedMotion="user">\n  <YourApp />\n</MotionConfig>`}
-        />
-        <h2>Before shipping a client project</h2>
+        <h2>Canvas support</h2>
         <p>
-          Supply descriptive alt text, test the final content at mobile widths,
-          check text contrast after recoloring, and walk through the page with a
-          keyboard. Independent component support does not replace checking the
-          assembled website.
+          Shaders require WebGL. A static gradient appears if WebGL is
+          unavailable or its context is lost. The runtime recreates the shader
+          after context restoration. Keep essential content outside a decorative
+          canvas.
         </p>
-        <div className="guide-note">
-          The collection has been checked in Chromium. Broader browser and
-          assistive technology testing is still part of the commercial release
-          process.
-        </div>
+        <h2>Before using it in a client project</h2>
+        <p>
+          Test your content with a keyboard, supply useful image descriptions,
+          and check contrast after recoloring. Review mobile behavior and the
+          final page with reduced motion enabled. These previews are checked in
+          Chromium; test your project’s other target browsers too.
+        </p>
       </div>
     );
   if (slug === "registry")
@@ -415,96 +457,80 @@ function Guide({ slug }: { slug: string }) {
       <div className="guide-prose">
         <h2>Install source. Keep control.</h2>
         <p>
-          The public registry contains six free-preview pieces. Three Studio
-          compositions are intentionally excluded. The registry adds the
-          selected TypeScript component and its CSS to your project. Motion is
-          installed where required. It follows your configured components alias;
-          it does not require a runtime Forme package.
+          The public registry contains six free components. The three Studio
+          previews are excluded. The CLI copies TypeScript and scoped CSS into
+          your configured components directory. There is no Forme runtime
+          package.
         </p>
-        <h2>Generate and serve the registry</h2>
-        <Code
-          text={`# In the Forme repository\nnpm run build\nnpm run dev\n\n# In your configured React project\nnpx shadcn@latest add ${window.location.origin.replace(/\/$/, "")}/r/magnetic-button.json`}
-        />
+        <h2>Install a component</h2>
+        <Code text={command} />
+        <p>
+          Run this in a React project with a shadcn components.json and import
+          aliases already configured. Magnetic button also installs Motion. All
+          other current components use browser APIs and React.
+        </p>
         <h2>What goes into your project</h2>
         <Code
-          text={`src/components/forme/\n  magnetic-button.tsx\n  magnetic-button.css`}
+          text={
+            "components/forme/\n  prism-button.tsx\n  prism-button.css\n\n# Shader components also include:\n  shader-canvas.tsx\n  shader-canvas.css"
+          }
         />
         <p>
-          The exact destination depends on the components alias in your
-          components.json. Registry target placeholders preserve that
-          configuration.
+          The destination follows the components alias in your components.json.
+          Shaders share one canvas runtime; keep it beside the shader component.
         </p>
-        <h2>Hosting the registry</h2>
-        <p>
-          Build output includes the registry at /r/ and its manifest at
-          /registry.json. Once a public deployment is available, replace the
-          localhost origin in install commands with that deployment’s origin.
-        </p>
-        <div className="guide-note">
-          The GitHub repository is private. The public demo distributes only the
-          free-preview registry. Hosted CLI installation will be enabled when
-          the registry is published publicly. This update is prepared locally
-          for review.
-        </div>
         <h2>Copy manually</h2>
         <p>
-          Open any component’s Source tab and copy both the TypeScript and CSS
-          files into the same directory. Keep the stylesheet import intact.
-          Install motion if the component imports motion/react.
+          Open the Source tab and copy every listed file into the same folder.
+          Keep relative imports intact. For shaders, include the shared
+          TypeScript runtime and its CSS, as well as the shader file. Install
+          motion if the component imports motion/react.
+        </p>
+        <h2>Preview and Studio access</h2>
+        <p>
+          Working Studio demos are public. Their editable source is reserved for
+          the planned paid edition. Purchasing and customer downloads are not
+          open yet.
         </p>
       </div>
     );
   return (
     <div className="guide-prose">
-      <h2>Start with an interaction.</h2>
+      <h2>Start with a little unexpected.</h2>
       <p>
-        Editorial is a collection of nine React components for brand websites:
-        expressive typography, image interactions, navigation, buttons, cursors,
-        and layouts. The free pieces include editable TypeScript and scoped CSS;
-        Studio compositions have working previews.
+        Signal is Forme’s first drop: three buttons, three shaders, and three
+        ASCII experiments. Six include installable source. Three are Studio
+        previews, with paid access coming later.
+      </p>
+      <h2>Add your first component</h2>
+      <p>In a React project with shadcn and import aliases configured, run:</p>
+      <Code text={command} />
+      <h2>Connect it to your project</h2>
+      <Code
+        text={
+          'import { PrismButton } from "@/components/forme/prism-button"\n\nexport function ContactButton() {\n  return (\n    <PrismButton onClick={() => console.log("Connect your action")}>\n      Start a conversation\n    </PrismButton>\n  )\n}'
+        }
+      />
+      <p>
+        The stylesheet is imported by the component. Demo fonts and photography
+        are not installed. Replace image paths with your own assets. Components
+        that need browser APIs include a use client directive for React
+        frameworks that use server components.
+      </p>
+      <a className="button" href="/docs/prism-button/">
+        Try Prism button
+        <Arrow />
+      </a>
+      <h2>Explore before you install</h2>
+      <p>
+        Each component has Preview, Usage, and Source tabs. Change shader colors
+        and speed, try a button label, and switch to a narrow preview. You can
+        save components to Bookmarks in this browser.
       </p>
       <div className="guide-note">
-        This is a development preview. Checkout, customer entitlements, and
-        commercial licensing are planned before the public launch.
+        Studio purchasing is coming later. Pricing, commercial terms, and
+        customer source access will be announced before the paid launch.
       </div>
-      <h2>Add your first component</h2>
-      <p>
-        In a React project that already has a shadcn components.json and import
-        aliases configured, run:
-      </p>
-      <Code
-        text={`npx shadcn@latest add ${window.location.origin.replace(/\/$/, "")}/r/magnetic-button.json`}
-      />
-      <p>
-        The generated registry is checked into the repository. If you change
-        component source locally, run npm run build to refresh it.
-      </p>
-      <h2>Use it</h2>
-      <Code
-        text={`import { MagneticButton } from "@/components/forme/magnetic-button"\n\nexport function ContactButton() {\n  return (\n    <MagneticButton onClick={() => console.log("Connect your action")}>\n      Start a conversation\n    </MagneticButton>\n  )\n}`}
-      />
-      <h2>Your project, your source</h2>
-      <p>
-        The component imports its CSS automatically. Fonts and demo photos are
-        not installed. Open an individual component’s Usage tab for its props
-        and a complete example.
-      </p>
-      <a className="button" href="/docs/magnetic-button/">
-        Try magnetic button <Arrow />
-      </a>
-      <h2>For contributors: run Forme locally</h2>
-      <p>
-        You need Node.js 22.12+ or 24+, npm, and access to the private
-        repository.
-      </p>
-      <Code text={`git clone ${repo}.git\ncd forme\nnpm ci\nnpm run dev`} />
-      <h2>Prefer to copy and paste?</h2>
-      <p>
-        The six free-preview component pages include TypeScript and CSS in their
-        Source tabs. Three Studio compositions have public demos; their editable
-        source is reserved for the planned paid edition. Copy both files into
-        the same folder, then install motion for components that use it.
-      </p>
     </div>
   );
 }

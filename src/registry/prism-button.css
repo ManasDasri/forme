@@ -1,0 +1,74 @@
+.forme-prism {
+  --px: 50%;
+  --py: 50%;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  border: 1px solid #ffffff45;
+  border-radius: 11px;
+  padding: 16px 24px;
+  background:
+    radial-gradient(
+      120px circle at var(--px) var(--py),
+      #8f9bcf80,
+      transparent
+    ),
+    linear-gradient(135deg, #3b414b, #171a22 45%, #343c4d);
+  box-shadow:
+    inset 0 1px 1px #ffffff60,
+    0 5px 25px #0005;
+  color: #f4f5fd;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    box-shadow 0.25s,
+    transform 0.25s;
+  overflow: hidden;
+}
+.forme-prism:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    transparent 10%,
+    #a9c6ff40 30%,
+    #f3c9ff30 45%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.65s;
+}
+.forme-prism:hover:before,
+.forme-prism:focus-visible:before {
+  transform: translateX(40%);
+}
+.forme-prism:hover {
+  box-shadow:
+    inset 0 1px 1px #fff8,
+    0 6px 28px #9aafff25;
+}
+.forme-prism > span:last-child {
+  font-size: 18px;
+}
+.forme-prism:focus-visible {
+  outline: 3px solid #8aabff;
+  outline-offset: 5px;
+}
+.forme-prism:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-prism,
+  .forme-prism:before {
+    transition: none;
+  }
+}

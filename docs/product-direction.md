@@ -1,25 +1,25 @@
-# Forme: interaction systems for independent studios
+# Forme: the future looks interactive
 
-## Evidence, reviewed 1 November 2026
+## Current direction — 1 November 2026
 
-- [React Bits Pro](https://pro.reactbits.dev/) already offers a broad catalog of animated components, finished blocks, templates, cursor effects, and theming. Catalog size and an isolated visual effect are weak differentiators for a small new library.
-- [Codrops Creative Hub](https://tympanus.net/codrops/hub/) features grid transitions, view switching, image galleries, page transitions, and cursor experiments. This is evidence of an active creative practice, not proof of willingness to pay for a particular component.
-- [Canvas UI issue 42](https://github.com/DavidHDev/canvas-ui/issues/42) documents offscreen input queues causing resume stalls, since resolved. It illustrates the integration and lifecycle work behind impressive interactive demos.
+The owner narrowed the product to buttons, UI shaders, ASCII art, and related experimental components. The intended buyers remain creative agencies and independent designers building premium brand sites. This replaces the earlier portfolio-interaction collection as the active offering.
 
-## Product hypothesis
+[21st.dev](https://21st.dev/) and its [component browser](https://21st.dev/community/components) informed the quiet navigation, searchable preview grid, sidebar, saved components, and dark presentation. These are browsing patterns; Forme uses original component code, copy, branding, and visuals. [Canvas UI](https://canvasui.dev/) remains a reference for focused releases and the distinction between public pieces and a paid edition.
 
-Independent studios may value a coherent, adaptable set of project-presentation interactions: choosing work, comparing art direction, inspecting images, entering a case study, and moving through a project reel. The opportunity is reducing the integration work between these interactions, with keyboard, touch, reduced-motion behavior, editable source, and usable content structures included. This remains a hypothesis until tested with agency customers.
+## First drop: Signal
 
-## This revision
+Three categories, three components each. Each category includes two free-source components and one Studio preview. There are no invented community statistics or testimonials. Studio checkout is not available; the site states that pricing and source access will be announced before launch. The next release has no announced date.
 
-Preserve project index, Form & structure gallery, focus cursor, magnetic button, and image reveal. Add an image-comparison control to the free preview. Replace the weaker initial concepts in the active collection with a case-study stage, a scrub-controlled project reel, and image-preview navigation in Studio. Older experiments remain in source history rather than being promoted as finished products.
+The differentiating hypothesis is a small, coherent set of expressive details with editable source and documented integration behavior. Market demand and willingness to pay have not been validated. The next useful research step is observing prospective buyers integrating a piece into a real project.
 
-## Art direction
+## Visual system
 
-Porcelain #F5F5F3, paper #FFFFFF, carbon #18191B, graphite #6B6E73, pale blue #DDE7EB. Dark mode uses #101113 and #1B1D20 with #F1F2EF text. Space Grotesk is reserved for the wordmark and a few headings; DM Sans carries interface and display text. Photography, scale, and deliberate composition supply the visual character. Components use neutral frames instead of colored specimen boxes.
+Obsidian #09090B, panel #101013, raised #19191E, chalk #F5F5F8, secondary #9C9CA7, signal blue #496CFF. The light theme uses #FBFBFD and #FFFFFF with the same hierarchy. DM Sans carries display and interface text. Monospace is reserved for code and ASCII artwork.
 
-The homepage opens with a large, aligned, working project index. A two-column gallery gives interactions room to show their behavior. Upcoming launches become photography-led release studies with dates left unspecified. No rotated covers, decorative stars, gradient spheres, or novelty poster treatments.
+The homepage centers its headline over an actual flowing shader. An aligned application frame presents the working library below. Component previews supply the visual variety; surrounding navigation stays restrained. No tilted hero cards or decorative placeholder objects. Desktop uses a three-column preview grid; mobile collapses the sidebar and retains all filtering and saving controls.
 
-## Validation before pricing
+## Integration quality
 
-Observe five studio developers adapting these pieces to an actual project. Measure time to first useful integration, the content/layout changes they need, mobile compromises, and whether they would pay for source plus composition guidance. Do not claim proven demand from this desk research.
+WebGL programs share one small native runtime, draw an initial frame, stop rendering offscreen and in hidden tabs, respect reduced motion, and recover from context loss. Static CSS fallback covers unavailable WebGL. ASCII orbit includes pause and reduced motion. Native buttons preserve click, focus, and disabled behavior. The registry includes shared files and scoped CSS. Only free source is exposed in public documentation and registry payloads.
+
+Earlier project-presentation components remain unused in the repository rather than appearing as the active product. They can be reconsidered only if a later drop calls for them.
