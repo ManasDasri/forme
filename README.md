@@ -67,11 +67,16 @@ Light and dark themes follow system preference initially, with an explicit choic
 
 The Vercel project is `forme`. Authentication and project linking are machine-local and ignored by Git.
 
+Live demo: https://forme.vercel.app
+
 ```sh
 vercel deploy --prod
+vercel alias set <deployment-url-returned-above> forme.vercel.app
 ```
 
 `vercel.json` sets Vite, the build command, static output, and clean paths. `.vercelignore` excludes local environment files, browser artifacts, Git, and research files from uploads. Do not publish the repository or customer source as part of a static deploy.
+
+The short alias is assigned manually; repeat the alias step after a new CLI deployment. This demo project's Vercel authentication is disabled so visitors and the shadcn CLI can use the public site. Repository source visibility remains private, and Studio source payloads are excluded from the static build.
 
 ## Before commercial launch
 
