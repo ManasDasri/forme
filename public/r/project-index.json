@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "project-index",
+  "type": "registry:component",
+  "title": "Project index",
+  "description": "An interactive project list with image previews.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "src/registry/project-index.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/project-index.tsx",
+      "content": "'use client'\n\nimport { useId, useState } from 'react'\nimport { AnimatePresence, motion, useReducedMotion } from 'motion/react'\nimport './project-index.css'\n\nexport interface Project {\n  title: string\n  category: string\n  image: string\n  alt: string\n  description?: string\n}\n\nexport function ProjectIndex({ projects }: { projects: Project[] }) {\n  const [selected, setSelected] = useState(0)\n  const reduce = useReducedMotion()\n  const panelId = useId()\n  const active = projects[selected] ?? projects[0]\n  if (!active) return null\n  return (\n    <div className=\"forme-index\">\n      <div className=\"forme-index-list\" aria-label=\"Select a project\">\n        <span className=\"forme-index-label\">Selected work</span>\n        {projects.map((project, i) => (\n          <button key={project.title} onPointerEnter={event => { if (event.pointerType === 'mouse') setSelected(i) }} onFocus={() => setSelected(i)} onClick={() => setSelected(i)} aria-pressed={active === project} aria-controls={panelId}>\n            <span>{project.title}<small>{project.category}</small></span><span aria-hidden=\"true\">↗</span>\n          </button>\n        ))}\n      </div>\n      <div id={panelId} className=\"forme-index-image\">\n        <AnimatePresence mode=\"wait\">\n          <motion.img key={active.image} src={active.image} alt={active.alt} loading=\"lazy\" initial={{ opacity: 0, y: reduce ? 0 : 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: reduce ? 0 : 0.2 }} />\n        </AnimatePresence>\n        <p aria-live=\"polite\">{active.description ?? active.title}</p>\n      </div>\n    </div>\n  )\n}\n"
+    },
+    {
+      "path": "src/registry/project-index.css",
+      "type": "registry:file",
+      "target": "@components/forme/project-index.css",
+      "content": ".forme-index{display:grid;grid-template-columns:1fr 42%;gap:24px;width:100%;height:100%;min-height:250px;padding:24px;box-sizing:border-box;background:#eeefeb;color:#262a25}.forme-index-list{display:flex;flex-direction:column;justify-content:center;min-width:0}.forme-index-label{font-size:10px;margin-bottom:15px;color:#656b63}.forme-index-list button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:13px 0;background:none;border:0;border-bottom:1px solid #cfd3ca;color:inherit;text-align:left;font:inherit;font-size:21px;letter-spacing:-.05em;cursor:pointer;opacity:.48;transition:opacity .2s}.forme-index-list button[aria-pressed=true],.forme-index-list button:hover{opacity:1}.forme-index-list small{display:block;margin-top:4px;font-size:9px;font-weight:400;letter-spacing:0}.forme-index-image{position:relative;align-self:stretch;overflow:hidden;min-height:180px;background:#d8dcd3;border-radius:2px}.forme-index-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}.forme-index-image p{position:absolute;bottom:10px;left:10px;right:10px;margin:0;padding:6px 8px;background:#fffffff0;color:#262a25;font-size:10px}.forme-index button:focus-visible{outline:2px solid #2749ed;outline-offset:3px}@media(max-width:400px){.forme-index{padding:18px;gap:14px}.forme-index-list button{font-size:18px}}@media(prefers-reduced-motion:reduce){.forme-index-list button{transition:none}}\n"
+    }
+  ]
+}

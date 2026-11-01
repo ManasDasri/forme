@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "editorial-hero",
+  "type": "registry:component",
+  "title": "Editorial hero",
+  "description": "Coordinated typography and image reveal for brand websites.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "src/registry/editorial-hero.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/editorial-hero.tsx",
+      "content": "'use client'\n\nimport { motion, useReducedMotion } from 'motion/react'\nimport './editorial-hero.css'\n\nexport interface EditorialHeroProps {\n  title: string\n  subtitle: string\n  image: string\n  alt: string\n  brand?: string\n}\n\nexport function EditorialHero({ title, subtitle, image, alt, brand = 'Independent studio' }: EditorialHeroProps) {\n  const reduce = useReducedMotion()\n  return (\n    <section className={`forme-editorial${title.length > 24 ? ' forme-editorial-long' : ''}`} aria-label={brand}>\n      <span className=\"forme-editorial-brand\">{brand}<span aria-hidden=\"true\">✳</span></span>\n      <motion.img src={image} alt={alt} loading=\"lazy\" initial={reduce ? false : { clipPath: 'inset(0 0 100% 0)' }} whileInView={{ clipPath: 'inset(0 0 0% 0)' }} viewport={{ once: true }} transition={{ duration: reduce ? 0 : 1, ease: [0.22, 1, 0.36, 1] }} />\n      <motion.h3 style={title.length > 24 ? { fontSize: 'clamp(23px, 8cqi, 48px)', maxWidth: '18ch', overflowWrap: 'anywhere' } : undefined} initial={reduce ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: reduce ? 0 : 0.8, delay: reduce ? 0 : 0.15 }}>{title}</motion.h3>\n      <p>{subtitle}</p>\n    </section>\n  )\n}\n"
+    },
+    {
+      "path": "src/registry/editorial-hero.css",
+      "type": "registry:file",
+      "target": "@components/forme/editorial-hero.css",
+      "content": ".forme-editorial{container-type:inline-size;position:relative;isolation:isolate;min-height:270px;height:100%;overflow:hidden;background:#e2e7df;color:#17231c;padding:24px;box-sizing:border-box}.forme-editorial-brand{display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:500}.forme-editorial-brand>span{font-size:25px}.forme-editorial img{position:absolute;z-index:-1;right:15%;top:21%;width:47%;height:64%;object-fit:cover;border-radius:100px 100px 2px 2px}.forme-editorial h3{position:relative;margin:40px 0 24px;max-width:8ch;font-size:clamp(48px,6vw,82px);font-weight:500;line-height:.93;letter-spacing:-.07em;text-wrap:balance}.forme-editorial p{position:relative;margin:0;max-width:18ch;font-size:10px;line-height:1.5}\n.forme-editorial-long img{opacity:.28}\n"
+    }
+  ]
+}

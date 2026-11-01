@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "motion-link",
+  "type": "registry:component",
+  "title": "Rolling link",
+  "description": "An animated link with a rolling label.",
+  "files": [
+    {
+      "path": "src/registry/motion-link.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/motion-link.tsx",
+      "content": "'use client'\n\nimport type { AnchorHTMLAttributes } from 'react'\nimport './motion-link.css'\n\nexport function MotionLink({ children, className = '', ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {\n  return <a {...props} className={`forme-link ${className}`}><span className=\"forme-link-window\"><span className=\"forme-link-text\">{children}</span><span className=\"forme-link-copy\" aria-hidden=\"true\">{children}</span></span><span className=\"forme-link-arrow\" aria-hidden=\"true\">↗</span></a>\n}\n"
+    },
+    {
+      "path": "src/registry/motion-link.css",
+      "type": "registry:file",
+      "target": "@components/forme/motion-link.css",
+      "content": ".forme-link{display:inline-flex;align-items:center;gap:24px;color:inherit;text-decoration:none;line-height:1.3;padding:7px 0;border-bottom:1px solid currentColor}.forme-link-window{position:relative;overflow:hidden;display:block}.forme-link-text,.forme-link-copy{display:block;transition:transform .45s cubic-bezier(.22,1,.36,1)}.forme-link-copy{position:absolute;inset:0;transform:translateY(110%)}.forme-link:hover .forme-link-text,.forme-link:focus-visible .forme-link-text{transform:translateY(-110%)}.forme-link:hover .forme-link-copy,.forme-link:focus-visible .forme-link-copy{transform:translateY(0)}.forme-link-arrow{display:block;transition:transform .3s}.forme-link:hover .forme-link-arrow{transform:translate(3px,-3px)}.forme-link:focus-visible{outline:3px solid #2749ed;outline-offset:5px}@media(prefers-reduced-motion:reduce){.forme-link-text,.forme-link-copy,.forme-link-arrow{transition:none}.forme-link:hover .forme-link-text,.forme-link:focus-visible .forme-link-text,.forme-link:hover .forme-link-arrow{transform:none}.forme-link-copy{display:none}}\n"
+    }
+  ]
+}

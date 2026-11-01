@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.local
+*.tsbuildinfo
+.env*
+!.env.example
+.DS_Store
+.openai/artifacts/
+playwright-report/
+test-results/
+.playwright-cli/
+output/
