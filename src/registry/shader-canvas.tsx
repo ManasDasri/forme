@@ -9,7 +9,12 @@ export interface ShaderCanvasProps {
   label?: string;
   interactive?: boolean;
 }
-/** Small shared WebGL runtime. Offscreen and hidden canvases stop rendering. */
+const toRgb = (color: string) => {
+  const hex = /^#[0-9a-f]{6}$/i.test(color) ? color : "#5376ff";
+  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+};
+/** Small shared WebGL runtime. Offscreen and hidden canvases stop rendering.
+ * Color and speed are uniforms: changing them never recompiles the program. */
 export function ShaderCanvas({
   fragment,
   color = "#5376ff",
@@ -18,6 +23,9 @@ export function ShaderCanvas({
   interactive = true,
 }: ShaderCanvasProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const live = useRef({ rgb: toRgb(color), speed, redraw: () => {} });
+  live.current.rgb = toRgb(color);
+  live.current.speed = Math.max(0, Math.min(speed, 3));
   const [fallback, setFallback] = useState(false);
   const [revision, setRevision] = useState(0);
   useEffect(() => {
@@ -34,8 +42,8 @@ export function ShaderCanvas({
     let disposed = false,
       frame = 0,
       visible = false,
-      last = 0;
-    const started = performance.now();
+      last = 0,
+      phase = 0;
     let pointer = [0.5, 0.5];
     const media = matchMedia("(prefers-reduced-motion:reduce)");
     const shaders: WebGLShader[] = [];
@@ -58,10 +66,13 @@ export function ShaderCanvas({
     const pixel = compile(gl.FRAGMENT_SHADER, fragment);
     const program = gl.createProgram();
     const buffer = gl.createBuffer();
-    if (!vertex || !pixel || !program || !buffer) {
+    const release = () => {
       shaders.forEach((s) => gl.deleteShader(s));
       if (program) gl.deleteProgram(program);
       if (buffer) gl.deleteBuffer(buffer);
+    };
+    if (!vertex || !pixel || !program || !buffer) {
+      release();
       setFallback(true);
       return;
     }
@@ -69,9 +80,7 @@ export function ShaderCanvas({
     gl.attachShader(program, pixel);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      shaders.forEach((s) => gl.deleteShader(s));
-      gl.deleteProgram(program);
-      gl.deleteBuffer(buffer);
+      release();
       setFallback(true);
       return;
     }
@@ -89,38 +98,41 @@ export function ShaderCanvas({
       time = gl.getUniformLocation(program, "u_time"),
       mouse = gl.getUniformLocation(program, "u_mouse"),
       tint = gl.getUniformLocation(program, "u_color");
-    const hex = /^#[0-9a-f]{6}$/i.test(color) ? color : "#5376ff";
-    const rgb = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+    const render = () => {
+      if (disposed || gl.isContextLost()) return;
+      const { rgb } = live.current;
+      gl.viewport(0, 0, node.width, node.height);
+      gl.uniform2f(resolution, node.width, node.height);
+      gl.uniform1f(time, media.matches ? 0 : phase);
+      gl.uniform2f(mouse, pointer[0], pointer[1]);
+      gl.uniform3f(tint, rgb[0], rgb[1], rgb[2]);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    };
     const draw = (now: number) => {
       if (disposed || gl.isContextLost()) return;
-      if (now - last >= 32 || media.matches) {
+      if (now - last >= 32) {
+        // Accumulate phase so speed changes never jump the animation.
+        phase += Math.min(now - last, 100) * 0.001 * live.current.speed;
         last = now;
-        gl.viewport(0, 0, node.width, node.height);
-        gl.uniform2f(resolution, node.width, node.height);
-        gl.uniform1f(
-          time,
-          media.matches
-            ? 0
-            : (now - started) * 0.001 * Math.max(0, Math.min(speed, 3)),
-        );
-        gl.uniform2f(mouse, pointer[0], pointer[1]);
-        gl.uniform3f(tint, rgb[0], rgb[1], rgb[2]);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        render();
       }
       if (visible && !document.hidden && !media.matches)
         frame = requestAnimationFrame(draw);
     };
     const start = () => {
       cancelAnimationFrame(frame);
-      if (visible && !document.hidden) frame = requestAnimationFrame(draw);
+      last = performance.now();
+      if (visible && !document.hidden && !media.matches)
+        frame = requestAnimationFrame(draw);
+      else render();
     };
+    live.current.redraw = render;
     const resize = new ResizeObserver(() => {
       const r = node.getBoundingClientRect();
       const ratio = Math.min(devicePixelRatio || 1, 1.25);
       node.width = Math.max(1, Math.round(r.width * ratio));
       node.height = Math.max(1, Math.round(r.height * ratio));
-      if (visible) start();
-      else draw(performance.now());
+      render();
     });
     resize.observe(node);
     const intersection = new IntersectionObserver((entries) => {
@@ -153,6 +165,7 @@ export function ShaderCanvas({
     setFallback(false);
     return () => {
       disposed = true;
+      live.current.redraw = () => {};
       cancelAnimationFrame(frame);
       resize.disconnect();
       intersection.disconnect();
@@ -161,13 +174,11 @@ export function ShaderCanvas({
       node.removeEventListener("webglcontextrestored", restored);
       document.removeEventListener("visibilitychange", start);
       media.removeEventListener("change", start);
-      if (!gl.isContextLost()) {
-        gl.deleteBuffer(buffer);
-        gl.deleteProgram(program);
-        shaders.forEach((s) => gl.deleteShader(s));
-      }
+      if (!gl.isContextLost()) release();
     };
-  }, [fragment, color, speed, revision, interactive]);
+  }, [fragment, revision, interactive]);
+  // Paused or reduced-motion canvases still reflect a new color immediately.
+  useEffect(() => live.current.redraw(), [color]);
   return (
     <div
       className="forme-shader"

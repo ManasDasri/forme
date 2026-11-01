@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { MotionConfig } from "motion/react";
-import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/space-grotesk";
 import App from "./App";
 import "./styles.css";
