@@ -125,7 +125,6 @@ export function AsciiOrbit({
     <div ref={root} className="forme-ascii-orbit" style={{ color }}>
       <pre ref={output} role="img" aria-label={label} />
       <div className="forme-ascii-orbit-footer">
-        <span>ASCII / Orbital study</span>
         <button onClick={() => setPaused(!paused)} aria-pressed={paused}>
           {paused ? "Resume" : "Pause"}
         </button>

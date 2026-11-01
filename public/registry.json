@@ -1,12 +1,108 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "forme",
-  "homepage": "https://github.com/ManasDasri/forme",
+  "homepage": "https://forme.vercel.app",
   "items": [
+    {
+      "name": "horizon-shader",
+      "type": "registry:component",
+      "title": "Horizon",
+      "description": "Dawn breaking along the curve of a planet.",
+      "files": [
+        {
+          "path": "src/registry/horizon-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/horizon-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "lens-button",
+      "type": "registry:component",
+      "title": "Lens button",
+      "description": "Dark glass with a spotlight edge that follows your pointer.",
+      "files": [
+        {
+          "path": "src/registry/lens-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/lens-button.tsx"
+        },
+        {
+          "path": "src/registry/lens-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/lens-button.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-globe",
+      "type": "registry:component",
+      "title": "ASCII globe",
+      "description": "A planet of characters. Drag it, spin it, steer it with keys.",
+      "files": [
+        {
+          "path": "src/registry/ascii-globe.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-globe.tsx"
+        },
+        {
+          "path": "src/registry/ascii-globe.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-globe.css"
+        }
+      ]
+    },
+    {
+      "name": "hold-button",
+      "type": "registry:component",
+      "title": "Hold to confirm",
+      "description": "A charging bar for actions that deserve a deliberate press.",
+      "files": [
+        {
+          "path": "src/registry/hold-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/hold-button.tsx"
+        },
+        {
+          "path": "src/registry/hold-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/hold-button.css"
+        }
+      ]
+    },
+    {
+      "name": "radar-sweep",
+      "type": "registry:component",
+      "title": "Radar sweep",
+      "description": "A scope with a phosphor sweep. Contacts ping as the beam passes.",
+      "files": [
+        {
+          "path": "src/registry/radar-sweep.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/radar-sweep.tsx"
+        },
+        {
+          "path": "src/registry/radar-sweep.css",
+          "type": "registry:file",
+          "target": "@components/forme/radar-sweep.css"
+        }
+      ]
+    },
     {
       "name": "silk-shader",
       "type": "registry:component",
-      "title": "Silk Shader",
+      "title": "Silk field",
+      "description": "An ambient field of flowing light, moving at its own pace.",
       "files": [
         {
           "path": "src/registry/silk-shader.tsx",
@@ -26,26 +122,115 @@
       ]
     },
     {
-      "name": "prism-button",
+      "name": "plasma-button",
       "type": "registry:component",
-      "title": "Prism Button",
+      "title": "Plasma button",
+      "description": "A charged ring of light that surges when you get close.",
       "files": [
         {
-          "path": "src/registry/prism-button.tsx",
+          "path": "src/registry/plasma-button.tsx",
           "type": "registry:component",
-          "target": "@components/forme/prism-button.tsx"
+          "target": "@components/forme/plasma-button.tsx"
         },
         {
-          "path": "src/registry/prism-button.css",
+          "path": "src/registry/plasma-button.css",
           "type": "registry:file",
-          "target": "@components/forme/prism-button.css"
+          "target": "@components/forme/plasma-button.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-rain",
+      "type": "registry:component",
+      "title": "Glyph rain",
+      "description": "Falling columns of code. The pointer stirs them; a click sends a surge.",
+      "files": [
+        {
+          "path": "src/registry/ascii-rain.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-rain.tsx"
+        },
+        {
+          "path": "src/registry/ascii-rain.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-rain.css"
+        }
+      ]
+    },
+    {
+      "name": "telemetry-card",
+      "type": "registry:component",
+      "title": "Telemetry card",
+      "description": "A glass readout with rolling digits and a live sparkline.",
+      "files": [
+        {
+          "path": "src/registry/telemetry-card.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/telemetry-card.tsx"
+        },
+        {
+          "path": "src/registry/telemetry-card.css",
+          "type": "registry:file",
+          "target": "@components/forme/telemetry-card.css"
+        }
+      ]
+    },
+    {
+      "name": "chrome-shader",
+      "type": "registry:component",
+      "title": "Liquid chrome",
+      "description": "Polished metal that flows, reflecting a studio you never see.",
+      "files": [
+        {
+          "path": "src/registry/chrome-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/chrome-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "scramble-button",
+      "type": "registry:component",
+      "title": "Scramble button",
+      "description": "A terminal label that decodes itself every time you arrive.",
+      "files": [
+        {
+          "path": "src/registry/scramble-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/scramble-button.tsx"
+        },
+        {
+          "path": "src/registry/scramble-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/scramble-button.css"
+        },
+        {
+          "path": "src/registry/ascii-decode.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-decode.tsx"
+        },
+        {
+          "path": "src/registry/ascii-decode.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-decode.css"
         }
       ]
     },
     {
       "name": "ascii-orbit",
       "type": "registry:component",
-      "title": "Ascii Orbit",
+      "title": "ASCII orbit",
+      "description": "A dense, dimensional object, drawn entirely from characters.",
       "files": [
         {
           "path": "src/registry/ascii-orbit.tsx",
@@ -60,9 +245,87 @@
       ]
     },
     {
+      "name": "oscilloscope",
+      "type": "registry:component",
+      "title": "Oscilloscope",
+      "description": "A phosphor trace you can tune by hand or by keyboard.",
+      "files": [
+        {
+          "path": "src/registry/oscilloscope.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/oscilloscope.tsx"
+        },
+        {
+          "path": "src/registry/oscilloscope.css",
+          "type": "registry:file",
+          "target": "@components/forme/oscilloscope.css"
+        }
+      ]
+    },
+    {
+      "name": "warp-shader",
+      "type": "registry:component",
+      "title": "Warp field",
+      "description": "Stars stretch into streaks as you punch through.",
+      "files": [
+        {
+          "path": "src/registry/warp-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/warp-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "prism-button",
+      "type": "registry:component",
+      "title": "Prism button",
+      "description": "Brushed metal, refracted light, and a responsive highlight.",
+      "files": [
+        {
+          "path": "src/registry/prism-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/prism-button.tsx"
+        },
+        {
+          "path": "src/registry/prism-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/prism-button.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-decode",
+      "type": "registry:component",
+      "title": "Decode text",
+      "description": "Headlines that resolve out of noise as they scroll into view.",
+      "files": [
+        {
+          "path": "src/registry/ascii-decode.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-decode.tsx"
+        },
+        {
+          "path": "src/registry/ascii-decode.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-decode.css"
+        }
+      ]
+    },
+    {
       "name": "dither-shader",
       "type": "registry:component",
-      "title": "Dither Shader",
+      "title": "Dither terrain",
+      "description": "A changing topography of pixels, noise, and light.",
       "files": [
         {
           "path": "src/registry/dither-shader.tsx",
@@ -84,7 +347,8 @@
     {
       "name": "magnetic-button",
       "type": "registry:component",
-      "title": "Magnetic Button",
+      "title": "Magnetic button",
+      "description": "A little attraction. A satisfying response.",
       "files": [
         {
           "path": "src/registry/magnetic-button.tsx",
@@ -104,7 +368,8 @@
     {
       "name": "ascii-image",
       "type": "registry:component",
-      "title": "Ascii Image",
+      "title": "ASCII reveal",
+      "description": "An image hidden in plain text. Move to find what’s beneath.",
       "files": [
         {
           "path": "src/registry/ascii-image.tsx",

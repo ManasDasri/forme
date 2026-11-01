@@ -1,0 +1,63 @@
+.forme-radar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  background: radial-gradient(60% 60% at 50% 50%, #08110e, #030504 80%);
+  overflow: hidden;
+}
+.forme-radar-scope {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: crosshair;
+}
+.forme-radar-scope canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.forme-radar-scope:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+.forme-radar-footer {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font: 500 12px/1 system-ui, sans-serif;
+  color: #a1a1aa;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.forme-radar-footer button {
+  pointer-events: auto;
+  height: 26px;
+  padding: 0 11px;
+  border: 1px solid #ffffff1f;
+  border-radius: 999px;
+  background: #00000080;
+  backdrop-filter: blur(8px);
+  color: #e4e4e7;
+  font: inherit;
+  cursor: pointer;
+}
+.forme-radar-footer button:hover {
+  background: #000000b3;
+}
+.forme-radar-footer button:focus-visible {
+  outline: 2px solid #e4e4e7;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-radar-scope {
+    cursor: default;
+  }
+}

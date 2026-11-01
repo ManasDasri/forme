@@ -2,16 +2,17 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import "./build-registry.mjs";
+import { catalog, freeCount } from "../src/catalog.ts";
 
 test("registry items include current portable source and styles", async () => {
   const registry = JSON.parse(
     await readFile(new URL("../registry.json", import.meta.url), "utf8"),
   );
-  assert.equal(new Set(registry.items.map((item) => item.name)).size, 9);
+  assert.equal(new Set(registry.items.map((item) => item.name)).size, catalog.length);
   const published = JSON.parse(
     await readFile(new URL("../public/registry.json", import.meta.url), "utf8"),
   );
-  assert.equal(published.items.length, 6);
+  assert.equal(published.items.length, freeCount);
   const payloads = await readdir(new URL("../public/r/", import.meta.url));
   for (const item of registry.items) {
     if (item.meta?.access === "studio") {

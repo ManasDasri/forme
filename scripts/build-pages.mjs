@@ -15,6 +15,7 @@ const pages = [
   "collections/buttons",
   "collections/shaders",
   "collections/ascii",
+  "collections/hud",
   "collections/next",
   "collections",
   "collections/editorial",
@@ -25,6 +26,7 @@ const pages = [
   "docs/theming",
   "docs/accessibility",
   "docs/registry",
+  "docs/quality",
   ...registry.items.map((item) => `docs/${item.name}`),
 ];
 for (const page of pages) {

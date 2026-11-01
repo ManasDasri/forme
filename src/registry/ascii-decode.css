@@ -1,0 +1,36 @@
+.forme-decode {
+  --forme-decode-noise: #8ab4ff;
+  position: relative;
+}
+/* The real text holds layout and stays readable to assistive technology. */
+.forme-decode-final {
+  color: transparent;
+}
+.forme-decode-live {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.forme-decode-live > span {
+  transition: color 0.35s, opacity 0.35s, text-shadow 0.35s;
+}
+.forme-decode-live > span[data-scrambling] {
+  color: var(--forme-decode-noise);
+  opacity: 0.45;
+  text-shadow: 0 0 18px var(--forme-decode-noise);
+  transition: none;
+}
+/* Inline decodes (buttons, labels) never wrap or spill while glyphs churn. */
+span.forme-decode {
+  display: inline-block;
+  white-space: nowrap;
+}
+span.forme-decode .forme-decode-live {
+  overflow: hidden;
+  text-align: left;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-decode-live > span {
+    transition: none;
+  }
+}

@@ -1,0 +1,139 @@
+.forme-telemetry {
+  --forme-telemetry-color: #8ab4ff;
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  padding: 18px 20px 16px;
+  border: 1px solid #ffffff1a;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff0f, #ffffff05);
+  box-shadow:
+    inset 0 1px 0 #ffffff14,
+    0 24px 60px -24px #000000cc;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  color: #f4f4f5;
+  font-variant-numeric: tabular-nums;
+}
+.forme-telemetry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #a1a1aa;
+}
+.forme-telemetry-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #d4d4d8;
+}
+.forme-telemetry-status i {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+.forme-telemetry-status i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: forme-telemetry-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.forme-telemetry-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 10px;
+}
+.forme-telemetry-number {
+  display: inline-flex;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.forme-telemetry-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
+}
+.forme-telemetry-digit > span {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.1, 1);
+}
+.forme-telemetry-digit > span > span {
+  height: 1em;
+}
+.forme-telemetry-unit {
+  color: #a1a1aa;
+  font-size: 15px;
+}
+.forme-telemetry-delta {
+  margin-left: auto;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #4ade801f;
+  color: #4ade80;
+  font-size: 12px;
+  font-weight: 500;
+}
+.forme-telemetry-delta[data-down] {
+  background: #f871711f;
+  color: #f87171;
+}
+.forme-telemetry-chart {
+  position: relative;
+  height: 56px;
+  margin-top: 14px;
+}
+.forme-telemetry-chart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.forme-telemetry-head-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: var(--forme-telemetry-color);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--forme-telemetry-color), transparent 75%),
+    0 0 14px var(--forme-telemetry-color);
+  transition:
+    left 0.6s cubic-bezier(0.2, 0.9, 0.1, 1),
+    top 0.6s cubic-bezier(0.2, 0.9, 0.1, 1);
+}
+.forme-telemetry-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@keyframes forme-telemetry-ping {
+  75%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-telemetry-digit > span,
+  .forme-telemetry-head-dot {
+    transition: none;
+  }
+  .forme-telemetry-status i::after {
+    animation: none;
+  }
+}
