@@ -103,7 +103,6 @@ export function AsciiTunnel({
     >
       <pre ref={output} role="img" aria-label={label} />
       <div className="forme-ascii-tunnel-footer">
-        <span>ASCII / Tunnel</span>
         <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
           {paused ? "Resume" : "Pause"}
         </button>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { catalog, code, exportName, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
+import { catalog, exportName, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
-import { Arrow, Code, Icon, Traits, installCommand, sizeOf, useCopy } from "./ui";
+import { Code, Icon, Traits, installCommand, sizeOf, useCopy } from "./ui";
 import registry from "../registry.json";
 
 // Free source only: Studio files live outside src/ and cannot be matched here.
@@ -85,18 +85,15 @@ export function Workbench({ slug }: { slug: string }) {
             <button onClick={() => setMobile(!mobile)} aria-pressed={mobile}>
               Narrow
             </button>
-            <button onClick={() => setReplay((n) => n + 1)}>↻ Replay</button>
+            <button onClick={() => setReplay((n) => n + 1)}>Replay</button>
           </div>
         )}
       </div>
       {tab === "preview" && (
         <>
           <div className="workbench-canvas">
-            <span className="workbench-code" aria-hidden="true">
-              {code(slug)} · {component.category}
-            </span>
             <div className={`workbench-stage${mobile ? " is-narrow" : ""}`} key={replay}>
-              <Demo slug={slug} title={title} image={image || undefined} color={color} speed={speed} />
+              <Demo slug={slug} title={title} image={image || undefined} color={color} speed={speed} hint />
             </div>
           </div>
           {!studio && (
@@ -148,8 +145,7 @@ export function Workbench({ slug }: { slug: string }) {
       )}
       {tab === "usage" && studio && (
         <div className="studio-gate">
-          <p className="label">// Studio</p>
-          <h2>Recorded preview. Source with the paid edition.</h2>
+          <h2>This is a recording. Source comes with Studio.</h2>
           <p>
             What you see is a deterministic recording of the real component. Its source is not distributed on this site.
             Purchasing is not open yet; pricing and terms will be announced before launch.
@@ -158,7 +154,7 @@ export function Workbench({ slug }: { slug: string }) {
           <p>{component.props}</p>
           <Code text={component.usage} />
           <a className="btn" href="/studio/">
-            Explore Studio <Arrow />
+            See Studio
           </a>
         </div>
       )}
@@ -198,17 +194,17 @@ export function DocsPage({ slug }: { slug: string }) {
     <main id="main" className="docs-layout shell">
       <aside className="docs-sidebar">
         <nav aria-label="Documentation">
-          <p className="label">// Guides</p>
+          <p className="docs-group">Guides</p>
           {guides.map((g) => (
             <a key={g.slug} href={`/docs/${g.slug ? g.slug + "/" : ""}`} aria-current={slug === g.slug ? "page" : undefined}>
               {g.title}
             </a>
           ))}
-          <p className="label">// Components {catalog.length}</p>
+          <p className="docs-group">Components</p>
           {catalog.map((c) => (
             <a key={c.slug} href={`/docs/${c.slug}/`} aria-current={slug === c.slug ? "page" : undefined}>
               {c.name}
-              <span>{c.access === "studio" ? "Studio" : code(c.slug)}</span>
+              {c.access === "studio" && <span>Studio</span>}
             </a>
           ))}
         </nav>
@@ -230,7 +226,7 @@ export function DocsPage({ slug }: { slug: string }) {
               <Traits traits={component.traits} />
               <span className="fact">{sizeOf(component.slug)} gzipped</span>
               <a className="fact" href="/docs/quality/">
-                How these are checked <Arrow diagonal />
+                How these are checked
               </a>
             </div>
           )}
@@ -253,7 +249,7 @@ function Quality() {
   const traits = Object.keys(traitInfo) as Trait[];
   return (
     <div className="prose">
-      <h2>Badges you can audit.</h2>
+      <h2>Badges you can audit</h2>
       <p>
         Every badge on this site maps to a concrete check in <code>scripts/traits.test.mjs</code>. The test reads each
         component's installed files and fails the build if a claimed behavior is missing from the source. It also fails if
@@ -293,7 +289,7 @@ function Quality() {
                 </th>
                 <td>{sizeOf(c.slug)}</td>
                 {traits.map((t) => (
-                  <td key={t}>{c.traits.includes(t) ? <span aria-label="Yes">✓</span> : <span aria-label="Not applicable or no">·</span>}</td>
+                  <td key={t}>{c.traits.includes(t) ? <span aria-label="Yes">✓</span> : <span aria-label="Not applicable">–</span>}</td>
                 ))}
               </tr>
             ))}
@@ -334,7 +330,7 @@ function Guide({ slug }: { slug: string }) {
   if (slug === "accessibility")
     return (
       <div className="prose">
-        <h2>Motion with good manners</h2>
+        <h2>Reduced motion</h2>
         <p>
           Every component handles the reduced-motion preference. Shaders render one still frame. ASCII pieces and HUD
           instruments freeze. Glitch, plasma, and scramble effects switch off. Hold to confirm keeps its progress bar,
@@ -361,7 +357,7 @@ function Guide({ slug }: { slug: string }) {
   if (slug === "registry")
     return (
       <div className="prose">
-        <h2>Install source. Keep control.</h2>
+        <h2>Install the source</h2>
         <p>
           The public registry contains {freeCount} free components. The {studioCount} Studio pieces are excluded. The CLI
           copies TypeScript and scoped CSS into your components directory. There is no Forme runtime package.
@@ -380,12 +376,11 @@ function Guide({ slug }: { slug: string }) {
     );
   return (
     <div className="prose">
-      <h2>Start with one signal.</h2>
+      <h2>Install your first component</h2>
       <p>
-        Signal is Forme's first drop: {catalog.length} components across buttons, shaders, ASCII, and HUD. {freeCount}{" "}
-        include installable source. {studioCount} are Studio pieces, shown as recordings, with paid access later.
+        Forme has {catalog.length} components across buttons, shaders, ASCII, and HUD. {freeCount} include installable
+        source. {studioCount} are Studio pieces, shown as recordings, with paid access later.
       </p>
-      <h2>Add your first component</h2>
       <Code text={command} />
       <Code
         text={
@@ -397,7 +392,7 @@ function Guide({ slug }: { slug: string }) {
         imported by the component.
       </p>
       <a className="btn" href="/docs/glitch-button/">
-        Try Glitch button <Arrow />
+        Try Glitch button
       </a>
     </div>
   );

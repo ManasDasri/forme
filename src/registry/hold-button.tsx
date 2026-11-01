@@ -102,10 +102,10 @@ export function HoldButton({
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <span className="forme-hold-fill" aria-hidden="true" />
       <span className="forme-hold-label">{done ? confirmedLabel : children}</span>
-      <span className="forme-hold-meter" aria-hidden="true">
-        {String(Math.round(progress * 100)).padStart(3, "0")}%
+      {/* The fill carries an inverted copy of the label, revealed as the hold charges. */}
+      <span className="forme-hold-fill" aria-hidden="true">
+        <span className="forme-hold-label">{done ? confirmedLabel : children}</span>
       </span>
       <span id={hint} className="forme-hold-sr">
         Press and hold to confirm

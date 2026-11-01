@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { catalog, code } from "./catalog";
-import { Arrow, Icon } from "./ui";
+import { catalog } from "./catalog";
+import { Icon } from "./ui";
 
 export function SearchDialog({ close }: { close: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -40,7 +40,7 @@ export function SearchDialog({ close }: { close: () => void }) {
         <input
           id="global-search"
           autoFocus
-          placeholder="Search the signal…"
+          placeholder="Search components"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -49,25 +49,21 @@ export function SearchDialog({ close }: { close: () => void }) {
         </button>
       </div>
       <div className="search-results">
-        <p className="label">// {query ? `${items.length} results` : "All channels"}</p>
+        <p className="search-heading">{query ? `${items.length} ${items.length === 1 ? "result" : "results"}` : "All components"}</p>
         {items.map((c) => (
           <a key={c.slug} href={`/docs/${c.slug}/`}>
-            <span className="search-code">{code(c.slug)}</span>
             <span>
               <strong>{c.name}</strong>
-              <small>
-                {c.category} · {c.access === "studio" ? "Studio" : "Free"}
-              </small>
+              <small>{c.access === "studio" ? `${c.category}, Studio` : c.category}</small>
             </span>
-            <Arrow diagonal />
           </a>
         ))}
-        {!items.length && <div className="search-empty">No signal. Try “shader”, “ascii”, or “hud”.</div>}
+        {!items.length && <div className="search-empty">Nothing matches that. Try “shader”, “ASCII”, or “button”.</div>}
       </div>
       <div className="search-footer">
-        <span>↑↓ to move · Enter to open · Esc to close</span>
+        <span>Use ↑ and ↓ to move, Enter to open</span>
         <a href="/components/">
-          Open library <Arrow />
+          All components
         </a>
       </div>
     </dialog>

@@ -133,8 +133,6 @@ export function AsciiRain({
         <canvas ref={canvas} aria-hidden="true" />
       </button>
       <div className="forme-ascii-rain-footer">
-        <span>ASCII / Rain</span>
-        <span>Click to surge</span>
         <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
           {paused ? "Resume" : "Pause"}
         </button>

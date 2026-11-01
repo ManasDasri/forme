@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
-import { catalog, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
+import { catalog, freeCount, traitInfo, type Trait } from "./catalog";
 import sizes from "./sizes.json";
 
 export const installCommand = (slug: string) =>
@@ -70,11 +70,10 @@ export function Icon({ name }: { name: "search" | "bookmark" | "bookmark-filled"
 }
 export function Mark() {
   return (
-    <span className="brand-mark" aria-hidden="true">
-      <i />
-      <i />
-      <i />
-    </span>
+    <svg className="brand-mark" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="13" cy="7" r="3" fill="currentColor" />
+    </svg>
   );
 }
 /** Mounts live previews only near the viewport, keeping WebGL contexts bounded. */
@@ -139,15 +138,14 @@ export function Header({ onSearch }: { onSearch: () => void }) {
     setTheme(next);
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", next === "dark" ? "#05060a" : "#f3f5f9");
+      ?.setAttribute("content", next === "dark" ? "#000000" : "#fafafa");
     try {
       localStorage.setItem("forme-theme", next);
     } catch {}
   }
   const path = location.pathname;
   const links = [
-    ["/components/", "Library"],
-    ["/collections/", "Channels"],
+    ["/components/", "Components"],
     ["/studio/", "Studio"],
     ["/docs/", "Docs"],
   ];
@@ -162,9 +160,6 @@ export function Header({ onSearch }: { onSearch: () => void }) {
             <Mark />
             forme
           </a>
-          <span className="header-signal" aria-hidden="true">
-            <i /> Signal // Drop 01
-          </span>
           <nav id="main-nav" className={`main-nav${menu ? " is-open" : ""}`} aria-label="Main navigation">
             {links.map(([href, label]) => (
               <a key={href} href={href} aria-current={path.startsWith(href.slice(0, -1)) ? "page" : undefined}>
@@ -173,21 +168,20 @@ export function Header({ onSearch }: { onSearch: () => void }) {
             ))}
           </nav>
           <div className="header-actions">
-            <button className="header-search" onClick={onSearch} aria-label="Search the library">
+            <button className="header-search" onClick={onSearch} aria-label="Search components">
               <Icon name="search" />
               <span>Search</span>
               <kbd>⌘K</kbd>
             </button>
-            <a className="icon-button" href="/bookmarks/" aria-label="Your bookmarks">
+            <a className="icon-button" href="/bookmarks/" aria-label="Bookmarks">
               <Icon name="bookmark" />
             </a>
-            <button
-              className="icon-button"
-              onClick={toggle}
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            >
+            <button className="icon-button" onClick={toggle} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}>
               <Icon name={theme === "dark" ? "sun" : "moon"} />
             </button>
+            <a className="btn btn-small header-cta" href="/docs/">
+              Get started
+            </a>
             <button
               className="icon-button mobile-toggle"
               onClick={() => setMenu(!menu)}
@@ -206,22 +200,19 @@ export function Header({ onSearch }: { onSearch: () => void }) {
 export function Footer() {
   return (
     <footer className="footer shell">
-      <div>
-        <a className="wordmark" href="/">
-          <Mark />
-          forme
-        </a>
-        <p>Interfaces from the near future.</p>
-      </div>
+      <a className="wordmark" href="/">
+        <Mark />
+        forme
+      </a>
       <nav aria-label="Footer navigation">
-        <a href="/components/">Library</a>
-        <a href="/collections/">Channels</a>
-        <a href="/docs/quality/">How we verify</a>
+        <a href="/components/">Components</a>
         <a href="/studio/">Studio</a>
+        <a href="/docs/">Docs</a>
+        <a href="/docs/quality/">How we verify</a>
       </nav>
-      <span className="footer-meta">
-        {catalog.length} components · {freeCount} free · {studioCount} Studio · © {new Date().getFullYear()} Forme
-      </span>
+      <p>
+        © {new Date().getFullYear()} Forme. {catalog.length} components, {freeCount} free.
+      </p>
     </footer>
   );
 }

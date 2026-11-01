@@ -1,7 +1,11 @@
 "use client";
 import { ShaderCanvas } from "./shader-canvas";
 
-const fragment = `precision mediump float;
+const fragment = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
 uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time; uniform vec3 u_color;
 float hash(float n){return fract(sin(n*91.7)*43758.5453);}
 void main(){

@@ -146,8 +146,6 @@ export function AsciiGlobe({
     >
       <pre ref={output} aria-hidden="true" />
       <div className="forme-ascii-globe-footer">
-        <span>ASCII / Globe</span>
-        <span>Drag or use arrow keys</span>
         <button
           aria-pressed={paused}
           onPointerDown={(e) => e.stopPropagation()}

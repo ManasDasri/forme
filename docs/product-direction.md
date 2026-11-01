@@ -2,7 +2,7 @@
 
 ## Update — 1 November 2026 (later)
 
-Signal grew to 25 components with a fourth channel, HUD, and a futuristic visual system: grid backdrop, HUD labels in monospace, corner brackets, chamfered buttons, cyan and magenta signal accents, and Space Grotesk. The differentiator is now explicit: verifiable quality. Trait badges are enforced by tests, sizes are measured at build, and Studio previews are recordings so Studio source is never distributed. Demand and willingness to pay remain unvalidated.
+Signal grew to 25 components with a fourth channel, HUD. A first futuristic pass (grid backdrop, monospace HUD labels, corner brackets, neon accents) was rejected by the owner as cheap and templated. The site now follows a restrained system closer to 21st.dev's quality bar: true black, one family (Instrument Sans, condensed for display), white primary actions, no accent in the chrome, and previews that carry all the color. The home hero is a live stage that switches between real components. The differentiator is now explicit: verifiable quality. Trait badges are enforced by tests, sizes are measured at build, and Studio previews are recordings so Studio source is never distributed. Demand and willingness to pay remain unvalidated.
 
 
 ## Current direction — 1 November 2026

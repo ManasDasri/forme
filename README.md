@@ -1,6 +1,6 @@
 # Forme
 
-Futuristic React components: shaders, HUD instruments, ASCII worlds, and buttons that react. Source you install and own, with accessibility behavior that is checked against the code in CI.
+Components for interfaces that feel alive: shaders, ASCII, live instruments, and buttons for React. Source you install and own, with accessibility behavior that is checked against the code in CI.
 
 Live preview: https://forme.vercel.app
 
@@ -24,7 +24,7 @@ npm run build
 | Channel | Free | Studio |
 | ------- | ---- | ------ |
 | Buttons | Glitch, Plasma, Hold to confirm, Scramble, Prism, Magnetic | Shutter |
-| Shaders | Neon horizon, Warp field, Hologram, Silk field, Dither terrain | Singularity, Caustic glass |
+| Shaders | Horizon, Warp field, Hologram, Silk field, Dither terrain | Singularity, Caustic glass |
 | ASCII | ASCII globe, Glyph rain, Decode text, ASCII orbit, ASCII reveal | ASCII tunnel, ASCII surface |
 | HUD | Radar sweep, Oscilloscope, HUD frame | Holo card |
 

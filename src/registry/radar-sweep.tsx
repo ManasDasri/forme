@@ -151,7 +151,6 @@ export function RadarSweep({
       </button>
       <div className="forme-radar-footer">
         <span>Contacts {String(count).padStart(2, "0")}</span>
-        <span>Click to mark</span>
         <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
           {paused ? "Resume" : "Pause"}
         </button>

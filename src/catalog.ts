@@ -60,13 +60,13 @@ const shaderProps =
 export const catalog: CatalogItem[] = [
   {
     slug: "horizon-shader",
-    name: "Neon horizon",
+    name: "Horizon",
     category: "Shaders",
-    description: "An endless grid racing toward a glowing horizon.",
-    usage: '<HorizonShader color="#38e1ff" speed={1} />',
-    props: `${shaderProps} The pointer shifts the vanishing point.`,
+    description: "Dawn breaking along the curve of a planet.",
+    usage: '<HorizonShader color="#6f8bff" speed={1} />',
+    props: `${shaderProps} The pointer moves the light along the rim.`,
     traits: shader,
-    color: "#38e1ff",
+    color: "#6f8bff",
     speed: true,
   },
   {

@@ -27,16 +27,12 @@ export function ScrambleButton({
         props.onFocus?.(e);
       }}
     >
-      <span className="forme-scramble-index" aria-hidden="true">
-        [01]
-      </span>
       <span className="forme-decode">
         <span className="forme-decode-final">{children}</span>
         <span className="forme-decode-live" aria-hidden="true">
           {shown}
         </span>
       </span>
-      <span className="forme-scramble-cursor" aria-hidden="true" />
     </button>
   );
 }

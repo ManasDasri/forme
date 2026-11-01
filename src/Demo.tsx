@@ -43,17 +43,15 @@ const live: Record<string, (p: Props) => ReactNode> = {
   },
   "ascii-decode": (p) => (
     <div className="decode-specimen" style={{ color: p.color }}>
-      <span className="specimen-kicker">Incoming transmission</span>
       <AsciiDecode as="h3" text={p.title || "Signal acquired."} />
-      <span className="specimen-kicker">Hover to decode again</span>
     </div>
   ),
   "hud-frame": () => (
     <div className="hud-specimen">
       <HudFrame label="Uplink" status="Live" code="SIG-01">
         <div className="hud-specimen-readout">
-          <strong>042.7</strong>
-          <span>kHz · carrier locked</span>
+          <strong>42.7</strong>
+          <span>kHz carrier</span>
         </div>
       </HudFrame>
     </div>
@@ -108,12 +106,14 @@ export function Demo({
   image,
   color,
   speed = 1,
+  hint = false,
 }: {
   slug: string;
   title?: string;
   image?: string;
   color?: string;
   speed?: number;
+  hint?: boolean;
 }) {
   const [selected, setSelected] = useState(false);
   const item = catalog.find((c) => c.slug === slug);
@@ -122,17 +122,18 @@ export function Demo({
   const label = title || item?.text || "Activate";
   return (
     <div className={`button-specimen specimen-${slug}`}>
-      <span className="specimen-kicker">{item?.name}</span>
       {buttons[slug]?.(label, () => setSelected((s) => !s))}
-      <span className="specimen-hint" role="status">
-        {selected
-          ? slug === "hold-button"
-            ? "Confirmed. Wire onConfirm to your action."
-            : "Received. Connect this to your own action."
-          : slug === "hold-button"
-            ? "Press and hold, or hold Space."
-            : "Hover, focus, or press."}
-      </span>
+      {hint && (
+        <span className="specimen-hint" role="status">
+          {selected
+            ? slug === "hold-button"
+              ? "Confirmed. Wire onConfirm to your action."
+              : "Clicked. Wire onClick to your action."
+            : slug === "hold-button"
+              ? "Press and hold, or hold Space."
+              : "Hover, focus, or click."}
+        </span>
+      )}
     </div>
   );
 }

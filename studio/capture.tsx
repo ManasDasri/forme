@@ -2,7 +2,7 @@
 // It is never part of the site build, so Studio source stays out of public bundles.
 import type { ReactNode } from "react";
 import { createRoot } from "react-dom/client";
-import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/instrument-sans/standard.css";
 import { CausticShader } from "./caustic-shader";
 import { SingularityShader } from "./singularity-shader";
 import { ShutterButton } from "./shutter-button";

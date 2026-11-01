@@ -155,8 +155,6 @@ export function AsciiSurface({
         <canvas ref={canvas} aria-hidden="true" />
       </button>
       <div className="forme-ascii-surface-footer">
-        <span>ASCII / Surface study</span>
-        <span>Tap to ripple</span>
         <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
           {paused ? "Resume" : "Pause"}
         </button>

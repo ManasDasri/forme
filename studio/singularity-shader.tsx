@@ -1,9 +1,13 @@
 "use client";
 import { ShaderCanvas } from "./shader-canvas";
 
-const fragment = `precision mediump float;
+const fragment = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
 uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time; uniform vec3 u_color;
-float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float hash(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
 float disk(vec2 p,float rs,float t){
  vec2 d=vec2(p.x,p.y*3.4);float dr=length(d);
  float body=smoothstep(.62,.2,dr)*smoothstep(rs*1.05,rs*1.7,dr);
