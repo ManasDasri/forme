@@ -34,8 +34,8 @@ export function Workbench({ slug }: { slug: string }) {
   const defaultColor =
     slug === "dither-shader"
       ? "#c5dacb"
-      : slug === "orbital-shader"
-        ? "#b398f3"
+      : slug === "caustic-shader"
+        ? "#73d9ed"
         : slug.startsWith("ascii")
           ? "#b7c3df"
           : "#5376ff";
@@ -113,23 +113,21 @@ export function Workbench({ slug }: { slug: string }) {
             </div>
           </div>
           <div className="workbench-controls">
-            {(component.category === "Buttons" || slug === "ascii-text") && (
+            {component.category === "Buttons" && (
               <label>
-                {slug === "ascii-text" ? "Text" : "Button label"}
+                Button label
                 <input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder={
-                    slug === "ascii-text"
-                      ? "HELLO, FUTURE."
-                      : "Enter the experience"
-                  }
+                  placeholder="Enter the experience"
                   maxLength={40}
                 />
               </label>
             )}
             {(component.category === "Shaders" ||
-              ["ascii-orbit", "ascii-image"].includes(slug)) && (
+              ["ascii-orbit", "ascii-image", "ascii-surface"].includes(
+                slug,
+              )) && (
               <label className="control-color">
                 Color
                 <input
@@ -139,7 +137,8 @@ export function Workbench({ slug }: { slug: string }) {
                 />
               </label>
             )}
-            {(component.category === "Shaders" || slug === "ascii-orbit") && (
+            {(component.category === "Shaders" ||
+              ["ascii-orbit", "ascii-surface"].includes(slug)) && (
               <label className="control-speed">
                 Speed / {speed.toFixed(1)}×
                 <input
@@ -186,9 +185,11 @@ export function Workbench({ slug }: { slug: string }) {
             </button>
           </div>
           <p className="docs-hint">
-            {component.category === "Shaders"
-              ? "Move your pointer across the canvas. Adjust the color and speed to explore."
-              : "Hover, focus, or select the preview. Use the controls to make it your own."}
+            {slug === "silk-shader"
+              ? "An ambient animation. Adjust its color and speed; pointer movement leaves it unchanged."
+              : component.category === "Shaders"
+                ? "Move your pointer across the canvas. Adjust the color and speed to explore."
+                : "Hover, focus, or select the preview. Use the controls to make it your own."}
           </p>
         </>
       )}
@@ -385,8 +386,9 @@ function Guide({ slug }: { slug: string }) {
         <h2>Color and speed</h2>
         <p>
           Shaders accept a six-digit hex color and a speed between 0 and 3.
-          Their container controls the size. ASCII orbit and ASCII reveal also
-          accept a color. Try these controls on the component’s Preview tab.
+          Their container controls the size. ASCII orbit, ASCII reveal, and
+          ASCII surface also accept a color. Try these controls on the
+          component’s Preview tab.
         </p>
         <Code
           text={
@@ -408,8 +410,9 @@ function Guide({ slug }: { slug: string }) {
         <p>
           ASCII reveal needs your own image URL and descriptive alt text. Use a
           same-origin image or a remote image that permits cross-origin canvas
-          access. It shows the photograph if the image cannot be sampled. Signal
-          text accepts your headline and the characters used during its reveal.
+          access. It shows the photograph if the image cannot be sampled. ASCII
+          surface projects a fabric of characters that responds to movement and
+          ripples.
         </p>
       </div>
     );
@@ -419,22 +422,22 @@ function Guide({ slug }: { slug: string }) {
         <h2>Motion with good manners.</h2>
         <p>
           Shaders render a still frame for the operating system’s reduced-motion
-          preference. ASCII orbit stops rotating, Signal text shows its final
-          text immediately, and button movement switches off. The previews
-          remain usable.
+          preference. ASCII orbit and ASCII surface become still, and button
+          movement switches off. The previews remain usable.
         </p>
         <h2>Pause, keyboard, and touch</h2>
         <p>
-          ASCII orbit includes a pause control. Shaders and the orbit stop
-          rendering when offscreen or in a hidden tab. Buttons use native button
-          elements with focus and disabled states. Magnetic attraction runs only
-          for a mouse pointer.
+          ASCII orbit and ASCII surface include pause controls. Shaders and
+          animated ASCII pieces stop rendering when offscreen or in a hidden
+          tab. Buttons use native button elements with focus and disabled
+          states. Magnetic attraction runs only for a mouse pointer.
         </p>
         <p>
           ASCII reveal supports a centered reveal through click, tap, Enter, or
           Space. Its canvas is decorative; the photograph keeps your alt text.
-          Signal text has a fixed accessible name while its visual characters
-          change.
+          ASCII surface supports a ripple through click, tap, Enter, or Space,
+          and has a pause control. Silk field is ambient and does not react to
+          the pointer.
         </p>
         <h2>Canvas support</h2>
         <p>

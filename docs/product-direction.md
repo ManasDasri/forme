@@ -20,6 +20,8 @@ The homepage centers its headline over an actual flowing shader. An aligned appl
 
 ## Integration quality
 
+Silk field is ambient with no pointer response. Caustic glass replaces the orbital shader; ASCII surface replaces the text scramble. The magnetic button adds a small spring-back and press-release rebound.
+
 WebGL programs share one small native runtime, draw an initial frame, stop rendering offscreen and in hidden tabs, respect reduced motion, and recover from context loss. Static CSS fallback covers unavailable WebGL. ASCII orbit includes pause and reduced motion. Native buttons preserve click, focus, and disabled behavior. The registry includes shared files and scoped CSS. Only free source is exposed in public documentation and registry payloads.
 
 Earlier project-presentation components remain unused in the repository rather than appearing as the active product. They can be reconsidered only if a later drop calls for them.

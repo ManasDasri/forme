@@ -1,6 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import "./ascii-orbit.css";
+// Sample the geometry densely once; frames only rotate and project it.
+const around = Array.from({ length: 320 }, (_, i) => {
+  const angle = (i / 320) * Math.PI * 2;
+  return { angle, cos: Math.cos(angle), sin: Math.sin(angle) };
+});
+const tube = Array.from({ length: 128 }, (_, i) => {
+  const angle = (i / 128) * Math.PI * 2;
+  return { cos: Math.cos(angle), sin: Math.sin(angle) };
+});
 export function AsciiOrbit({
   color = "#d2d7e3",
   speed = 1,
@@ -34,20 +43,20 @@ export function AsciiOrbit({
         const depth = new Float32Array(cols * rows);
         depth.fill(-Infinity);
         const screen = Array<string>(cols * rows).fill(" ");
-        const chars = " .,:;irsXA253hMHGS#9B&@";
+        const chars = ".,:;irsXA253hMHGS#9B&@";
         const ax = phase.current * 0.47 + 0.5,
           ay = phase.current * 0.31 + pointer;
         const sx = Math.sin(ax),
           cx = Math.cos(ax),
           sy = Math.sin(ay),
           cy = Math.cos(ay);
-        const scale = Math.min(cols * 0.15, rows * 0.25);
-        for (let a = 0; a < Math.PI * 2; a += 0.085)
-          for (let b = 0; b < Math.PI * 2; b += 0.17) {
-            const ring = 1.25 + 0.5 * Math.cos(b);
-            let x = ring * Math.cos(a),
-              y = ring * Math.sin(a),
-              z = 0.5 * Math.sin(b);
+        const scale = Math.min(cols * 0.18, rows * 0.28);
+        for (const a of around)
+          for (const b of tube) {
+            const ring = 1.25 + 0.5 * b.cos;
+            const x = ring * a.cos,
+              y = ring * a.sin,
+              z = 0.5 * b.sin;
             const ry = y * cx - z * sx,
               rz = y * sx + z * cx;
             const rx = x * cy + rz * sy,
@@ -61,7 +70,7 @@ export function AsciiOrbit({
               depth[idx] = zz;
               const light = Math.max(
                 0,
-                Math.min(1, 0.25 + 0.45 * Math.cos(b) + 0.3 * Math.sin(a + ax)),
+                Math.min(1, 0.25 + 0.45 * b.cos + 0.3 * Math.sin(a.angle + ax)),
               );
               screen[idx] = chars[Math.floor(light * (chars.length - 1))];
             }
@@ -78,10 +87,10 @@ export function AsciiOrbit({
       if (visible && !document.hidden) frame = requestAnimationFrame(paint);
     };
     const resize = new ResizeObserver(() => {
-      cols = Math.max(36, Math.min(90, Math.floor(node.clientWidth / 5)));
+      cols = Math.max(80, Math.min(220, Math.floor(node.clientWidth / 3.2)));
       rows = Math.max(
-        20,
-        Math.min(35, Math.floor((node.clientHeight - 55) / 8)),
+        32,
+        Math.min(84, Math.floor((node.clientHeight - 55) / 4.8)),
       );
       pre.style.fontSize = `${Math.min(node.clientWidth / (cols * 0.61), (node.clientHeight - 55) / (rows * 1.05))}px`;
       start();

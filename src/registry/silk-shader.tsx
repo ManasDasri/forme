@@ -1,10 +1,10 @@
 "use client";
 import { ShaderCanvas } from "./shader-canvas";
 const fragment = `precision mediump float;
-uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time; uniform vec3 u_color;
+uniform vec2 u_resolution; uniform float u_time; uniform vec3 u_color;
 void main(){
  vec2 uv=gl_FragCoord.xy/u_resolution.xy; vec2 p=(uv-.5)*vec2(u_resolution.x/u_resolution.y,1.0);
- p+= (u_mouse-.5)*.18; float t=u_time*.18;
+ float t=u_time*.18;
  float fold=sin(p.x*2.7+p.y*3.2+t+sin(p.y*2.0-t)*1.3);
  float ribbon=pow(.5+.5*sin(fold*4.0+p.x*2.0-t),4.0);
  float soft=pow(.5+.5*sin(fold*3.0+p.y*2.5+t*.6),2.0);
@@ -26,6 +26,7 @@ export function SilkShader({
       color={color}
       speed={speed}
       label="Silk field"
+      interactive={false}
     />
   );
 }

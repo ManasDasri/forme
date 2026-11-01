@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { SilkShader } from "./registry/silk-shader";
 import { DitherShader } from "./registry/dither-shader";
-import { OrbitalShader } from "./registry/orbital-shader";
+import { CausticShader } from "./registry/caustic-shader";
 import { PrismButton } from "./registry/prism-button";
 import { MagneticButton } from "./registry/magnetic-button";
 import { ShutterButton } from "./registry/shutter-button";
 import { AsciiOrbit } from "./registry/ascii-orbit";
 import { AsciiImage } from "./registry/ascii-image";
-import { AsciiText } from "./registry/ascii-text";
+import { AsciiSurface } from "./registry/ascii-surface";
 export function Demo({
   slug,
   title,
@@ -26,8 +26,8 @@ export function Demo({
   if (slug === "silk-shader") return <SilkShader color={color} speed={speed} />;
   if (slug === "dither-shader")
     return <DitherShader color={color} speed={speed} />;
-  if (slug === "orbital-shader")
-    return <OrbitalShader color={color} speed={speed} />;
+  if (slug === "caustic-shader")
+    return <CausticShader color={color} speed={speed} />;
   if (slug === "ascii-orbit") return <AsciiOrbit color={color} speed={speed} />;
   if (slug === "ascii-image")
     return (
@@ -43,8 +43,8 @@ export function Demo({
         color={color}
       />
     );
-  if (slug === "ascii-text")
-    return <AsciiText text={title || "HELLO, FUTURE."} />;
+  if (slug === "ascii-surface")
+    return <AsciiSurface color={color} speed={speed} />;
   const label = selected
     ? "Signal received"
     : title ||

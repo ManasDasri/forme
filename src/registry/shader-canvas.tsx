@@ -7,6 +7,7 @@ export interface ShaderCanvasProps {
   color?: string;
   speed?: number;
   label?: string;
+  interactive?: boolean;
 }
 /** Small shared WebGL runtime. Offscreen and hidden canvases stop rendering. */
 export function ShaderCanvas({
@@ -14,6 +15,7 @@ export function ShaderCanvas({
   color = "#5376ff",
   speed = 1,
   label = "Interactive shader",
+  interactive = true,
 }: ShaderCanvasProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const [fallback, setFallback] = useState(false);
@@ -143,7 +145,7 @@ export function ShaderCanvas({
       setFallback(false);
       setRevision((v) => v + 1);
     };
-    node.addEventListener("pointermove", move);
+    if (interactive) node.addEventListener("pointermove", move);
     node.addEventListener("webglcontextlost", lost);
     node.addEventListener("webglcontextrestored", restored);
     document.addEventListener("visibilitychange", start);
@@ -165,7 +167,7 @@ export function ShaderCanvas({
         shaders.forEach((s) => gl.deleteShader(s));
       }
     };
-  }, [fragment, color, speed, revision]);
+  }, [fragment, color, speed, revision, interactive]);
   return (
     <div
       className="forme-shader"
@@ -177,7 +179,13 @@ export function ShaderCanvas({
       <canvas ref={canvas} role="img" aria-label={label} />
       <span className="forme-shader-caption">
         {label}
-        <span>{fallback ? "Static fallback" : "Move to explore"}</span>
+        <span>
+          {fallback
+            ? "Static fallback"
+            : interactive
+              ? "Move to explore"
+              : "Ambient shader"}
+        </span>
       </span>
     </div>
   );

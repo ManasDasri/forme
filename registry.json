@@ -117,14 +117,14 @@
       ]
     },
     {
-      "name": "orbital-shader",
+      "name": "caustic-shader",
       "type": "registry:component",
-      "title": "Orbital Shader",
+      "title": "Caustic glass",
       "files": [
         {
-          "path": "src/registry/orbital-shader.tsx",
+          "path": "src/registry/caustic-shader.tsx",
           "type": "registry:component",
-          "target": "@components/forme/orbital-shader.tsx"
+          "target": "@components/forme/caustic-shader.tsx"
         },
         {
           "path": "src/registry/shader-canvas.tsx",
@@ -162,19 +162,19 @@
       }
     },
     {
-      "name": "ascii-text",
+      "name": "ascii-surface",
       "type": "registry:component",
-      "title": "Ascii Text",
+      "title": "ASCII surface",
       "files": [
         {
-          "path": "src/registry/ascii-text.tsx",
+          "path": "src/registry/ascii-surface.tsx",
           "type": "registry:component",
-          "target": "@components/forme/ascii-text.tsx"
+          "target": "@components/forme/ascii-surface.tsx"
         },
         {
-          "path": "src/registry/ascii-text.css",
+          "path": "src/registry/ascii-surface.css",
           "type": "registry:file",
-          "target": "@components/forme/ascii-text.css"
+          "target": "@components/forme/ascii-surface.css"
         }
       ],
       "meta": {

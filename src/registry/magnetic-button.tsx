@@ -1,7 +1,8 @@
 "use client";
 
 import type { ButtonHTMLAttributes } from "react";
-import { motion, useReducedMotion, useSpring } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, useSpring } from "motion/react";
 import "./magnetic-button.css";
 
 export function MagneticButton({
@@ -10,9 +11,22 @@ export function MagneticButton({
   type = "button",
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
-  const reduce = useReducedMotion();
-  const x = useSpring(0, { stiffness: 180, damping: 16 });
-  const y = useSpring(0, { stiffness: 180, damping: 16 });
+  const [reduce, setReduce] = useState(false);
+  const x = useSpring(0, { stiffness: 260, damping: 13, mass: 0.7 });
+  const y = useSpring(0, { stiffness: 260, damping: 13, mass: 0.7 });
+  useEffect(() => {
+    const media = matchMedia("(prefers-reduced-motion:reduce)");
+    const update = () => setReduce(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  useEffect(() => {
+    if (reduce || props.disabled) {
+      x.jump(0);
+      y.jump(0);
+    }
+  }, [reduce, props.disabled, x, y]);
   return (
     <span
       className="forme-magnet"
@@ -26,8 +40,16 @@ export function MagneticButton({
         x.set(0);
         y.set(0);
       }}
+      onPointerCancel={() => {
+        x.set(0);
+        y.set(0);
+      }}
     >
-      <motion.span style={{ x, y }}>
+      <motion.span
+        style={{ x, y }}
+        whileTap={reduce || props.disabled ? undefined : { scale: 0.96 }}
+        transition={{ type: "spring", stiffness: 420, damping: 14, mass: 0.55 }}
+      >
         <button
           {...props}
           type={type}

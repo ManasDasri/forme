@@ -18,7 +18,7 @@ const groups = [
   {
     name: "Shaders",
     slug: "shaders",
-    demo: "orbital-shader",
+    demo: "caustic-shader",
     description: "Light, noise, and a little distortion.",
     count: 3,
   },

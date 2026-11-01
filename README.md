@@ -22,8 +22,8 @@ The Vite build creates refreshable static entries for all public pages, generate
 | Category | Free components               | Studio previews |
 | -------- | ----------------------------- | --------------- |
 | Buttons  | Prism button, Magnetic button | Shutter button  |
-| Shaders  | Silk field, Dither terrain    | Orbital field   |
-| ASCII    | ASCII orbit, ASCII reveal     | Signal text     |
+| Shaders  | Silk field, Dither terrain    | Caustic glass   |
+| ASCII    | ASCII orbit, ASCII reveal     | ASCII surface   |
 
 The previous portfolio collection remains as unused source. It is excluded from the active catalog, runtime imports, documentation source, and public registry.
 
@@ -53,7 +53,7 @@ The public registry builder reads the private root `registry.json`, omits Studio
 - `/studio/` — the three Studio previews
 - `/docs/` — usage, customization, accessibility, registry, and individual component playgrounds
 
-Dark mode is the initial theme; the explicit choice persists across pages. Header search supports Cmd/Ctrl+K. Shaders support pointer movement, color and speed controls, a WebGL fallback, context restoration, reduced motion, and rendering suspension offscreen or in hidden tabs. ASCII orbit includes pause. ASCII reveal supports mouse, keyboard and touch. Source tabs include every file required by the selected free component.
+Dark mode is the initial theme; the explicit choice persists across pages. Header search supports Cmd/Ctrl+K. Silk field is ambient and does not respond to the pointer. Dither terrain and Caustic glass support pointer movement. All shaders have color and speed controls, a WebGL fallback, context restoration, reduced motion, and rendering suspension offscreen or in hidden tabs. ASCII orbit uses a dense adaptive character grid and finely sampled geometry. ASCII orbit and ASCII surface include pause. ASCII surface supports pointer deformation and click, tap, or keyboard ripples. Magnetic button springs past center on release and rebounds after a press. ASCII reveal supports mouse, keyboard and touch. Source tabs include every file required by the selected free component.
 
 `src/App.tsx` owns pages, `src/Library.tsx` browsing, `src/library-state.ts` filtering/bookmarks, `src/Docs.tsx` playgrounds and guides, and `src/registry/` installable components. No new runtime dependency was added for this revision.
 

@@ -762,7 +762,7 @@ select {
 }
 .discovery-preview > div,
 .discovery-preview > .forme-ascii-image,
-.discovery-preview > .forme-ascii-text {
+.discovery-preview > .forme-ascii-surface {
   height: 100%;
   min-height: 100%;
 }
@@ -990,21 +990,7 @@ select {
 .discovery-preview .forme-magnet-arrow {
   font-size: 16px;
 }
-.discovery-preview .forme-ascii-text {
-  padding: 23px;
-}
-.discovery-preview .forme-ascii-text-output {
-  font-size: 29px;
-  max-width: 11ch;
-}
-.discovery-preview .forme-ascii-text-label {
-  top: 51px;
-}
-.discovery-preview .forme-ascii-text-footer {
-  left: 20px;
-  right: 20px;
-  font-size: 8px;
-}
+
 .discovery-preview .forme-ascii-image > span {
   font-size: 8px;
   left: 15px;
@@ -2018,9 +2004,6 @@ select {
     gap: 35px;
     grid-template-columns: 180px minmax(0, 1fr);
   }
-  .discovery-preview .forme-ascii-text-output {
-    font-size: 24px;
-  }
 }
 @media (max-width: 850px) {
   .shell {
@@ -2557,20 +2540,7 @@ select {
   .discovery-preview .forme-ascii-image > span > span {
     display: none;
   }
-  .discovery-preview .forme-ascii-text {
-    padding: 15px;
-  }
-  .discovery-preview .forme-ascii-text-output {
-    font-size: 23px;
-  }
-  .discovery-preview .forme-ascii-text-label {
-    font-size: 6px;
-  }
-  .discovery-preview .forme-ascii-text-footer {
-    font-size: 7px;
-    left: 15px;
-    right: 15px;
-  }
+
   .browser-bottom {
     font-size: 7px;
     align-items: start;
@@ -3008,19 +2978,5 @@ select {
     right: 18px;
     font-size: 9px;
     bottom: 17px;
-  }
-  .discovery-preview .forme-ascii-text {
-    padding: 27px;
-  }
-  .discovery-preview .forme-ascii-text-output {
-    font-size: 34px;
-  }
-  .discovery-preview .forme-ascii-text-label {
-    font-size: 8px;
-  }
-  .discovery-preview .forme-ascii-text-footer {
-    font-size: 9px;
-    left: 27px;
-    right: 27px;
   }
 }

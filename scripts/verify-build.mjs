@@ -54,9 +54,9 @@ const bundle = (
   )
 ).join("\n");
 for (const marker of [
-  "export function OrbitalShader",
+  "export function CausticShader",
   "export function ShutterButton",
-  "export function AsciiText",
+  "export function AsciiSurface",
 ])
   assert.ok(
     !bundle.includes(marker),
