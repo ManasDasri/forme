@@ -1,10 +1,73 @@
-export const categories = ['All components', 'Typography', 'Imagery', 'Navigation', 'Interactions'] as const
-export type Category = typeof categories[number]
-export const catalog: { slug: string; name: string; category: Category; description: string; usage: string; props: string }[] = [
-  { slug: 'editorial-hero', name: 'Editorial hero', category: 'Typography', description: 'An opening with a point of view. Type and imagery, perfectly timed.', usage: `<EditorialHero\n  brand="Serein studio"\n  title="Room to feel."\n  subtitle="Spaces for a slower kind of living."\n  image="/your-image.jpg"\n  alt="Sunlit interior with sculptural furniture"\n/>`, props: 'title, subtitle, image, and alt are required strings. brand is optional. The reveal plays once as the component enters the viewport.' },
-  { slug: 'project-index', name: 'Project index', category: 'Interactions', description: 'A quiet list. A new perspective on every project.', usage: `<ProjectIndex projects={[\n  { title: "Serein", category: "Architecture",\n    image: "/project.jpg", alt: "Serein interior",\n    description: "A considered place to call home." }\n]} />`, props: 'projects is an array of objects with title, category, image, and alt. description is optional. Hover, focus, or select a project to update the preview.' },
-  { slug: 'image-reveal', name: 'Image reveal', category: 'Imagery', description: 'Let the image break out of its frame. A small moment of discovery.', usage: `<ImageReveal\n  src="/your-image.jpg"\n  alt="Sculptural concrete architecture"\n  title="Perspective"\n  caption="See the whole picture"\n/>`, props: 'src, alt, and title are required strings. caption is optional. Click, tap, Enter, or Space toggles the reveal. aria-pressed exposes its state.' },
-  { slug: 'fullscreen-menu', name: 'Full-screen menu', category: 'Navigation', description: 'Give navigation a little room to express itself.', usage: `<FullscreenMenu brand="Your studio" links={[\n  { label: "Selected work", href: "/work" },\n  { label: "About the studio", href: "/about" },\n  { label: "Get in touch", href: "/contact" }\n]} />`, props: 'links is an array of label and href objects. brand is optional. A native modal dialog handles focus, Escape, and keyboard navigation.' },
-  { slug: 'expanding-gallery', name: 'Expanding gallery', category: 'Imagery', description: 'A collection that makes space for what catches your eye.', usage: `<ExpandingGallery images={[\n  { src: "/one.jpg", alt: "Concrete facade", title: "Form" },\n  { src: "/two.jpg", alt: "Softly lit interior", title: "Space" },\n  { src: "/three.jpg", alt: "Mountain landscape", title: "Stillness" }\n]} />`, props: 'images is an array with src, alt, and title for each image. Select an image to expand it. Each selection is a keyboard-accessible button.' },
-  { slug: 'motion-link', name: 'Rolling link', category: 'Typography', description: 'A familiar gesture with an unexpected finish.', usage: `<MotionLink href="/your-project">\n  Explore the project\n</MotionLink>`, props: 'Accepts standard React anchor attributes, including href, target, and className. Pass plain text as children for the rolling label effect.' },
-]
+export const categories = [
+  "All components",
+  "Typography",
+  "Imagery",
+  "Navigation",
+  "Interactions",
+] as const;
+export type Category = (typeof categories)[number];
+export const catalog: {
+  slug: string;
+  name: string;
+  category: Category;
+  description: string;
+  usage: string;
+  props: string;
+}[] = [
+  {
+    slug: "editorial-hero",
+    name: "Editorial hero",
+    category: "Typography",
+    description:
+      "An opening with a point of view. Type and imagery, perfectly timed.",
+    usage: `<EditorialHero\n  brand="Serein studio"\n  title="Room to feel."\n  subtitle="Spaces for a slower kind of living."\n  image="/your-image.jpg"\n  alt="Sunlit interior with sculptural furniture"\n/>`,
+    props:
+      "title, subtitle, image, and alt are required strings. brand is optional. The reveal plays once as the component enters the viewport.",
+  },
+  {
+    slug: "project-index",
+    name: "Project index",
+    category: "Interactions",
+    description: "A quiet list. A new perspective on every project.",
+    usage: `<ProjectIndex projects={[\n  { title: "Serein", category: "Architecture",\n    image: "/project.jpg", alt: "Serein interior",\n    description: "A considered place to call home." }\n]} />`,
+    props:
+      "projects is an array of objects with title, category, image, and alt. description is optional. Hover, focus, or select a project to update the preview.",
+  },
+  {
+    slug: "image-reveal",
+    name: "Image reveal",
+    category: "Imagery",
+    description:
+      "Let the image break out of its frame. A small moment of discovery.",
+    usage: `<ImageReveal\n  src="/your-image.jpg"\n  alt="Sculptural concrete architecture"\n  title="Perspective"\n  caption="See the whole picture"\n/>`,
+    props:
+      "src, alt, and title are required strings. caption is optional. Click, tap, Enter, or Space toggles the reveal. aria-pressed exposes its state.",
+  },
+  {
+    slug: "fullscreen-menu",
+    name: "Full-screen menu",
+    category: "Navigation",
+    description: "Give navigation a little room to express itself.",
+    usage: `<FullscreenMenu brand="Your studio" links={[\n  { label: "Selected work", href: "/work" },\n  { label: "About the studio", href: "/about" },\n  { label: "Get in touch", href: "/contact" }\n]} />`,
+    props:
+      "links is an array of label and href objects. brand is optional. A native modal dialog handles focus, Escape, and keyboard navigation.",
+  },
+  {
+    slug: "expanding-gallery",
+    name: "Expanding gallery",
+    category: "Imagery",
+    description: "A collection that makes space for what catches your eye.",
+    usage: `<ExpandingGallery images={[\n  { src: "/one.jpg", alt: "Concrete facade", title: "Form" },\n  { src: "/two.jpg", alt: "Softly lit interior", title: "Space" },\n  { src: "/three.jpg", alt: "Mountain landscape", title: "Stillness" }\n]} />`,
+    props:
+      "images is an array with src, alt, and title for each image. Select an image to expand it. Each selection is a keyboard-accessible button.",
+  },
+  {
+    slug: "motion-link",
+    name: "Rolling link",
+    category: "Typography",
+    description: "A familiar gesture with an unexpected finish.",
+    usage: `<MotionLink href="/your-project">\n  Explore the project\n</MotionLink>`,
+    props:
+      "Accepts standard React anchor attributes, including href, target, and className. Pass plain text as children for the rolling label effect.",
+  },
+];

@@ -1,1 +1,97 @@
-.forme-index{display:grid;grid-template-columns:1fr 42%;gap:24px;width:100%;height:100%;min-height:250px;padding:24px;box-sizing:border-box;background:#eeefeb;color:#262a25}.forme-index-list{display:flex;flex-direction:column;justify-content:center;min-width:0}.forme-index-label{font-size:10px;margin-bottom:15px;color:#656b63}.forme-index-list button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:13px 0;background:none;border:0;border-bottom:1px solid #cfd3ca;color:inherit;text-align:left;font:inherit;font-size:21px;letter-spacing:-.05em;cursor:pointer;opacity:.48;transition:opacity .2s}.forme-index-list button[aria-pressed=true],.forme-index-list button:hover{opacity:1}.forme-index-list small{display:block;margin-top:4px;font-size:9px;font-weight:400;letter-spacing:0}.forme-index-image{position:relative;align-self:stretch;overflow:hidden;min-height:180px;background:#d8dcd3;border-radius:2px}.forme-index-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}.forme-index-image p{position:absolute;bottom:10px;left:10px;right:10px;margin:0;padding:6px 8px;background:#fffffff0;color:#262a25;font-size:10px}.forme-index button:focus-visible{outline:2px solid #2749ed;outline-offset:3px}@media(max-width:400px){.forme-index{padding:18px;gap:14px}.forme-index-list button{font-size:18px}}@media(prefers-reduced-motion:reduce){.forme-index-list button{transition:none}}
+.forme-index {
+  display: grid;
+  grid-template-columns: 1fr 42%;
+  gap: 24px;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #eeefeb;
+  color: #262a25;
+}
+.forme-index-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.forme-index-label {
+  font-size: 10px;
+  margin-bottom: 15px;
+  color: #656b63;
+}
+.forme-index-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #cfd3ca;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  font-size: 21px;
+  letter-spacing: -0.05em;
+  cursor: pointer;
+  opacity: 0.48;
+  transition: opacity 0.2s;
+}
+.forme-index-list button[aria-pressed="true"],
+.forme-index-list button:hover {
+  opacity: 1;
+}
+.forme-index-list small {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.forme-index-image {
+  position: relative;
+  align-self: stretch;
+  overflow: hidden;
+  min-height: 180px;
+  background: #d8dcd3;
+  border-radius: 2px;
+}
+.forme-index-image img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+.forme-index-image p {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 6px 8px;
+  background: #fffffff0;
+  color: #262a25;
+  font-size: 10px;
+}
+.forme-index button:focus-visible {
+  outline: 2px solid #2749ed;
+  outline-offset: 3px;
+}
+@media (max-width: 400px) {
+  .forme-index {
+    padding: 18px;
+    gap: 14px;
+  }
+  .forme-index-list button {
+    font-size: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-index-list button {
+    transition: none;
+  }
+}
