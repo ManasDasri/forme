@@ -1,6 +1,6 @@
 # Forme
 
-Experimental React buttons, interactive shaders, and ASCII components for designers building distinctive websites.
+Futuristic React components: shaders, HUD instruments, ASCII worlds, and buttons that react. Source you install and own, with accessibility behavior that is checked against the code in CI.
 
 Live preview: https://forme.vercel.app
 
@@ -15,47 +15,50 @@ npm test
 npm run build
 ```
 
-The Vite build creates refreshable static entries for all public pages, generates the public registry, and checks Studio source distribution boundaries. CI runs tests and the production build.
+`npm test` runs the registry, library, and trait tests. `npm run build` generates the public registry and measured sizes, type-checks, builds, writes refreshable static entries, and verifies that no Studio source reached the bundle.
 
 ## Signal, the first drop
 
-| Category | Free components               | Studio previews |
-| -------- | ----------------------------- | --------------- |
-| Buttons  | Prism button, Magnetic button | Shutter button  |
-| Shaders  | Silk field, Dither terrain    | Caustic glass   |
-| ASCII    | ASCII orbit, ASCII reveal     | ASCII surface   |
+25 components across four channels. 19 free, 6 Studio.
 
-The previous portfolio collection remains as unused source. It is excluded from the active catalog, runtime imports, documentation source, and public registry.
+| Channel | Free | Studio |
+| ------- | ---- | ------ |
+| Buttons | Glitch, Plasma, Hold to confirm, Scramble, Prism, Magnetic | Shutter |
+| Shaders | Neon horizon, Warp field, Hologram, Silk field, Dither terrain | Singularity, Caustic glass |
+| ASCII | ASCII globe, Glyph rain, Decode text, ASCII orbit, ASCII reveal | ASCII tunnel, ASCII surface |
+| HUD | Radar sweep, Oscilloscope, HUD frame | Holo card |
 
-Studio previews run compiled browser code. Editable TypeScript is excluded from public registry payloads and raw-source documentation; this is distribution control, not DRM. Purchasing and customer downloads are not open yet.
+## The edge: verifiable quality
+
+- **Trait badges are tests.** Each component's badges (reduced motion, keyboard, pauses offscreen, pause control, WebGL fallback, zero deps) live in `src/catalog.ts`. `scripts/traits.test.mjs` reads the installed files and fails if a claimed behavior has no evidence in source, or if any render loop lacks an offscreen pause.
+- **Measured size.** `scripts/build-registry.mjs` gzips every file the CLI would copy and writes `src/sizes.json`; the site shows those numbers.
+- **Studio source never ships.** Studio components live in `studio/`, outside `src/`. The site shows recordings made by `npm run capture` (deterministic: a fake clock steps 1/30 s per frame and CSS animations are seeked to it). `scripts/verify-build.mjs` checks that distinctive Studio string literals, GLSL, and CSS selectors are absent from the built JS and CSS.
 
 ## Install a free component
 
 In a React project with shadcn and import aliases configured:
 
 ```sh
-npx shadcn@latest add https://forme.vercel.app/r/prism-button.json
-npx shadcn@latest add https://forme.vercel.app/r/silk-shader.json
+npx shadcn@latest add https://forme.vercel.app/r/glitch-button.json
+npx shadcn@latest add https://forme.vercel.app/r/horizon-shader.json
 ```
 
-The CLI follows your configured components alias and installs scoped CSS beside the TypeScript. Shaders share `shader-canvas.tsx` and `shader-canvas.css`; the registry includes both. Magnetic button installs Motion. Other current pieces use React and native browser APIs. Demo fonts and photographs are not installed.
+Shaders share `shader-canvas.tsx` and `.css`; Scramble button includes `ascii-decode`. Magnetic button installs Motion. Everything else uses React and browser APIs only.
 
-The public registry builder reads the private root `registry.json`, omits Studio items, and removes stale generated payloads. Free documentation uses an explicit raw-source allowlist.
+## Re-recording Studio previews
 
-## Pages and behavior
+Requires ffmpeg and Playwright's Chromium (`npx playwright-core install chromium`).
 
-- `/` — shader hero and interactive library
-- `/components/` — search, category and access filters, sort, bookmarks, live previews
-- `/bookmarks/` — saved components, persisted in this browser
-- `/collections/` — Signal categories and next-drop status
-- `/collections/buttons/`, `/collections/shaders/`, `/collections/ascii/` — filtered category libraries
-- `/collections/next/` — coming soon, with no promised release date
-- `/studio/` — the three Studio previews
-- `/docs/` — usage, customization, accessibility, registry, and individual component playgrounds
+```sh
+npm run capture                 # all Studio pieces
+npm run capture -- holo-card    # one piece
+```
 
-Dark mode is the initial theme; the explicit choice persists across pages. Header search supports Cmd/Ctrl+K. Silk field is ambient and does not respond to the pointer. Dither terrain and Caustic glass support pointer movement. All shaders have color and speed controls, a WebGL fallback, context restoration, reduced motion, and rendering suspension offscreen or in hidden tabs. ASCII orbit uses a dense adaptive character grid and finely sampled geometry. ASCII orbit and ASCII surface include pause. ASCII surface supports pointer deformation and click, tap, or keyboard ripples. Magnetic button springs past center on release and rebounds after a press. ASCII reveal supports mouse, keyboard and touch. Source tabs include every file required by the selected free component.
+Outputs `public/studio/<slug>.mp4` and a poster `.jpg`.
 
-`src/App.tsx` owns pages, `src/Library.tsx` browsing, `src/library-state.ts` filtering/bookmarks, `src/Docs.tsx` playgrounds and guides, and `src/registry/` installable components. No new runtime dependency was added for this revision.
+## Layout
+
+`src/App.tsx` pages, `src/Library.tsx` browsing, `src/Docs.tsx` playgrounds and guides (including `/docs/quality/`), `src/catalog.ts` metadata and traits, `src/registry/` free components, `studio/` paid components and the private capture page.
 
 ## Deploy
 
