@@ -1,0 +1,91 @@
+@property --forme-plasma-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+.forme-plasma {
+  --forme-plasma-a: #39e6ff;
+  --forme-plasma-b: #8a5cff;
+  --forme-plasma-c: #ff4fd8;
+  --forme-plasma-ring: conic-gradient(
+    from var(--forme-plasma-angle),
+    var(--forme-plasma-a),
+    var(--forme-plasma-b),
+    var(--forme-plasma-c),
+    var(--forme-plasma-a)
+  );
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  padding: 1.5px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--forme-plasma-ring);
+  color: #f5f7ff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  animation: forme-plasma-spin 5s linear infinite;
+}
+.forme-plasma-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--forme-plasma-ring);
+  filter: blur(16px);
+  opacity: 0.35;
+  transition: opacity 0.3s;
+}
+.forme-plasma-core {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 26px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 140%, #2b2350, #07080f 70%);
+  transition: background 0.3s;
+}
+.forme-plasma-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--forme-plasma-a);
+  box-shadow: 0 0 12px var(--forme-plasma-a);
+}
+.forme-plasma:hover,
+.forme-plasma:focus-visible {
+  animation-duration: 1.6s;
+}
+.forme-plasma:hover .forme-plasma-glow,
+.forme-plasma:focus-visible .forme-plasma-glow {
+  opacity: 0.85;
+}
+.forme-plasma:active .forme-plasma-core {
+  background: radial-gradient(circle at 50% 120%, #4a3a8c, #0b0c18 75%);
+}
+.forme-plasma:focus-visible {
+  outline: 2px solid var(--forme-plasma-a);
+  outline-offset: 6px;
+}
+.forme-plasma:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  animation: none;
+}
+@keyframes forme-plasma-spin {
+  to {
+    --forme-plasma-angle: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-plasma,
+  .forme-plasma:hover {
+    animation: none;
+  }
+  .forme-plasma-glow,
+  .forme-plasma-core {
+    transition: none;
+  }
+}

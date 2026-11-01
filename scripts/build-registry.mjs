@@ -1,4 +1,5 @@
 import { readFile, mkdir, writeFile, readdir, unlink } from "node:fs/promises";
+import { gzipSync } from "node:zlib";
 
 const registry = JSON.parse(
   await readFile(new URL("../registry.json", import.meta.url), "utf8"),
@@ -40,6 +41,20 @@ for (const item of publicItems) {
 await writeFile(
   new URL("../public/registry.json", import.meta.url),
   JSON.stringify({ ...registry, items: publicItems }, null, 2) + "\n",
+);
+// Measured install size per component: every file the CLI would copy, gzipped.
+const sizes = {};
+for (const item of registry.items) {
+  const text = await Promise.all(
+    item.files.map((file) =>
+      readFile(new URL(`../${file.path}`, import.meta.url), "utf8"),
+    ),
+  );
+  sizes[item.name] = gzipSync(text.join("\n")).length;
+}
+await writeFile(
+  new URL("../src/sizes.json", import.meta.url),
+  JSON.stringify(sizes, null, 2) + "\n",
 );
 console.log(
   `Built ${publicItems.length} public registry items; Studio source excluded.`,

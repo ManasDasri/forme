@@ -1,0 +1,15 @@
+.forme-decode {
+  position: relative;
+}
+span.forme-decode {
+  display: inline-block;
+}
+/* The real text holds layout and stays readable to assistive technology. */
+.forme-decode-final {
+  color: transparent;
+}
+.forme-decode-live {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}

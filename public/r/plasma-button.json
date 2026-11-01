@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "plasma-button",
+  "type": "registry:component",
+  "title": "Plasma button",
+  "description": "A charged ring of light that surges when you get close.",
+  "files": [
+    {
+      "path": "src/registry/plasma-button.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/plasma-button.tsx",
+      "content": "\"use client\";\nimport type { ButtonHTMLAttributes } from \"react\";\nimport \"./plasma-button.css\";\n\nexport function PlasmaButton({\n  children,\n  className = \"\",\n  type = \"button\",\n  ...props\n}: ButtonHTMLAttributes<HTMLButtonElement>) {\n  return (\n    <button {...props} type={type} className={`forme-plasma ${className}`}>\n      <span className=\"forme-plasma-glow\" aria-hidden=\"true\" />\n      <span className=\"forme-plasma-core\">\n        {children}\n        <span className=\"forme-plasma-dot\" aria-hidden=\"true\" />\n      </span>\n    </button>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/plasma-button.css",
+      "type": "registry:file",
+      "target": "@components/forme/plasma-button.css",
+      "content": "@property --forme-plasma-angle {\n  syntax: \"<angle>\";\n  inherits: true;\n  initial-value: 0deg;\n}\n.forme-plasma {\n  --forme-plasma-a: #39e6ff;\n  --forme-plasma-b: #8a5cff;\n  --forme-plasma-c: #ff4fd8;\n  --forme-plasma-ring: conic-gradient(\n    from var(--forme-plasma-angle),\n    var(--forme-plasma-a),\n    var(--forme-plasma-b),\n    var(--forme-plasma-c),\n    var(--forme-plasma-a)\n  );\n  position: relative;\n  isolation: isolate;\n  display: inline-flex;\n  padding: 1.5px;\n  border: 0;\n  border-radius: 999px;\n  background: var(--forme-plasma-ring);\n  color: #f5f7ff;\n  font: inherit;\n  font-size: 15px;\n  font-weight: 500;\n  cursor: pointer;\n  animation: forme-plasma-spin 5s linear infinite;\n}\n.forme-plasma-glow {\n  position: absolute;\n  inset: 0;\n  z-index: -1;\n  border-radius: inherit;\n  background: var(--forme-plasma-ring);\n  filter: blur(16px);\n  opacity: 0.35;\n  transition: opacity 0.3s;\n}\n.forme-plasma-core {\n  display: inline-flex;\n  align-items: center;\n  gap: 14px;\n  padding: 15px 26px;\n  border-radius: inherit;\n  background: radial-gradient(circle at 50% 140%, #2b2350, #07080f 70%);\n  transition: background 0.3s;\n}\n.forme-plasma-dot {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: var(--forme-plasma-a);\n  box-shadow: 0 0 12px var(--forme-plasma-a);\n}\n.forme-plasma:hover,\n.forme-plasma:focus-visible {\n  animation-duration: 1.6s;\n}\n.forme-plasma:hover .forme-plasma-glow,\n.forme-plasma:focus-visible .forme-plasma-glow {\n  opacity: 0.85;\n}\n.forme-plasma:active .forme-plasma-core {\n  background: radial-gradient(circle at 50% 120%, #4a3a8c, #0b0c18 75%);\n}\n.forme-plasma:focus-visible {\n  outline: 2px solid var(--forme-plasma-a);\n  outline-offset: 6px;\n}\n.forme-plasma:disabled {\n  opacity: 0.4;\n  cursor: not-allowed;\n  animation: none;\n}\n@keyframes forme-plasma-spin {\n  to {\n    --forme-plasma-angle: 360deg;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-plasma,\n  .forme-plasma:hover {\n    animation: none;\n  }\n  .forme-plasma-glow,\n  .forme-plasma-core {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scramble-button",
+  "type": "registry:component",
+  "title": "Scramble button",
+  "description": "A terminal label that decodes itself every time you arrive.",
+  "files": [
+    {
+      "path": "src/registry/scramble-button.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/scramble-button.tsx",
+      "content": "\"use client\";\nimport type { ButtonHTMLAttributes } from \"react\";\nimport { useDecode } from \"./ascii-decode\";\nimport \"./ascii-decode.css\";\nimport \"./scramble-button.css\";\n\nexport function ScrambleButton({\n  children,\n  className = \"\",\n  type = \"button\",\n  ...props\n}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, \"children\"> & {\n  children: string;\n}) {\n  const [shown, run] = useDecode(children, 520);\n  return (\n    <button\n      {...props}\n      type={type}\n      className={`forme-scramble ${className}`}\n      onPointerEnter={(e) => {\n        run();\n        props.onPointerEnter?.(e);\n      }}\n      onFocus={(e) => {\n        run();\n        props.onFocus?.(e);\n      }}\n    >\n      <span className=\"forme-scramble-index\" aria-hidden=\"true\">\n        [01]\n      </span>\n      <span className=\"forme-decode\">\n        <span className=\"forme-decode-final\">{children}</span>\n        <span className=\"forme-decode-live\" aria-hidden=\"true\">\n          {shown}\n        </span>\n      </span>\n      <span className=\"forme-scramble-cursor\" aria-hidden=\"true\" />\n    </button>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/scramble-button.css",
+      "type": "registry:file",
+      "target": "@components/forme/scramble-button.css",
+      "content": ".forme-scramble {\n  display: inline-flex;\n  align-items: center;\n  gap: 14px;\n  padding: 15px 22px;\n  border: 1px solid #c8ff5a55;\n  border-radius: 2px;\n  background: #0b0e07;\n  color: #d9ff8a;\n  font: 500 14px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  cursor: pointer;\n  transition:\n    background 0.2s,\n    color 0.2s,\n    border-color 0.2s;\n}\n.forme-scramble-index {\n  opacity: 0.5;\n  font-size: 11px;\n}\n.forme-scramble-cursor {\n  width: 8px;\n  height: 15px;\n  background: currentColor;\n  animation: forme-scramble-blink 1s steps(1) infinite;\n}\n.forme-scramble:hover,\n.forme-scramble:focus-visible {\n  background: #c8ff5a;\n  border-color: #c8ff5a;\n  color: #0b0e07;\n}\n.forme-scramble:focus-visible {\n  outline: 2px solid #c8ff5a;\n  outline-offset: 4px;\n}\n.forme-scramble:disabled {\n  opacity: 0.4;\n  cursor: not-allowed;\n}\n@keyframes forme-scramble-blink {\n  50% {\n    opacity: 0;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-scramble,\n  .forme-scramble-cursor {\n    transition: none;\n    animation: none;\n  }\n}\n"
+    },
+    {
+      "path": "src/registry/ascii-decode.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/ascii-decode.tsx",
+      "content": "\"use client\";\nimport { createElement, useCallback, useEffect, useRef, useState } from \"react\";\nimport \"./ascii-decode.css\";\n\nconst glyphs = \"!<>-_/[]{}=+*^?#%@01ABCDEFXZ\";\n/** Returns the visible text and a function that decodes it from noise. */\nexport function useDecode(text: string, duration = 900) {\n  const [shown, setShown] = useState(text);\n  const frame = useRef(0);\n  const run = useCallback(() => {\n    cancelAnimationFrame(frame.current);\n    if (matchMedia(\"(prefers-reduced-motion:reduce)\").matches)\n      return setShown(text);\n    const start = performance.now();\n    let step = -1;\n    const tick = (now: number) => {\n      const progress = Math.min(1, (now - start) / duration);\n      // New noise every 45 ms reads as decoding instead of flicker.\n      if (Math.floor((now - start) / 45) !== step || progress === 1) {\n        step = Math.floor((now - start) / 45);\n        const solved = progress * text.length;\n        setShown(\n          Array.from(text, (ch, i) =>\n            i < solved || ch === \" \"\n              ? ch\n              : glyphs[Math.floor(Math.random() * glyphs.length)],\n          ).join(\"\"),\n        );\n      }\n      if (progress < 1) frame.current = requestAnimationFrame(tick);\n    };\n    frame.current = requestAnimationFrame(tick);\n  }, [text, duration]);\n  useEffect(() => {\n    setShown(text);\n    return () => cancelAnimationFrame(frame.current);\n  }, [text]);\n  return [shown, run] as const;\n}\n\nexport function AsciiDecode({\n  text,\n  as = \"span\",\n  className = \"\",\n  duration = 900,\n  replayOnHover = true,\n}: {\n  text: string;\n  as?: \"span\" | \"h1\" | \"h2\" | \"h3\" | \"p\";\n  className?: string;\n  duration?: number;\n  replayOnHover?: boolean;\n}) {\n  const ref = useRef<HTMLElement>(null);\n  const [shown, run] = useDecode(text, duration);\n  useEffect(() => {\n    const observer = new IntersectionObserver(([entry]) => {\n      if (!entry.isIntersecting) return;\n      run();\n      observer.disconnect();\n    });\n    observer.observe(ref.current!);\n    return () => observer.disconnect();\n  }, [run]);\n  return createElement(\n    as,\n    {\n      ref,\n      className: `forme-decode ${className}`,\n      onPointerEnter: replayOnHover ? run : undefined,\n    },\n    <span className=\"forme-decode-final\">{text}</span>,\n    <span className=\"forme-decode-live\" aria-hidden=\"true\">\n      {shown}\n    </span>,\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/ascii-decode.css",
+      "type": "registry:file",
+      "target": "@components/forme/ascii-decode.css",
+      "content": ".forme-decode {\n  position: relative;\n}\nspan.forme-decode {\n  display: inline-block;\n}\n/* The real text holds layout and stays readable to assistive technology. */\n.forme-decode-final {\n  color: transparent;\n}\n.forme-decode-live {\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n}\n"
+    }
+  ]
+}

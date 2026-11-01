@@ -2,7 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "ascii-image",
   "type": "registry:component",
-  "title": "Ascii Image",
+  "title": "ASCII reveal",
+  "description": "An image hidden in plain text. Move to find what’s beneath.",
   "files": [
     {
       "path": "src/registry/ascii-image.tsx",

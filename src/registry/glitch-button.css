@@ -1,0 +1,96 @@
+.forme-glitch {
+  --forme-glitch-a: #ff2bd6;
+  --forme-glitch-b: #2bf0ff;
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  padding: 17px 30px;
+  border: 0;
+  background: none;
+  color: #f4f7ff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+/* The chamfered plate lives on a pseudo-element so focus rings are not clipped. */
+.forme-glitch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(0deg, #ffffff08 0 1px, transparent 1px 3px),
+    linear-gradient(100deg, #191b2c, #0c0d16);
+  border: 1px solid #ffffff2a;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  transition: background 0.2s;
+}
+.forme-glitch > span {
+  grid-area: 1 / 1;
+}
+.forme-glitch-layer {
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+.forme-glitch-layer:nth-child(2) {
+  color: var(--forme-glitch-a);
+}
+.forme-glitch-layer:nth-child(3) {
+  color: var(--forme-glitch-b);
+}
+.forme-glitch:hover .forme-glitch-layer,
+.forme-glitch:focus-visible .forme-glitch-layer {
+  opacity: 1;
+}
+.forme-glitch:hover .forme-glitch-layer:nth-child(2),
+.forme-glitch:focus-visible .forme-glitch-layer:nth-child(2) {
+  animation: forme-glitch-a 0.9s steps(2, end) infinite;
+}
+.forme-glitch:hover .forme-glitch-layer:nth-child(3),
+.forme-glitch:focus-visible .forme-glitch-layer:nth-child(3) {
+  animation: forme-glitch-b 0.9s steps(2, end) infinite;
+}
+.forme-glitch:hover::before,
+.forme-glitch:focus-visible::before {
+  background:
+    repeating-linear-gradient(0deg, #ffffff10 0 1px, transparent 1px 3px),
+    linear-gradient(100deg, #2a1838, #0c1a24);
+}
+.forme-glitch:active .forme-glitch-text {
+  transform: translateX(1px) skewX(-8deg);
+}
+.forme-glitch:focus-visible {
+  outline: 2px solid var(--forme-glitch-b);
+  outline-offset: 5px;
+}
+.forme-glitch:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+@keyframes forme-glitch-a {
+  0% { clip-path: inset(10% 0 60% 0); transform: translate(-3px, 0); }
+  25% { clip-path: inset(70% 0 5% 0); transform: translate(2px, 1px); }
+  50% { clip-path: inset(30% 0 40% 0); transform: translate(-2px, -1px); }
+  75% { clip-path: inset(5% 0 80% 0); transform: translate(3px, 0); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(-1px, 1px); }
+}
+@keyframes forme-glitch-b {
+  0% { clip-path: inset(60% 0 15% 0); transform: translate(3px, 0); }
+  25% { clip-path: inset(15% 0 65% 0); transform: translate(-2px, -1px); }
+  50% { clip-path: inset(45% 0 30% 0); transform: translate(2px, 1px); }
+  75% { clip-path: inset(80% 0 2% 0); transform: translate(-3px, 0); }
+  100% { clip-path: inset(25% 0 55% 0); transform: translate(1px, -1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-glitch-layer {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .forme-glitch:active .forme-glitch-text {
+    transform: none;
+  }
+}

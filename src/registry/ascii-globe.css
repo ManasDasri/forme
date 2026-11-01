@@ -1,0 +1,59 @@
+.forme-ascii-globe {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  background: radial-gradient(circle at 50% 45%, #0c1824, #05070b 70%);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+.forme-ascii-globe:active {
+  cursor: grabbing;
+}
+.forme-ascii-globe:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+.forme-ascii-globe pre {
+  margin: 0 0 24px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: pre;
+  pointer-events: none;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+.forme-ascii-globe-footer {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: 400 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #9fb0c2;
+}
+.forme-ascii-globe-footer button {
+  font: inherit;
+  border: 1px solid #ffffff26;
+  border-radius: 3px;
+  background: none;
+  color: inherit;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.forme-ascii-globe-footer button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-ascii-globe pre {
+    filter: none;
+  }
+}

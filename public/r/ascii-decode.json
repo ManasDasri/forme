@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ascii-decode",
+  "type": "registry:component",
+  "title": "Decode text",
+  "description": "Headlines that resolve out of noise as they scroll into view.",
+  "files": [
+    {
+      "path": "src/registry/ascii-decode.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/ascii-decode.tsx",
+      "content": "\"use client\";\nimport { createElement, useCallback, useEffect, useRef, useState } from \"react\";\nimport \"./ascii-decode.css\";\n\nconst glyphs = \"!<>-_/[]{}=+*^?#%@01ABCDEFXZ\";\n/** Returns the visible text and a function that decodes it from noise. */\nexport function useDecode(text: string, duration = 900) {\n  const [shown, setShown] = useState(text);\n  const frame = useRef(0);\n  const run = useCallback(() => {\n    cancelAnimationFrame(frame.current);\n    if (matchMedia(\"(prefers-reduced-motion:reduce)\").matches)\n      return setShown(text);\n    const start = performance.now();\n    let step = -1;\n    const tick = (now: number) => {\n      const progress = Math.min(1, (now - start) / duration);\n      // New noise every 45 ms reads as decoding instead of flicker.\n      if (Math.floor((now - start) / 45) !== step || progress === 1) {\n        step = Math.floor((now - start) / 45);\n        const solved = progress * text.length;\n        setShown(\n          Array.from(text, (ch, i) =>\n            i < solved || ch === \" \"\n              ? ch\n              : glyphs[Math.floor(Math.random() * glyphs.length)],\n          ).join(\"\"),\n        );\n      }\n      if (progress < 1) frame.current = requestAnimationFrame(tick);\n    };\n    frame.current = requestAnimationFrame(tick);\n  }, [text, duration]);\n  useEffect(() => {\n    setShown(text);\n    return () => cancelAnimationFrame(frame.current);\n  }, [text]);\n  return [shown, run] as const;\n}\n\nexport function AsciiDecode({\n  text,\n  as = \"span\",\n  className = \"\",\n  duration = 900,\n  replayOnHover = true,\n}: {\n  text: string;\n  as?: \"span\" | \"h1\" | \"h2\" | \"h3\" | \"p\";\n  className?: string;\n  duration?: number;\n  replayOnHover?: boolean;\n}) {\n  const ref = useRef<HTMLElement>(null);\n  const [shown, run] = useDecode(text, duration);\n  useEffect(() => {\n    const observer = new IntersectionObserver(([entry]) => {\n      if (!entry.isIntersecting) return;\n      run();\n      observer.disconnect();\n    });\n    observer.observe(ref.current!);\n    return () => observer.disconnect();\n  }, [run]);\n  return createElement(\n    as,\n    {\n      ref,\n      className: `forme-decode ${className}`,\n      onPointerEnter: replayOnHover ? run : undefined,\n    },\n    <span className=\"forme-decode-final\">{text}</span>,\n    <span className=\"forme-decode-live\" aria-hidden=\"true\">\n      {shown}\n    </span>,\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/ascii-decode.css",
+      "type": "registry:file",
+      "target": "@components/forme/ascii-decode.css",
+      "content": ".forme-decode {\n  position: relative;\n}\nspan.forme-decode {\n  display: inline-block;\n}\n/* The real text holds layout and stays readable to assistive technology. */\n.forme-decode-final {\n  color: transparent;\n}\n.forme-decode-live {\n  position: absolute;\n  inset: 0;\n  pointer-events: none;\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+.forme-hud {
+  --forme-hud-accent: #4df3ff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 240px;
+  padding: 18px 20px;
+  background:
+    linear-gradient(#4df3ff08 1px, transparent 1px) 0 0 / 100% 18px,
+    #060a0f;
+  color: #d7f7ff;
+  overflow: hidden;
+  isolation: isolate;
+}
+.forme-hud-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 0 solid var(--forme-hud-accent);
+  animation: forme-hud-lock 0.7s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+.forme-hud-corner[data-corner="tl"] { top: 0; left: 0; border-width: 2px 0 0 2px; --forme-hud-from: -10px, -10px; }
+.forme-hud-corner[data-corner="tr"] { top: 0; right: 0; border-width: 2px 2px 0 0; --forme-hud-from: 10px, -10px; }
+.forme-hud-corner[data-corner="bl"] { bottom: 0; left: 0; border-width: 0 0 2px 2px; --forme-hud-from: -10px, 10px; }
+.forme-hud-corner[data-corner="br"] { bottom: 0; right: 0; border-width: 0 2px 2px 0; --forme-hud-from: 10px, 10px; }
+.forme-hud-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 40%;
+  z-index: -1;
+  background: linear-gradient(transparent, #4df3ff14 85%, #4df3ff55 100%);
+  animation: forme-hud-scan 3.2s linear infinite;
+}
+.forme-hud-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font: 500 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7fb4c2;
+}
+.forme-hud-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--forme-hud-accent);
+}
+.forme-hud-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  animation: forme-hud-blink 1.4s steps(1) infinite;
+}
+.forme-hud-ticks {
+  flex: 1;
+  max-width: 120px;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, #7fb4c2 0 1px, transparent 1px 6px);
+  opacity: 0.6;
+}
+.forme-hud-body {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+@keyframes forme-hud-lock {
+  from { transform: translate(var(--forme-hud-from)); opacity: 0; }
+}
+@keyframes forme-hud-scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(250%); }
+}
+@keyframes forme-hud-blink {
+  50% { opacity: 0.2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-hud-corner,
+  .forme-hud-scan,
+  .forme-hud-status i {
+    animation: none;
+  }
+  .forme-hud-scan {
+    display: none;
+  }
+}

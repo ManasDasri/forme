@@ -1,0 +1,54 @@
+.forme-scramble {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 22px;
+  border: 1px solid #c8ff5a55;
+  border-radius: 2px;
+  background: #0b0e07;
+  color: #d9ff8a;
+  font: 500 14px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.forme-scramble-index {
+  opacity: 0.5;
+  font-size: 11px;
+}
+.forme-scramble-cursor {
+  width: 8px;
+  height: 15px;
+  background: currentColor;
+  animation: forme-scramble-blink 1s steps(1) infinite;
+}
+.forme-scramble:hover,
+.forme-scramble:focus-visible {
+  background: #c8ff5a;
+  border-color: #c8ff5a;
+  color: #0b0e07;
+}
+.forme-scramble:focus-visible {
+  outline: 2px solid #c8ff5a;
+  outline-offset: 4px;
+}
+.forme-scramble:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+@keyframes forme-scramble-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-scramble,
+  .forme-scramble-cursor {
+    transition: none;
+    animation: none;
+  }
+}

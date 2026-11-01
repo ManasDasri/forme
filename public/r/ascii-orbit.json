@@ -2,7 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "ascii-orbit",
   "type": "registry:component",
-  "title": "Ascii Orbit",
+  "title": "ASCII orbit",
+  "description": "A dense, dimensional object, drawn entirely from characters.",
   "files": [
     {
       "path": "src/registry/ascii-orbit.tsx",
