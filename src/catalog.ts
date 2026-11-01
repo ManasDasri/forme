@@ -213,16 +213,17 @@ export const catalog: CatalogItem[] = [
     speed: true,
   },
   {
-    slug: "warp-shader",
-    name: "Warp field",
+    slug: "aurora-shader",
+    name: "Aurora",
     category: "Shaders",
-    description: "Stars stretch into streaks as you punch through.",
-    usage: '<WarpShader color="#9b8cff" speed={1} />',
-    props: `${shaderProps} The pointer steers the vanishing point.`,
+    description: "Slow curtains of light folding across a night sky.",
+    usage: '<AuroraShader color="#5eead4" speed={1} />',
+    props: `${shaderProps} Ambient: no pointer response.`,
     traits: shader,
-    color: "#9b8cff",
+    color: "#5eead4",
     speed: true,
   },
+
   {
     slug: "prism-button",
     name: "Prism button",
@@ -286,33 +287,37 @@ export const catalog: CatalogItem[] = [
     name: "Singularity",
     category: "Shaders",
     access: "studio",
-    description: "A black hole bending starlight around a burning accretion disk.",
-    usage: '<SingularityShader color="#ff9b5c" speed={1} />',
+    description: "A black hole, its far side bent into a halo of light.",
+    usage: '<SingularityShader color="#e8a25c" speed={1} />',
     props: `${shaderProps} The pointer shifts the observer.`,
     traits: shader,
   },
   {
-    slug: "holo-card",
-    name: "Holo card",
+    slug: "orbit-gauge",
+    name: "Orbit gauge",
     category: "HUD",
     access: "studio",
-    description: "A card that tilts toward you, with foil that shifts like a hologram.",
-    usage: "<HoloCard>\n  <YourCardContent />\n</HoloCard>",
+    description: "Concentric precision arcs that ease to every new value.",
+    usage:
+      '<OrbitGauge title="Capacity" metrics={[\n  { label: "CPU", value: 0.72, color: "#8ab4ff" },\n  { label: "Memory", value: 0.48, color: "#c4b5fd" },\n  { label: "Disk", value: 0.31, color: "#5eead4" },\n]} />',
     props:
-      "Wraps any children. Tilt, foil, and glare follow a mouse pointer and settle on leave. Reduced motion keeps the card flat with a static foil.",
+      "metrics takes up to three { label, value (0–1), color } entries; title labels the center. Arcs ease to new values and the center rolls to the first metric. The whole gauge is described to assistive technology as text. Reduced motion jumps straight to each value.",
     traits: ["reduced-motion", "zero-deps"],
   },
+
   {
-    slug: "ascii-tunnel",
-    name: "ASCII tunnel",
+    slug: "ascii-black-hole",
+    name: "ASCII black hole",
     category: "ASCII",
     access: "studio",
-    description: "Rings of characters rush toward you, glowing at the far end.",
-    usage: '<AsciiTunnel color="#ffb86b" speed={1} />',
+    description: "A black hole in dense characters, its disk orbiting into the dark.",
+    usage: "<AsciiBlackHole speed={1} />",
     props:
-      "color, speed, and label are optional. Glyph size, brightness, and color follow depth; the far end steers toward the pointer with parallax. Includes pause, stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
+      "speed and label are optional. Tens of thousands of glyphs per frame, batched by brightness so it stays fast. Inner rings orbit faster than outer ones, the approaching side burns white, and the far side of the disk is lensed into a ring. Ambient, with a pause control. Stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
     traits: ["reduced-motion", "offscreen-pause", "pause-control", "zero-deps"],
   },
+
+
   {
     slug: "caustic-shader",
     name: "Caustic glass",

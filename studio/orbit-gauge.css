@@ -1,0 +1,89 @@
+.forme-orbit {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  width: 280px;
+  max-width: 100%;
+  margin: 0;
+  color: #f4f4f5;
+  font-variant-numeric: tabular-nums;
+}
+.forme-orbit svg {
+  width: 100%;
+  overflow: visible;
+}
+.forme-orbit-tick {
+  stroke: #ffffff26;
+  stroke-width: 1;
+}
+.forme-orbit-tick.is-long {
+  stroke: #ffffff59;
+}
+.forme-orbit-track,
+.forme-orbit-value {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.forme-orbit-track {
+  stroke: #ffffff0d;
+}
+.forme-orbit-value {
+  filter: drop-shadow(0 0 6px currentColor);
+  transition: stroke-dasharray 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.forme-orbit-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 2px;
+}
+.forme-orbit-center strong {
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.forme-orbit-center strong span {
+  margin-left: 2px;
+  font-size: 20px;
+  color: #a1a1aa;
+}
+.forme-orbit-center > span {
+  font-size: 13px;
+  color: #a1a1aa;
+}
+.forme-orbit-legend {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+  color: #a1a1aa;
+}
+.forme-orbit-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.forme-orbit-legend i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.forme-orbit-legend b {
+  font-weight: 500;
+  color: #f4f4f5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-orbit-value {
+    transition: none;
+  }
+}

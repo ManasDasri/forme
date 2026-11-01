@@ -3,7 +3,7 @@
   "name": "oscilloscope",
   "type": "registry:component",
   "title": "Oscilloscope",
-  "description": "A phosphor trace you can tune by hand or by keyboard.",
+  "description": "A phosphor trace with persistence. Tune it by hand or keyboard.",
   "files": [
     {
       "path": "src/registry/oscilloscope.tsx",

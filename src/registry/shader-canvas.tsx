@@ -44,7 +44,9 @@ export function ShaderCanvas({
       visible = false,
       last = 0,
       phase = 0;
-    let pointer = [0.5, 0.5];
+    // The shader sees an eased pointer: it drifts toward the cursor and home again.
+    let pointer = [0.5, 0.5],
+      target = [0.5, 0.5];
     const media = matchMedia("(prefers-reduced-motion:reduce)");
     const shaders: WebGLShader[] = [];
     const compile = (type: number, source: string) => {
@@ -113,6 +115,7 @@ export function ShaderCanvas({
       if (now - last >= 32) {
         // Accumulate phase so speed changes never jump the animation.
         phase += Math.min(now - last, 100) * 0.001 * live.current.speed;
+        pointer = [pointer[0] + (target[0] - pointer[0]) * 0.035, pointer[1] + (target[1] - pointer[1]) * 0.035];
         last = now;
         render();
       }
@@ -143,10 +146,13 @@ export function ShaderCanvas({
     const move = (event: PointerEvent) => {
       if (media.matches) return;
       const r = node.getBoundingClientRect();
-      pointer = [
+      target = [
         (event.clientX - r.left) / r.width,
         1 - (event.clientY - r.top) / r.height,
       ];
+    };
+    const leave = () => {
+      target = [0.5, 0.5];
     };
     const lost = (event: Event) => {
       event.preventDefault();
@@ -157,7 +163,10 @@ export function ShaderCanvas({
       setFallback(false);
       setRevision((v) => v + 1);
     };
-    if (interactive) node.addEventListener("pointermove", move);
+    if (interactive) {
+      node.addEventListener("pointermove", move);
+      node.addEventListener("pointerleave", leave);
+    }
     node.addEventListener("webglcontextlost", lost);
     node.addEventListener("webglcontextrestored", restored);
     document.addEventListener("visibilitychange", start);
@@ -170,6 +179,7 @@ export function ShaderCanvas({
       resize.disconnect();
       intersection.disconnect();
       node.removeEventListener("pointermove", move);
+      node.removeEventListener("pointerleave", leave);
       node.removeEventListener("webglcontextlost", lost);
       node.removeEventListener("webglcontextrestored", restored);
       document.removeEventListener("visibilitychange", start);
@@ -194,8 +204,8 @@ export function ShaderCanvas({
           {fallback
             ? "Static fallback"
             : interactive
-              ? "Move to explore"
-              : "Ambient shader"}
+              ? "Responds to the pointer"
+              : "Ambient"}
         </span>
       </span>
     </div>

@@ -248,7 +248,7 @@
       "name": "oscilloscope",
       "type": "registry:component",
       "title": "Oscilloscope",
-      "description": "A phosphor trace you can tune by hand or by keyboard.",
+      "description": "A phosphor trace with persistence. Tune it by hand or keyboard.",
       "files": [
         {
           "path": "src/registry/oscilloscope.tsx",
@@ -263,15 +263,15 @@
       ]
     },
     {
-      "name": "warp-shader",
+      "name": "aurora-shader",
       "type": "registry:component",
-      "title": "Warp field",
-      "description": "Stars stretch into streaks as you punch through.",
+      "title": "Aurora",
+      "description": "Slow curtains of light folding across a night sky.",
       "files": [
         {
-          "path": "src/registry/warp-shader.tsx",
+          "path": "src/registry/aurora-shader.tsx",
           "type": "registry:component",
-          "target": "@components/forme/warp-shader.tsx"
+          "target": "@components/forme/aurora-shader.tsx"
         },
         {
           "path": "src/registry/shader-canvas.tsx",
@@ -307,7 +307,7 @@
       "name": "ascii-decode",
       "type": "registry:component",
       "title": "Decode text",
-      "description": "Headlines that resolve out of noise as they scroll into view.",
+      "description": "Headlines that resolve letter by letter as they scroll into view.",
       "files": [
         {
           "path": "src/registry/ascii-decode.tsx",
@@ -387,7 +387,7 @@
       "name": "singularity-shader",
       "type": "registry:component",
       "title": "Singularity",
-      "description": "A black hole bending starlight around a burning accretion disk.",
+      "description": "A black hole, its far side bent into a halo of light.",
       "files": [
         {
           "path": "studio/singularity-shader.tsx",
@@ -410,20 +410,20 @@
       }
     },
     {
-      "name": "holo-card",
+      "name": "orbit-gauge",
       "type": "registry:component",
-      "title": "Holo card",
-      "description": "A card that tilts toward you, with foil that shifts like a hologram.",
+      "title": "Orbit gauge",
+      "description": "Concentric precision arcs that ease to every new value.",
       "files": [
         {
-          "path": "studio/holo-card.tsx",
+          "path": "studio/orbit-gauge.tsx",
           "type": "registry:component",
-          "target": "@components/forme/holo-card.tsx"
+          "target": "@components/forme/orbit-gauge.tsx"
         },
         {
-          "path": "studio/holo-card.css",
+          "path": "studio/orbit-gauge.css",
           "type": "registry:file",
-          "target": "@components/forme/holo-card.css"
+          "target": "@components/forme/orbit-gauge.css"
         }
       ],
       "meta": {
@@ -431,20 +431,20 @@
       }
     },
     {
-      "name": "ascii-tunnel",
+      "name": "ascii-black-hole",
       "type": "registry:component",
-      "title": "ASCII tunnel",
-      "description": "Rings of characters rush toward you, glowing at the far end.",
+      "title": "ASCII black hole",
+      "description": "A black hole in dense characters, its disk orbiting into the dark.",
       "files": [
         {
-          "path": "studio/ascii-tunnel.tsx",
+          "path": "studio/ascii-black-hole.tsx",
           "type": "registry:component",
-          "target": "@components/forme/ascii-tunnel.tsx"
+          "target": "@components/forme/ascii-black-hole.tsx"
         },
         {
-          "path": "studio/ascii-tunnel.css",
+          "path": "studio/ascii-black-hole.css",
           "type": "registry:file",
-          "target": "@components/forme/ascii-tunnel.css"
+          "target": "@components/forme/ascii-black-hole.css"
         }
       ],
       "meta": {

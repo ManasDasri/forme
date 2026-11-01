@@ -3,7 +3,7 @@ import { catalog } from "./catalog";
 import { SilkShader } from "./registry/silk-shader";
 import { DitherShader } from "./registry/dither-shader";
 import { HorizonShader } from "./registry/horizon-shader";
-import { WarpShader } from "./registry/warp-shader";
+import { AuroraShader } from "./registry/aurora-shader";
 import { ChromeShader } from "./registry/chrome-shader";
 import { PrismButton } from "./registry/prism-button";
 import { MagneticButton } from "./registry/magnetic-button";
@@ -30,7 +30,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "silk-shader": (p) => <SilkShader color={p.color} speed={p.speed} />,
   "dither-shader": (p) => <DitherShader color={p.color} speed={p.speed} />,
   "horizon-shader": (p) => <HorizonShader color={p.color} speed={p.speed} />,
-  "warp-shader": (p) => <WarpShader color={p.color} speed={p.speed} />,
+  "aurora-shader": (p) => <AuroraShader color={p.color} speed={p.speed} />,
   "chrome-shader": (p) => <ChromeShader color={p.color} speed={p.speed} />,
   "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
   "ascii-rain": (p) => <AsciiRain color={p.color} speed={p.speed} />,
