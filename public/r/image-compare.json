@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-compare",
+  "type": "registry:component",
+  "title": "Image compare",
+  "description": "Image compare for client project presentation.",
+  "files": [
+    {
+      "path": "src/registry/image-compare.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/image-compare.tsx",
+      "content": "\"use client\";\n\nimport { useId, useState } from \"react\";\nimport \"./image-compare.css\";\n\nexport interface ImageCompareProps {\n  before: string;\n  after: string;\n  beforeAlt: string;\n  afterAlt: string;\n  beforeLabel?: string;\n  afterLabel?: string;\n  initial?: number;\n}\n\n/** Native range input supports pointer, touch, and keyboard without custom dragging. */\nexport function ImageCompare({\n  before,\n  after,\n  beforeAlt,\n  afterAlt,\n  beforeLabel = \"Before\",\n  afterLabel = \"After\",\n  initial = 50,\n}: ImageCompareProps) {\n  const [position, setPosition] = useState(Math.max(0, Math.min(100, initial)));\n  const id = useId();\n  return (\n    <div className=\"forme-compare\">\n      <img src={after} alt={afterAlt} loading=\"lazy\" />\n      <div\n        className=\"forme-compare-before\"\n        style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}\n      >\n        <img src={before} alt={beforeAlt} loading=\"lazy\" />\n      </div>\n      <span className=\"forme-compare-label before\">{beforeLabel}</span>\n      <span className=\"forme-compare-label after\">{afterLabel}</span>\n      <span\n        className=\"forme-compare-divider\"\n        style={{ left: `${position}%` }}\n        aria-hidden=\"true\"\n      >\n        <span>↔</span>\n      </span>\n      <label htmlFor={id} className=\"forme-compare-sr\">\n        Comparison position\n      </label>\n      <input\n        id={id}\n        type=\"range\"\n        min=\"0\"\n        max=\"100\"\n        step=\"1\"\n        value={position}\n        onChange={(e) => setPosition(Number(e.target.value))}\n        aria-valuetext={`${position}% ${beforeLabel}, ${100 - position}% ${afterLabel}`}\n      />\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/image-compare.css",
+      "type": "registry:file",
+      "target": "@components/forme/image-compare.css",
+      "content": ".forme-compare {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  min-height: 280px;\n  overflow: hidden;\n  background: #343638;\n  color: #fff;\n}\n.forme-compare > img,\n.forme-compare-before,\n.forme-compare-before > img {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n.forme-compare-label {\n  position: absolute;\n  top: 20px;\n  font: 400 10px/1.2 sans-serif;\n  background: #13171c85;\n  padding: 7px 10px;\n  border: 1px solid #ffffff40;\n  backdrop-filter: blur(5px);\n  border-radius: 3px;\n  pointer-events: none;\n}\n.forme-compare-label.before {\n  left: 20px;\n}\n.forme-compare-label.after {\n  right: 20px;\n}\n.forme-compare-divider {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  width: 1px;\n  background: #fffe;\n  pointer-events: none;\n}\n.forme-compare-divider > span {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  transform: translate(-50%, -50%);\n  display: grid;\n  place-items: center;\n  width: 37px;\n  height: 37px;\n  background: #fff;\n  color: #23282d;\n  border-radius: 50%;\n  box-shadow: 0 3px 20px #0003;\n  font-size: 20px;\n}\n.forme-compare input {\n  appearance: none;\n  position: absolute;\n  inset: 0;\n  margin: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  cursor: ew-resize;\n  opacity: 0;\n}\n.forme-compare input::-webkit-slider-thumb {\n  appearance: none;\n  width: 35px;\n  height: 100%;\n  background: transparent;\n}\n.forme-compare input::-moz-range-thumb {\n  width: 35px;\n  height: 100%;\n  border: 0;\n  background: transparent;\n}\n.forme-compare:focus-within {\n  outline: 3px solid #91b7e2;\n  outline-offset: -4px;\n}\n.forme-compare-sr {\n  position: absolute;\n  clip-path: inset(50%);\n  width: 1px;\n  height: 1px;\n  overflow: hidden;\n}\n"
+    }
+  ]
+}

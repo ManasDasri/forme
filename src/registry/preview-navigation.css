@@ -1,0 +1,149 @@
+.forme-preview-nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  height: 100%;
+  min-height: 280px;
+  box-sizing: border-box;
+  padding: 28px;
+  background: var(--forme-nav-bg, #dce3e6);
+  color: var(--forme-nav-ink, #24323b);
+}
+.forme-preview-nav > span {
+  position: absolute;
+  top: 25px;
+  left: 28px;
+  font-size: 11px;
+}
+.forme-preview-nav > p {
+  font-size: clamp(30px, 4vw, 52px);
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+  margin: 30px 0 22px;
+}
+.forme-preview-nav-trigger {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  padding: 12px 0;
+  cursor: pointer;
+}
+.forme-preview-nav-trigger > span {
+  font-size: 17px;
+}
+.forme-preview-nav-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: clamp(25px, 5vw, 75px);
+  border: 0;
+  background: var(--forme-nav-dialog-bg, #171c20);
+  color: var(--forme-nav-dialog-ink, #eef0ed);
+  font: inherit;
+  overflow: auto;
+}
+.forme-preview-nav-dialog::backdrop {
+  background: #101214c0;
+}
+.forme-preview-nav-dialog > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.forme-preview-nav-dialog > header button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.forme-preview-nav-body {
+  display: grid;
+  grid-template-columns: 1fr 45%;
+  gap: 8vw;
+  align-items: center;
+  min-height: 75vh;
+}
+.forme-preview-nav-body nav {
+  display: flex;
+  flex-direction: column;
+}
+.forme-preview-nav-body a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: inherit;
+  padding: 23px 0;
+  border-bottom: 1px solid #ffffff22;
+  text-decoration: none;
+  font-size: clamp(28px, 4.5vw, 70px);
+  letter-spacing: -0.06em;
+  line-height: 1.1;
+}
+.forme-preview-nav-body a small {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0;
+  opacity: 0.5;
+  margin-top: 11px;
+}
+.forme-preview-nav-body a > span:last-child {
+  font-size: 0.5em;
+}
+.forme-preview-nav-image {
+  position: relative;
+  height: 55vh;
+  min-height: 250px;
+  overflow: hidden;
+}
+.forme-preview-nav-image img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.forme-preview-nav-dialog > footer {
+  font-size: 10px;
+  opacity: 0.5;
+}
+.forme-preview-nav :focus-visible {
+  outline: 3px solid #91b7e2;
+  outline-offset: 5px;
+}
+.forme-preview-nav-dialog :focus-visible {
+  outline: 2px solid #91b7e2;
+  outline-offset: 5px;
+}
+@media (max-width: 600px) {
+  .forme-preview-nav-body {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    min-height: auto;
+    padding-block: 40px;
+  }
+  .forme-preview-nav-image {
+    height: 30vh;
+    min-height: 180px;
+  }
+  .forme-preview-nav-body a {
+    font-size: 40px;
+    padding: 17px 0;
+  }
+}

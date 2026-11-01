@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { SVGProps } from "react";
+import { catalog } from "./catalog";
 
 export const repo = "https://github.com/ManasDasri/forme";
 export function Arrow({
@@ -80,9 +81,9 @@ export function Header() {
       </a>
       <div className="announcement">
         <span className="status-dot" />
-        Editorial, expanded. Twelve ways to make an impression.
+        Release 01 / Editorial is now in preview.
         <a href="/collections/editorial/">
-          Explore the collection <Arrow diagonal />
+          Explore Editorial <Arrow diagonal />
         </a>
       </div>
       <header className="site-header">
@@ -110,7 +111,7 @@ export function Header() {
                 path.startsWith("/collections/editorial") ? "page" : undefined
               }
             >
-              Components <span className="nav-count">12</span>
+              Components <span className="nav-count">{catalog.length}</span>
             </a>
             <a
               href="/studio/"
@@ -177,7 +178,7 @@ export function Footer() {
           <Mark />
           forme
         </a>
-        <p>Made with care. Made to move.</p>
+        <p>Independent by design.</p>
       </div>
       <nav aria-label="Footer navigation">
         <a href="/collections/">Collections</a>

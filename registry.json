@@ -4,25 +4,6 @@
   "homepage": "https://github.com/ManasDasri/forme",
   "items": [
     {
-      "name": "editorial-hero",
-      "type": "registry:component",
-      "title": "Editorial hero",
-      "description": "Coordinated typography and image reveal for brand websites.",
-      "dependencies": ["motion"],
-      "files": [
-        {
-          "path": "src/registry/editorial-hero.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/editorial-hero.tsx"
-        },
-        {
-          "path": "src/registry/editorial-hero.css",
-          "type": "registry:file",
-          "target": "@components/forme/editorial-hero.css"
-        }
-      ]
-    },
-    {
       "name": "project-index",
       "type": "registry:component",
       "title": "Project index",
@@ -38,44 +19,6 @@
           "path": "src/registry/project-index.css",
           "type": "registry:file",
           "target": "@components/forme/project-index.css"
-        }
-      ]
-    },
-    {
-      "name": "image-reveal",
-      "type": "registry:component",
-      "title": "Image reveal",
-      "description": "A touch and keyboard accessible image reveal.",
-      "dependencies": ["motion"],
-      "files": [
-        {
-          "path": "src/registry/image-reveal.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/image-reveal.tsx"
-        },
-        {
-          "path": "src/registry/image-reveal.css",
-          "type": "registry:file",
-          "target": "@components/forme/image-reveal.css"
-        }
-      ]
-    },
-    {
-      "name": "fullscreen-menu",
-      "type": "registry:component",
-      "title": "Full-screen menu",
-      "description": "An expressive full-screen menu using a native dialog.",
-      "dependencies": ["motion"],
-      "files": [
-        {
-          "path": "src/registry/fullscreen-menu.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/fullscreen-menu.tsx"
-        },
-        {
-          "path": "src/registry/fullscreen-menu.css",
-          "type": "registry:file",
-          "target": "@components/forme/fullscreen-menu.css"
         }
       ]
     },
@@ -99,20 +42,21 @@
       ]
     },
     {
-      "name": "motion-link",
+      "name": "focus-cursor",
       "type": "registry:component",
-      "title": "Rolling link",
-      "description": "An animated link with a rolling label.",
+      "title": "Focus cursor",
+      "description": "Focus cursor for expressive editorial websites.",
+      "dependencies": ["motion"],
       "files": [
         {
-          "path": "src/registry/motion-link.tsx",
+          "path": "src/registry/focus-cursor.tsx",
           "type": "registry:component",
-          "target": "@components/forme/motion-link.tsx"
+          "target": "@components/forme/focus-cursor.tsx"
         },
         {
-          "path": "src/registry/motion-link.css",
+          "path": "src/registry/focus-cursor.css",
           "type": "registry:file",
-          "target": "@components/forme/motion-link.css"
+          "target": "@components/forme/focus-cursor.css"
         }
       ]
     },
@@ -136,105 +80,104 @@
       ]
     },
     {
-      "name": "focus-cursor",
+      "name": "image-reveal",
       "type": "registry:component",
-      "title": "Focus cursor",
-      "description": "Focus cursor for expressive editorial websites.",
+      "title": "Image reveal",
+      "description": "A touch and keyboard accessible image reveal.",
       "dependencies": ["motion"],
       "files": [
         {
-          "path": "src/registry/focus-cursor.tsx",
+          "path": "src/registry/image-reveal.tsx",
           "type": "registry:component",
-          "target": "@components/forme/focus-cursor.tsx"
+          "target": "@components/forme/image-reveal.tsx"
         },
         {
-          "path": "src/registry/focus-cursor.css",
+          "path": "src/registry/image-reveal.css",
           "type": "registry:file",
-          "target": "@components/forme/focus-cursor.css"
+          "target": "@components/forme/image-reveal.css"
         }
       ]
     },
     {
-      "name": "type-switcher",
+      "name": "image-compare",
       "type": "registry:component",
-      "title": "Type switcher",
-      "description": "Type switcher for expressive editorial websites.",
-      "dependencies": ["motion"],
+      "title": "Image compare",
+      "description": "Image compare for client project presentation.",
       "files": [
         {
-          "path": "src/registry/type-switcher.tsx",
+          "path": "src/registry/image-compare.tsx",
           "type": "registry:component",
-          "target": "@components/forme/type-switcher.tsx"
+          "target": "@components/forme/image-compare.tsx"
         },
         {
-          "path": "src/registry/type-switcher.css",
+          "path": "src/registry/image-compare.css",
           "type": "registry:file",
-          "target": "@components/forme/type-switcher.css"
+          "target": "@components/forme/image-compare.css"
         }
       ]
     },
     {
-      "name": "story-scroll",
+      "name": "case-study",
       "type": "registry:component",
-      "title": "Scroll story",
-      "description": "Scroll story for expressive editorial websites.",
-      "dependencies": ["motion"],
+      "title": "Case-study stage",
+      "description": "Case-study stage for client project presentation.",
       "files": [
         {
-          "path": "src/registry/story-scroll.tsx",
+          "path": "src/registry/case-study.tsx",
           "type": "registry:component",
-          "target": "@components/forme/story-scroll.tsx"
+          "target": "@components/forme/case-study.tsx"
         },
         {
-          "path": "src/registry/story-scroll.css",
+          "path": "src/registry/case-study.css",
           "type": "registry:file",
-          "target": "@components/forme/story-scroll.css"
+          "target": "@components/forme/case-study.css"
         }
       ],
+      "dependencies": ["motion"],
       "meta": {
         "access": "studio"
       }
     },
     {
-      "name": "layout-switch",
+      "name": "project-reel",
       "type": "registry:component",
-      "title": "Perspective layout",
-      "description": "Perspective layout for expressive editorial websites.",
-      "dependencies": ["motion"],
+      "title": "Project reel",
+      "description": "Project reel for client project presentation.",
       "files": [
         {
-          "path": "src/registry/layout-switch.tsx",
+          "path": "src/registry/project-reel.tsx",
           "type": "registry:component",
-          "target": "@components/forme/layout-switch.tsx"
+          "target": "@components/forme/project-reel.tsx"
         },
         {
-          "path": "src/registry/layout-switch.css",
+          "path": "src/registry/project-reel.css",
           "type": "registry:file",
-          "target": "@components/forme/layout-switch.css"
+          "target": "@components/forme/project-reel.css"
         }
       ],
+      "dependencies": ["motion"],
       "meta": {
         "access": "studio"
       }
     },
     {
-      "name": "image-accordion",
+      "name": "preview-navigation",
       "type": "registry:component",
-      "title": "Image accordion",
-      "description": "Image accordion for expressive editorial websites.",
-      "dependencies": ["motion"],
+      "title": "Preview navigation",
+      "description": "Preview navigation for client project presentation.",
       "files": [
         {
-          "path": "src/registry/image-accordion.tsx",
+          "path": "src/registry/preview-navigation.tsx",
           "type": "registry:component",
-          "target": "@components/forme/image-accordion.tsx"
+          "target": "@components/forme/preview-navigation.tsx"
         },
         {
-          "path": "src/registry/image-accordion.css",
+          "path": "src/registry/preview-navigation.css",
           "type": "registry:file",
-          "target": "@components/forme/image-accordion.css"
+          "target": "@components/forme/preview-navigation.css"
         }
       ],
+      "dependencies": ["motion"],
       "meta": {
         "access": "studio"
       }

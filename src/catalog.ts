@@ -1,9 +1,8 @@
 export const categories = [
   "All components",
-  "Typography",
   "Imagery",
-  "Navigation",
   "Interactions",
+  "Navigation",
   "Buttons",
   "Cursors",
   "Layouts",
@@ -19,138 +18,98 @@ export const catalog: {
   props: string;
 }[] = [
   {
-    slug: "editorial-hero",
-    name: "Editorial hero",
-    category: "Typography",
-    description:
-      "An opening with a point of view. Type and imagery, perfectly timed.",
-    usage: `<EditorialHero\n  brand="Serein studio"\n  title="Room to feel."\n  subtitle="Spaces for a slower kind of living."\n  image="/your-image.jpg"\n  alt="Sunlit interior with sculptural furniture"\n/>`,
-    props:
-      "title, subtitle, image, and alt are required strings. brand is optional. The reveal plays once as the component enters the viewport.",
-  },
-  {
     slug: "project-index",
     name: "Project index",
     category: "Interactions",
-    description: "A quiet list. A new perspective on every project.",
-    usage: `<ProjectIndex projects={[\n  { title: "Serein", category: "Architecture",\n    image: "/project.jpg", alt: "Serein interior",\n    description: "A considered place to call home." }\n]} />`,
+    description: "A body of work, one considered selection at a time.",
+    usage: `<ProjectIndex projects={[\n  { title: "Forma", category: "Architecture",\n    image: "/project.jpg", alt: "A sculptural building",\n    description: "A study of light and structure." }\n]} />`,
     props:
-      "projects is an array of objects with title, category, image, and alt. description is optional. Hover, focus, or select a project to update the preview.",
-  },
-  {
-    slug: "image-reveal",
-    name: "Image reveal",
-    category: "Imagery",
-    description:
-      "Let the image break out of its frame. A small moment of discovery.",
-    usage: `<ImageReveal\n  src="/your-image.jpg"\n  alt="Sculptural concrete architecture"\n  title="Perspective"\n  caption="See the whole picture"\n/>`,
-    props:
-      "src, alt, and title are required strings. caption is optional. Click, tap, Enter, or Space toggles the reveal. aria-pressed exposes its state.",
-  },
-  {
-    slug: "fullscreen-menu",
-    name: "Full-screen menu",
-    category: "Navigation",
-    description: "Give navigation a little room to express itself.",
-    usage: `<FullscreenMenu brand="Your studio" links={[\n  { label: "Selected work", href: "/work" },\n  { label: "About the studio", href: "/about" },\n  { label: "Get in touch", href: "/contact" }\n]} />`,
-    props:
-      "links is an array of label and href objects. brand is optional. A native modal dialog handles focus, Escape, and keyboard navigation.",
+      "projects is an array with title, category, image, and alt. description is optional. Hover, focus, or select a project to update its image. Empty arrays render nothing.",
   },
   {
     slug: "expanding-gallery",
-    name: "Expanding gallery",
+    name: "Form & structure",
     category: "Imagery",
-    description: "A collection that makes space for what catches your eye.",
-    usage: `<ExpandingGallery images={[\n  { src: "/one.jpg", alt: "Concrete facade", title: "Form" },\n  { src: "/two.jpg", alt: "Softly lit interior", title: "Space" },\n  { src: "/three.jpg", alt: "Mountain landscape", title: "Stillness" }\n]} />`,
+    description: "A gallery that gives your selected image room to breathe.",
+    usage: `<ExpandingGallery images={[\n  { src: "/one.jpg", alt: "Building facade", title: "Structure" },\n  { src: "/two.jpg", alt: "Interior detail", title: "Space" }\n]} />`,
     props:
-      "images is an array with src, alt, and title for each image. Select an image to expand it. Each selection is a keyboard-accessible button.",
-  },
-  {
-    slug: "motion-link",
-    name: "Rolling link",
-    category: "Typography",
-    description: "A familiar gesture with an unexpected finish.",
-    usage: `<MotionLink href="/your-project">\n  Explore the project\n</MotionLink>`,
-    props:
-      "Accepts standard React anchor attributes, including href, target, and className. Pass plain text as children for the rolling label effect.",
-  },
-  {
-    slug: "magnetic-button",
-    name: "Magnetic button",
-    category: "Buttons",
-    description:
-      "A gentle pull. A satisfying response. A button with presence.",
-    usage: `<MagneticButton onClick={() => setOpen(true)}>\n  Start a conversation\n</MagneticButton>`,
-    props:
-      "Accepts native button props, including onClick, disabled, and type. Defaults to type=button. Pointer attraction is disabled for touch and reduced motion. Set --forme-button-bg and --forme-button-color to customize its colors.",
+      "images is an array of src, alt, and title objects. Click, tap, or use the keyboard to expand an image. Selected state is exposed through aria-pressed.",
   },
   {
     slug: "focus-cursor",
     name: "Focus cursor",
     category: "Cursors",
+    description: "Move through an image. Discover a different layer.",
+    usage: `<FocusCursor src="/landscape.jpg"\n  alt="A mountain lake" label="Look closer" />`,
+    props:
+      "src and alt are required; label is optional. The local lens reveals color under the pointer. Click, tap, Enter, or Space pins a centered lens. The native pointer is preserved. Pointer following is disabled for reduced motion.",
+  },
+  {
+    slug: "magnetic-button",
+    name: "Magnetic button",
+    category: "Buttons",
+    description: "A precise interaction with just enough attraction.",
+    usage: `<MagneticButton onClick={() => console.log("Connect your action")}>\n  Discuss a project\n</MagneticButton>`,
+    props:
+      "Accepts native button props including onClick, disabled, and type. Defaults to type=button. Pointer attraction is disabled for touch and reduced motion. Customize --forme-button-bg and --forme-button-color.",
+  },
+  {
+    slug: "image-reveal",
+    name: "Image reveal",
+    category: "Imagery",
+    description: "A deliberate change of frame, controlled by the viewer.",
+    usage: `<ImageReveal src="/project.jpg" alt="Architectural detail"\n  title="Forma" caption="Explore the perspective" />`,
+    props:
+      "src, alt, and title are required strings; caption is optional. Click, tap, Enter, or Space toggles the mask. aria-pressed communicates the state.",
+  },
+  {
+    slug: "image-compare",
+    name: "Image compare",
+    category: "Imagery",
     description:
-      "An image that comes to life beneath your cursor. Stay curious.",
-    usage: `<FocusCursor\n  src="/landscape.jpg"\n  alt="A mountain lake at dawn"\n  label="A closer look"\n/>`,
+      "Make an art-direction decision visible. Slide between two views.",
+    usage: `<ImageCompare before="/before.jpg" after="/after.jpg"\n  beforeAlt="Original treatment" afterAlt="Revised treatment"\n  beforeLabel="Original" afterLabel="Direction" initial={50} />`,
     props:
-      "src and alt are required. label is optional. Move the pointer to reveal color, or click, tap, Enter, or Space to pin a centered lens. The native cursor is preserved. Reduced motion uses the centered, selectable lens.",
+      "before, after, beforeAlt, and afterAlt are required. beforeLabel and afterLabel default to Before and After. initial is clamped to 0–100. The native range control supports touch and arrow keys. Images share the same object-fit crop.",
   },
   {
-    slug: "type-switcher",
-    name: "Type switcher",
-    category: "Typography",
-    description: "An editorial headline with another side to the story.",
-    usage: `<TypeSwitcher\n  phrases={["Less noise. More meaning.", "More feeling. Less ordinary."]}\n  caption="Select to change the headline."\n/>`,
-    props:
-      "phrases is an array of strings. caption is optional. Select the component to cycle through headlines; there is no autoplay. The current headline is announced politely. Customize --forme-type-bg and --forme-type-color.",
-  },
-  {
-    slug: "story-scroll",
-    access: "studio",
-    name: "Scroll story",
+    slug: "case-study",
+    name: "Case-study stage",
     category: "Layouts",
-    description: "A changing image. A slower read. Let the story unfold.",
-    usage: `<StoryScroll chapters={[\n  { title: "A sense of place.", body: "Every space begins with a feeling.",\n    image: "/interior.jpg", alt: "A calm, sunlit room" },\n  { title: "Room for more.", body: "Thoughtful details make the difference.",\n    image: "/detail.jpg", alt: "A sculptural architectural detail" }\n]} />`,
+    access: "studio",
+    description:
+      "From selected work to the full story, without losing context.",
+    usage: `<CaseStudy project={{\n  title: "Forma", category: "Architecture", year: "2026",\n  image: "/project.jpg", alt: "Project architecture",\n  description: "The thinking behind the work.",\n  credits: "Architecture and art direction by your studio."\n}} />`,
     props:
-      "chapters is an array of title, body, image, and alt objects. The reading pane scrolls independently, with chapter buttons as an alternative. Images crossfade as the selected chapter changes. Give the component a parent with a defined height.",
+      "project contains title, category, image, alt, and description; year and credits are optional. Opens a full-viewport native dialog with image reveal, content, Escape, focus trapping, and focus restoration. It does not navigate to a new URL.",
   },
   {
-    slug: "layout-switch",
-    access: "studio",
-    name: "Perspective layout",
+    slug: "project-reel",
+    name: "Project reel",
     category: "Layouts",
+    access: "studio",
     description:
-      "One body of work. Two ways of seeing it. Seamlessly connected.",
-    usage: `<LayoutSwitch items={[\n  { title: "Serein", category: "Architecture",\n    image: "/interior.jpg", alt: "A softly lit interior" },\n  { title: "Elsewhere", category: "Travel",\n    image: "/mountains.jpg", alt: "Mountains above a still lake" }\n]} />`,
+      "A photographic narrative at your visitor’s pace. No autoplay.",
+    usage: `<ProjectReel frames={[\n  { src: "/one.jpg", alt: "Project exterior", title: "Arrival", caption: "A sense of place" },\n  { src: "/two.jpg", alt: "Project interior", title: "Inside" }\n]} />`,
     props:
-      "items is an array of title, category, image, and alt objects. Grid and List controls animate the same content between layouts. Reduced motion switches immediately. Customize --forme-layout-bg, --forme-layout-color, and --forme-layout-selected.",
+      "frames is an array of src, alt, title, and optional caption objects. A scrub control and previous/next buttons select frames. Controls announce the active frame. No autoplay or scroll interception; reduced motion switches immediately.",
   },
   {
-    slug: "image-accordion",
+    slug: "preview-navigation",
+    name: "Preview navigation",
+    category: "Navigation",
     access: "studio",
-    name: "Image accordion",
-    category: "Interactions",
-    description:
-      "Make space for the details. An unfolding story in type and image.",
-    usage: `<ImageAccordion items={[\n  { title: "Our perspective", description: "A slower, more considered approach.",\n    image: "/studio.jpg", alt: "The studio interior" },\n  { title: "Our practice", description: "Built around the way you live.",\n    image: "/work.jpg", alt: "A recently completed space" }\n]} />`,
+    description: "Navigation with a preview of where you’re going.",
+    usage: `<PreviewNavigation brand="Your studio" links={[\n  { label: "Work", href: "/work", image: "/work.jpg",\n    alt: "Selected project", description: "Selected projects" },\n  { label: "Studio", href: "/about", image: "/studio.jpg",\n    alt: "Studio interior", description: "People and practice" }\n]} />`,
     props:
-      "items is an array with title, description, image, and alt. One panel opens at a time; the current panel can also be closed. Native buttons expose aria-expanded and reference their content. Customize --forme-accordion-bg and --forme-accordion-color.",
+      "links is an array of label, href, image, alt, and optional description objects. brand is optional. A native dialog contains navigable links and an image preview that responds to hover and focus. Links stay directly usable on touch.",
   },
 ];
-
+export const freeCount = catalog.filter((c) => c.access !== "studio").length;
+export const studioCount = catalog.length - freeCount;
 export function exportName(slug: string) {
-  const names: Record<string, string> = {
-    "editorial-hero": "EditorialHero",
-    "project-index": "ProjectIndex",
-    "image-reveal": "ImageReveal",
-    "fullscreen-menu": "FullscreenMenu",
-    "expanding-gallery": "ExpandingGallery",
-    "motion-link": "MotionLink",
-    "magnetic-button": "MagneticButton",
-    "focus-cursor": "FocusCursor",
-    "type-switcher": "TypeSwitcher",
-    "story-scroll": "StoryScroll",
-    "layout-switch": "LayoutSwitch",
-    "image-accordion": "ImageAccordion",
-  };
-  return names[slug];
+  return slug
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join("");
 }

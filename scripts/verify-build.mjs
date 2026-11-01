@@ -27,7 +27,10 @@ for (const path of [
   );
 }
 const payloads = await readdir(new URL("../dist/r/", import.meta.url));
-assert.equal(payloads.length, 9);
+assert.equal(
+  payloads.length,
+  registry.items.filter((item) => item.meta?.access !== "studio").length,
+);
 for (const item of registry.items.filter(
   (item) => item.meta?.access === "studio",
 ))
@@ -44,9 +47,9 @@ const bundle = (
   )
 ).join("\n");
 for (const marker of [
-  "export interface StoryChapter",
-  "export interface LayoutItem",
-  "export interface ImageAccordionItem",
+  "export interface CaseStudyItem",
+  "export interface ReelFrame",
+  "export interface PreviewNavLink",
 ])
   assert.ok(
     !bundle.includes(marker),

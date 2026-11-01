@@ -9,3 +9,6 @@ Photos downloaded from Unsplash for the showcase. These images are not included 
 Unsplash license: https://unsplash.com/license
 
 All studio and project names shown inside component demos are fictional examples.
+
+- Object release study (desk lamp): https://images.unsplash.com/photo-1507473885765-e6ed057f782c
+- Kinetic release study (city lighting): https://images.unsplash.com/photo-1519608487953-e999c86e7455

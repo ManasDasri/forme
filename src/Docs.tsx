@@ -5,10 +5,12 @@ import { Arrow, Code, repo } from "./ui";
 
 const sources = import.meta.glob(
   [
-    "./registry/*.{tsx,css}",
-    "!./registry/story-scroll.*",
-    "!./registry/layout-switch.*",
-    "!./registry/image-accordion.*",
+    "./registry/project-index.{tsx,css}",
+    "./registry/expanding-gallery.{tsx,css}",
+    "./registry/focus-cursor.{tsx,css}",
+    "./registry/magnetic-button.{tsx,css}",
+    "./registry/image-reveal.{tsx,css}",
+    "./registry/image-compare.{tsx,css}",
   ],
   { query: "?raw", import: "default", eager: true },
 ) as Record<string, string>;
@@ -108,7 +110,7 @@ export function Workbench({ slug }: { slug: string }) {
               />
             </label>
             {[
-              "editorial-hero",
+              "image-compare",
               "project-index",
               "image-reveal",
               "focus-cursor",
@@ -179,7 +181,7 @@ export function Workbench({ slug }: { slug: string }) {
             <button
               onClick={() =>
                 copy(
-                  `npx shadcn@latest add http://localhost:5173/r/${slug}.json`,
+                  `npx shadcn@latest add ${window.location.origin.replace(/\/$/, "")}/r/${slug}.json`,
                   "Install command copied",
                 )
               }
@@ -188,7 +190,7 @@ export function Workbench({ slug }: { slug: string }) {
             </button>
           </div>
           <Code
-            text={`npx shadcn@latest add http://localhost:5173/r/${slug}.json`}
+            text={`npx shadcn@latest add ${window.location.origin.replace(/\/$/, "")}/r/${slug}.json`}
           />
           <h2>Use it in your project</h2>
           <Code
@@ -312,7 +314,7 @@ export function DocsPage({ slug }: { slug: string }) {
             <div className="component-doc-footer">
               <span>Part of the Editorial collection</span>
               <a href="/collections/editorial/">
-                Explore all twelve <Arrow />
+                Explore all nine <Arrow />
               </a>
             </div>
           </>
@@ -340,13 +342,13 @@ function Guide({ slug }: { slug: string }) {
         </p>
         <h2>Bring your own typography</h2>
         <p>
-          Components inherit the surrounding font where possible. Editorial
-          display treatments use system serif typography in selected specimens.
-          Set your font at the app root or override the component’s scoped class
-          in your own stylesheet.
+          Components inherit the surrounding font where possible. Use a
+          consistent brand typeface across the assembled experience. Set your
+          font at the app root or override the component’s scoped class in your
+          own stylesheet.
         </p>
         <Code
-          text={`.my-project {\n  font-family: "Your brand font", sans-serif;\n}\n\n.forme-editorial {\n  background: #e2e7df;\n  color: #17231c;\n}`}
+          text={`.my-project {\n  font-family: "Your brand font", sans-serif;\n}\n\n.forme-index {\n  background: #e2e7df;\n  color: #17231c;\n}`}
         />
         <h2>Use component color tokens</h2>
         <p>
@@ -355,7 +357,7 @@ function Guide({ slug }: { slug: string }) {
           source, so every remaining color is yours to change.
         </p>
         <Code
-          text={`[data-theme="dark"] {\n  --forme-button-bg: #e2e9d5;\n  --forme-button-color: #243327;\n  --forme-type-bg: #362b28;\n  --forme-type-color: #f1d8ca;\n  --forme-layout-bg: #222634;\n  --forme-layout-color: #e3e7f4;\n  --forme-layout-selected: #3a4258;\n}`}
+          text={`[data-theme="dark"] {\n  --forme-button-bg: #e2e9d5;\n  --forme-button-color: #243327;\n  --forme-case-bg: #17191b;\n  --forme-case-ink: #edf0eb;\n  --forme-reel-bg: #24272a;\n  --forme-reel-ink: #e6eae8;\n}`}
         />
         <h2>Content and imagery</h2>
         <p>
@@ -379,8 +381,8 @@ function Guide({ slug }: { slug: string }) {
         <h2>Keyboard and touch</h2>
         <p>
           Interactive controls use native buttons and links. Tab to a control
-          and use Enter or Space to activate a button. The full-screen menu uses
-          a native dialog for focus trapping and Escape. Gallery and accordion
+          and use Enter or Space to activate a button. Preview navigation uses a
+          native dialog for focus trapping and Escape. Gallery and accordion
           controls expose their selected or expanded states.
         </p>
         <h2>The cursor stays yours</h2>
@@ -413,7 +415,7 @@ function Guide({ slug }: { slug: string }) {
       <div className="guide-prose">
         <h2>Install source. Keep control.</h2>
         <p>
-          The public registry contains nine free-preview pieces. Three Studio
+          The public registry contains six free-preview pieces. Three Studio
           compositions are intentionally excluded. The registry adds the
           selected TypeScript component and its CSS to your project. Motion is
           installed where required. It follows your configured components alias;
@@ -421,7 +423,7 @@ function Guide({ slug }: { slug: string }) {
         </p>
         <h2>Generate and serve the registry</h2>
         <Code
-          text={`# In the Forme repository\nnpm run build\nnpm run dev\n\n# In your configured React project\nnpx shadcn@latest add http://localhost:5173/r/magnetic-button.json`}
+          text={`# In the Forme repository\nnpm run build\nnpm run dev\n\n# In your configured React project\nnpx shadcn@latest add ${window.location.origin.replace(/\/$/, "")}/r/magnetic-button.json`}
         />
         <h2>What goes into your project</h2>
         <Code
@@ -439,9 +441,10 @@ function Guide({ slug }: { slug: string }) {
           localhost origin in install commands with that deployment’s origin.
         </p>
         <div className="guide-note">
-          The existing hosted preview and GitHub repository are private. Hosted
-          CLI installation will be enabled when the registry is published
-          publicly. This update is prepared locally for review.
+          The GitHub repository is private. The public demo distributes only the
+          free-preview registry. Hosted CLI installation will be enabled when
+          the registry is published publicly. This update is prepared locally
+          for review.
         </div>
         <h2>Copy manually</h2>
         <p>
@@ -453,29 +456,24 @@ function Guide({ slug }: { slug: string }) {
     );
   return (
     <div className="guide-prose">
-      <h2>Start with a feeling.</h2>
+      <h2>Start with an interaction.</h2>
       <p>
-        Editorial is a collection of twelve React components for brand websites:
+        Editorial is a collection of nine React components for brand websites:
         expressive typography, image interactions, navigation, buttons, cursors,
-        and layouts. Each piece is editable TypeScript with its own scoped CSS.
+        and layouts. The free pieces include editable TypeScript and scoped CSS;
+        Studio compositions have working previews.
       </p>
       <div className="guide-note">
         This is a development preview. Checkout, customer entitlements, and
         commercial licensing are planned before the public launch.
       </div>
-      <h2>Run Forme locally</h2>
-      <p>
-        You need Node.js 22.12+ or 24+, npm, and access to the private
-        repository.
-      </p>
-      <Code text={`git clone ${repo}.git\ncd forme\nnpm ci\nnpm run dev`} />
       <h2>Add your first component</h2>
       <p>
-        Keep the Forme dev server running. In a separate React project that
-        already has a shadcn components.json and import aliases configured, run:
+        In a React project that already has a shadcn components.json and import
+        aliases configured, run:
       </p>
       <Code
-        text={`npx shadcn@latest add http://localhost:5173/r/magnetic-button.json`}
+        text={`npx shadcn@latest add ${window.location.origin.replace(/\/$/, "")}/r/magnetic-button.json`}
       />
       <p>
         The generated registry is checked into the repository. If you change
@@ -494,13 +492,18 @@ function Guide({ slug }: { slug: string }) {
       <a className="button" href="/docs/magnetic-button/">
         Try magnetic button <Arrow />
       </a>
+      <h2>For contributors: run Forme locally</h2>
+      <p>
+        You need Node.js 22.12+ or 24+, npm, and access to the private
+        repository.
+      </p>
+      <Code text={`git clone ${repo}.git\ncd forme\nnpm ci\nnpm run dev`} />
       <h2>Prefer to copy and paste?</h2>
       <p>
-        The nine free-preview component pages include TypeScript and CSS in
-        their Source tabs. Three Studio compositions have public demos; their
-        editable source is reserved for the planned paid edition. Copy both
-        files into the same folder, then install motion for components that use
-        it.
+        The six free-preview component pages include TypeScript and CSS in their
+        Source tabs. Three Studio compositions have public demos; their editable
+        source is reserved for the planned paid edition. Copy both files into
+        the same folder, then install motion for components that use it.
       </p>
     </div>
   );

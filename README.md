@@ -1,100 +1,80 @@
 # Forme
 
-A motion component studio for independent designers and ambitious studios.
+An independent interaction studio for developers building distinctive client websites.
 
-**Editorial** is the first launch: twelve coordinated React components, a live gallery, editable previews, and dedicated usage documentation. **Object** and **Kinetic** have separate concept previews clearly marked coming soon. The site includes light and dark themes with persisted preference.
+Editorial is the first release. This revision centers the five strongest initial pieces and adds four project-presentation interactions. Object and Kinetic remain coming-soon releases with photography-led studies rather than placeholder graphics.
 
-## Develop
+## Develop and verify
 
-Requires Node.js 22.12+ or 24+ and npm.
+Requires Node.js 22.12+ or newer and npm.
 
 ```sh
 npm ci
 npm run dev
-```
-
-Open the printed URL, normally http://localhost:5173.
-
-```sh
 npm test
 npm run build
-npm run preview
 ```
 
-The production build type-checks, generates the free-preview registry, builds the app, creates refreshable static entry documents for all 21 subpages, and verifies Studio distribution boundaries. Output is `dist/` and can be served by a plain static host without history fallback rules.
+`dist/` contains a static site with refreshable entry documents for all 18 subpages. The build verifies page entries and Studio distribution boundaries. The Vercel configuration builds this directory directly.
+
+## The active collection
+
+| Free preview — six pieces | Planned Studio edition — three compositions |
+| --- | --- |
+| Project index | Case-study stage |
+| Form & structure gallery | Project reel |
+| Focus cursor | Preview navigation |
+| Magnetic button | |
+| Image reveal | |
+| Image compare | |
+
+Previous experiments remain in source history and in unused component files; they are excluded from the active catalog, public registry, documentation raw imports, and runtime demo imports.
+
+Studio demos run compiled client code. Editable TypeScript and CSS are excluded from public registry payloads and raw-source documentation; this is source distribution control, not DRM. Purchasing and authenticated customer downloads are not yet implemented.
+
+## Install a free piece
+
+Use the current public site origin, or run Forme locally and use its printed URL:
+
+```sh
+npx shadcn@latest add http://localhost:5173/r/image-compare.json
+```
+
+The CLI uses the consumer's configured components alias and installs TypeScript and scoped CSS together. Motion is installed where required. Image compare uses native range input and CSS without an animation dependency. Fonts and demo photos are not distributed with components.
 
 ## Pages
 
-- `/` — interactive introduction, specimen switcher, drag interaction, and live motion playground
-- `/collections/` — Editorial, Object, and Kinetic
-- `/collections/editorial/` — twelve live demos; search, category and access filters; gallery density control
-- `/collections/object/` and `/collections/kinetic/` — coming-soon concepts, with no invented release dates
-- `/studio/` — planned paid edition with three working composition previews
-- `/docs/` — installation, imports, and first-use guide
-- `/docs/theming/`, `/docs/accessibility/`, `/docs/registry/` — detailed guides
-- `/docs/<component-slug>/` — interactive workbench, usage, props, and free-preview source
+- `/` — full-width working project index, selected interactions, Studio preview, and release studies
+- `/collections/` — the release series
+- `/collections/editorial/` — live component library, filters, search, tier separation
+- `/collections/object/`, `/collections/kinetic/` — forthcoming directions
+- `/studio/` — complete project-presentation previews
+- `/docs/` — installation and usage
+- `/docs/theming/`, `/docs/accessibility/`, `/docs/registry/` — implementation guides
+- `/docs/<slug>/` — interactive workbench, usage, props, and free source
 
-## Release structure
+Light and dark themes follow system preference initially, with an explicit choice remembered locally. Pointer, keyboard, touch, and reduced-motion behavior are part of the component implementations.
 
-| Free preview — nine pieces | Planned Studio edition — three compositions |
-| -------------------------- | ------------------------------------------- |
-| Editorial hero             | Scroll story                                |
-| Project index              | Perspective layout                          |
-| Image reveal               | Image accordion                             |
-| Full-screen menu           |                                             |
-| Expanding gallery          |                                             |
-| Rolling link               |                                             |
-| Magnetic button            |                                             |
-| Focus cursor               |                                             |
-| Type switcher              |                                             |
+## Implementation
 
-Studio source is excluded from `public/r/`, `public/registry.json`, and raw documentation imports. Its compiled implementation necessarily runs in the browser to provide live previews; this is not DRM. No checkout, customer authentication, or entitlement service is simulated. These must be implemented before selling downloads.
+`src/App.tsx` contains the pages, `src/ui.tsx` the shared navigation/theme controls, `src/Docs.tsx` the documentation, `src/Demo.tsx` the real component examples, and `src/catalog.ts` the active catalog. Exact source lives in `src/registry/`.
 
-Free-preview designation describes the planned launch tier. The repository remains private and commercial licensing must be finalized before public release; see LICENSE. The split is provisional and easy to change in `src/catalog.ts`, `registry.json`, and the raw-source exclusion list in `src/Docs.tsx`.
+`registry.json` is the private source manifest. The registry builder emits only free pieces and removes stale generated payloads. Public docs use an explicit source allowlist. Tests check source fidelity and the production build checks the Studio boundary.
 
-## Install from the local registry
+[Product direction and research](docs/product-direction.md) records the evidence, hypotheses, and visual decisions behind this revision. Buyer willingness to pay has not been validated.
 
-Run `npm run build` after changing component source, then keep `npm run dev` running. In another React project configured for shadcn:
+## Deploy
+
+The Vercel project is `forme`. Authentication and project linking are machine-local and ignored by Git.
 
 ```sh
-npx shadcn@latest add http://localhost:5173/r/magnetic-button.json
+vercel deploy --prod
 ```
 
-The registry installs TypeScript and scoped CSS together. Target placeholders follow the consumer's configured components alias. Motion is installed where needed; rolling link uses CSS alone. Showcase fonts and photographs are not distributed with components.
-
-```tsx
-import { MagneticButton } from "@/components/forme/magnetic-button";
-
-<MagneticButton onClick={() => console.log("Connect your action")}>
-  Start a conversation
-</MagneticButton>;
-```
-
-The current hosted v1 preview is private. This enhancement is prepared on `enhance-editorial` and is not deployed until requested. On public launch, replace localhost in the documentation commands with the public registry origin.
-
-## Theme and accessibility
-
-The initial theme follows the operating system. The header toggle saves an explicit choice in localStorage; a small initialization script avoids a flash of the other theme. Native form controls use the matching color scheme. Storage failures do not prevent theme switching.
-
-Animations respect reduced motion. Controls use native buttons, links, and dialog behavior. The cursor lens is local to one image and preserves the native pointer; keyboard and touch can pin a centered lens. Pointer attraction switches off on touch. The scroll story includes chapter buttons as an alternative to scrolling.
-
-## Structure
-
-- `src/App.tsx` — pages and native navigation
-- `src/ui.tsx` — shared navigation, theme switch, footer
-- `src/Docs.tsx` — guides and component workbench
-- `src/Demo.tsx` — showcase examples using the actual registry components
-- `src/catalog.ts` — component descriptions, tiers, usage examples, props
-- `src/registry/` — component TypeScript and scoped CSS
-- `registry.json` — full private source manifest, including Studio metadata
-- `scripts/build-registry.mjs` — generates nine public payloads and removes stale payloads
-- `scripts/build-pages.mjs` — creates static entry documents for subpages
-- `scripts/registry.test.mjs` and `scripts/verify-build.mjs` — source fidelity, static pages, Studio exclusion
+`vercel.json` sets Vite, the build command, static output, and clean paths. `.vercelignore` excludes local environment files, browser artifacts, Git, and research files from uploads. Do not publish the repository or customer source as part of a static deploy.
 
 ## Before commercial launch
 
-Finalize licensing and pricing; connect payments, authenticated downloads, and customer entitlements; run broader browser and assistive-technology checks; select a public domain and registry origin. Forme remains a working name pending trademark and domain checks.
+Finalize commercial terms and pricing; connect payments and authenticated downloads; conduct broader browser and assistive-technology testing; validate the offer with studio buyers. Free-preview designation describes the planned launch tier. Commercial licensing is not granted by this private pre-release repository.
 
-## Credits and rights
-
-Original source: Copyright © 2026 ManasDasri. All rights reserved. Third-party dependencies, fonts, and photography retain their own licenses. See [LICENSE](LICENSE), [CREDITS.md](CREDITS.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). All demo studios and brands are fictional.
+Original source: Copyright © 2026 ManasDasri. All rights reserved. Third-party assets retain their licenses. See [LICENSE](LICENSE), [CREDITS.md](CREDITS.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Example brands and projects are fictional.
