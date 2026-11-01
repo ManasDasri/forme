@@ -115,6 +115,129 @@
           "target": "@components/forme/motion-link.css"
         }
       ]
+    },
+    {
+      "name": "magnetic-button",
+      "type": "registry:component",
+      "title": "Magnetic button",
+      "description": "Magnetic button for expressive editorial websites.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/magnetic-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/magnetic-button.tsx"
+        },
+        {
+          "path": "src/registry/magnetic-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/magnetic-button.css"
+        }
+      ]
+    },
+    {
+      "name": "focus-cursor",
+      "type": "registry:component",
+      "title": "Focus cursor",
+      "description": "Focus cursor for expressive editorial websites.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/focus-cursor.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/focus-cursor.tsx"
+        },
+        {
+          "path": "src/registry/focus-cursor.css",
+          "type": "registry:file",
+          "target": "@components/forme/focus-cursor.css"
+        }
+      ]
+    },
+    {
+      "name": "type-switcher",
+      "type": "registry:component",
+      "title": "Type switcher",
+      "description": "Type switcher for expressive editorial websites.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/type-switcher.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/type-switcher.tsx"
+        },
+        {
+          "path": "src/registry/type-switcher.css",
+          "type": "registry:file",
+          "target": "@components/forme/type-switcher.css"
+        }
+      ]
+    },
+    {
+      "name": "story-scroll",
+      "type": "registry:component",
+      "title": "Scroll story",
+      "description": "Scroll story for expressive editorial websites.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/story-scroll.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/story-scroll.tsx"
+        },
+        {
+          "path": "src/registry/story-scroll.css",
+          "type": "registry:file",
+          "target": "@components/forme/story-scroll.css"
+        }
+      ],
+      "meta": {
+        "access": "studio"
+      }
+    },
+    {
+      "name": "layout-switch",
+      "type": "registry:component",
+      "title": "Perspective layout",
+      "description": "Perspective layout for expressive editorial websites.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/layout-switch.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/layout-switch.tsx"
+        },
+        {
+          "path": "src/registry/layout-switch.css",
+          "type": "registry:file",
+          "target": "@components/forme/layout-switch.css"
+        }
+      ],
+      "meta": {
+        "access": "studio"
+      }
+    },
+    {
+      "name": "image-accordion",
+      "type": "registry:component",
+      "title": "Image accordion",
+      "description": "Image accordion for expressive editorial websites.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "src/registry/image-accordion.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/image-accordion.tsx"
+        },
+        {
+          "path": "src/registry/image-accordion.css",
+          "type": "registry:file",
+          "target": "@components/forme/image-accordion.css"
+        }
+      ],
+      "meta": {
+        "access": "studio"
+      }
     }
   ]
 }

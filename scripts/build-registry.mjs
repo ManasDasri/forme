@@ -1,11 +1,20 @@
-import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { readFile, mkdir, writeFile, readdir, unlink } from "node:fs/promises";
 
 const registry = JSON.parse(
   await readFile(new URL("../registry.json", import.meta.url), "utf8"),
 );
 const directory = new URL("../public/r/", import.meta.url);
 await mkdir(directory, { recursive: true });
-for (const item of registry.items) {
+const publicItems = registry.items.filter(
+  (item) => item.meta?.access !== "studio",
+);
+// Remove stale generated payloads, especially when a piece moves into Studio.
+const allowed = new Set(publicItems.map((item) => `${item.name}.json`));
+for (const file of await readdir(directory)) {
+  if (file.endsWith(".json") && !allowed.has(file))
+    await unlink(new URL(file, directory));
+}
+for (const item of publicItems) {
   const files = await Promise.all(
     item.files.map(async (file) => ({
       ...file,
@@ -30,6 +39,8 @@ for (const item of registry.items) {
 }
 await writeFile(
   new URL("../public/registry.json", import.meta.url),
-  JSON.stringify(registry, null, 2) + "\n",
+  JSON.stringify({ ...registry, items: publicItems }, null, 2) + "\n",
 );
-console.log(`Built ${registry.items.length} registry items.`);
+console.log(
+  `Built ${publicItems.length} public registry items; Studio source excluded.`,
+);

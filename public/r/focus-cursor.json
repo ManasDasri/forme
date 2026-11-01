@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "focus-cursor",
+  "type": "registry:component",
+  "title": "Focus cursor",
+  "description": "Focus cursor for expressive editorial websites.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "src/registry/focus-cursor.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/focus-cursor.tsx",
+      "content": "\"use client\";\n\nimport { useState } from \"react\";\nimport {\n  motion,\n  useMotionTemplate,\n  useReducedMotion,\n  useSpring,\n} from \"motion/react\";\nimport \"./focus-cursor.css\";\n\nexport interface FocusCursorProps {\n  src: string;\n  alt: string;\n  label?: string;\n}\n\n/** A local color-reveal lens. The native cursor remains available. */\nexport function FocusCursor({\n  src,\n  alt,\n  label = \"A closer look\",\n}: FocusCursorProps) {\n  const [pinned, setPinned] = useState(false);\n  const [hover, setHover] = useState(false);\n  const reduce = useReducedMotion();\n  const x = useSpring(150, { stiffness: 220, damping: 28 });\n  const y = useSpring(130, { stiffness: 220, damping: 28 });\n  const clipPath = useMotionTemplate`circle(80px at ${x}px ${y}px)`;\n  function center(node: HTMLElement) {\n    x.jump(node.clientWidth / 2);\n    y.jump(node.clientHeight / 2);\n  }\n  return (\n    <button\n      className=\"forme-focus\"\n      aria-label={`${label}: ${pinned ? \"unpin\" : \"pin\"} the color lens`}\n      aria-pressed={pinned}\n      onPointerMove={(event) => {\n        if (event.pointerType !== \"mouse\" || reduce) return;\n        const box = event.currentTarget.getBoundingClientRect();\n        x.set(event.clientX - box.left);\n        y.set(event.clientY - box.top);\n        setHover(true);\n      }}\n      onPointerLeave={() => setHover(false)}\n      onClick={(event) => {\n        center(event.currentTarget);\n        setPinned(!pinned);\n      }}\n    >\n      <img src={src} alt={alt} loading=\"lazy\" />\n      <motion.img\n        src={src}\n        alt=\"\"\n        aria-hidden=\"true\"\n        loading=\"lazy\"\n        style={{ clipPath, opacity: hover || pinned ? 1 : 0 }}\n      />\n      <span className=\"forme-focus-label\">\n        {label}\n        <span aria-hidden=\"true\">{pinned ? \"−\" : \"+\"}</span>\n      </span>\n      <span className=\"forme-focus-hint\">\n        {pinned\n          ? \"Lens pinned · select to release\"\n          : \"Move to explore · tap to pin\"}\n      </span>\n    </button>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/focus-cursor.css",
+      "type": "registry:file",
+      "target": "@components/forme/focus-cursor.css",
+      "content": ".forme-focus {\n  position: relative;\n  display: block;\n  width: 100%;\n  height: 100%;\n  min-height: 270px;\n  overflow: hidden;\n  border: 0;\n  padding: 0;\n  background: #45554d;\n  cursor: crosshair;\n  color: white;\n  text-align: left;\n  font: inherit;\n}\n.forme-focus > img {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n.forme-focus > img:first-child {\n  filter: grayscale(1) brightness(0.7);\n}\n.forme-focus > img:nth-child(2) {\n  transition: opacity 0.25s;\n}\n.forme-focus-label {\n  position: absolute;\n  left: 24px;\n  right: 24px;\n  top: 23px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  font-size: 16px;\n  letter-spacing: -0.04em;\n  text-shadow: 0 1px 8px #000b;\n}\n.forme-focus-label > span {\n  font-size: 25px;\n}\n.forme-focus-hint {\n  position: absolute;\n  bottom: 22px;\n  left: 24px;\n  padding: 7px 10px;\n  border: 1px solid #ffffff50;\n  border-radius: 20px;\n  background: #15251ca8;\n  backdrop-filter: blur(5px);\n  font-size: 10px;\n  color: #fff;\n}\n.forme-focus:focus-visible {\n  outline: 3px solid #617cf5;\n  outline-offset: -5px;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-focus > img:nth-child(2) {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

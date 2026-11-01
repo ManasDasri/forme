@@ -1,0 +1,29 @@
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+
+// Real entry documents make every page refreshable on a plain static host.
+const registry = JSON.parse(
+  await readFile(new URL("../registry.json", import.meta.url), "utf8"),
+);
+const html = await readFile(
+  new URL("../dist/index.html", import.meta.url),
+  "utf8",
+);
+const pages = [
+  "collections",
+  "collections/editorial",
+  "collections/object",
+  "collections/kinetic",
+  "studio",
+  "docs",
+  "docs/theming",
+  "docs/accessibility",
+  "docs/registry",
+  ...registry.items.map((item) => `docs/${item.name}`),
+];
+for (const page of pages) {
+  const directory = new URL(`../dist/${page}/`, import.meta.url);
+  await mkdir(directory, { recursive: true });
+  await writeFile(new URL("index.html", directory), html);
+}
+await writeFile(new URL("../dist/404.html", import.meta.url), html);
+console.log(`Built ${pages.length} static page entries.`);

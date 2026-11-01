@@ -125,6 +125,69 @@
           "target": "@components/forme/motion-link.css"
         }
       ]
+    },
+    {
+      "name": "magnetic-button",
+      "type": "registry:component",
+      "title": "Magnetic button",
+      "description": "Magnetic button for expressive editorial websites.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/magnetic-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/magnetic-button.tsx"
+        },
+        {
+          "path": "src/registry/magnetic-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/magnetic-button.css"
+        }
+      ]
+    },
+    {
+      "name": "focus-cursor",
+      "type": "registry:component",
+      "title": "Focus cursor",
+      "description": "Focus cursor for expressive editorial websites.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/focus-cursor.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/focus-cursor.tsx"
+        },
+        {
+          "path": "src/registry/focus-cursor.css",
+          "type": "registry:file",
+          "target": "@components/forme/focus-cursor.css"
+        }
+      ]
+    },
+    {
+      "name": "type-switcher",
+      "type": "registry:component",
+      "title": "Type switcher",
+      "description": "Type switcher for expressive editorial websites.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/type-switcher.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/type-switcher.tsx"
+        },
+        {
+          "path": "src/registry/type-switcher.css",
+          "type": "registry:file",
+          "target": "@components/forme/type-switcher.css"
+        }
+      ]
     }
   ]
 }

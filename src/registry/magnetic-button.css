@@ -1,0 +1,54 @@
+.forme-magnet {
+  display: inline-flex;
+  padding: 18px;
+  max-width: 100%;
+}
+.forme-magnet > span {
+  display: inline-flex;
+  max-width: 100%;
+}
+.forme-magnet-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  max-width: 100%;
+  padding: 18px 25px;
+  border: 1px solid currentColor;
+  border-radius: 50px;
+  background: var(--forme-button-bg, #242d25);
+  color: var(--forme-button-color, #f3f3e8);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+.forme-magnet-button > span:first-child {
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.forme-magnet-arrow {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 22px;
+  transition: transform 0.35s;
+}
+.forme-magnet-button:hover .forme-magnet-arrow {
+  transform: rotate(45deg);
+}
+.forme-magnet-button:focus-visible {
+  outline: 3px solid #617cf5;
+  outline-offset: 5px;
+}
+.forme-magnet-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-magnet-arrow {
+    transition: none;
+  }
+  .forme-magnet-button:hover .forme-magnet-arrow {
+    transform: none;
+  }
+}

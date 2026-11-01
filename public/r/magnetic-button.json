@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "magnetic-button",
+  "type": "registry:component",
+  "title": "Magnetic button",
+  "description": "Magnetic button for expressive editorial websites.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "src/registry/magnetic-button.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/magnetic-button.tsx",
+      "content": "\"use client\";\n\nimport type { ButtonHTMLAttributes } from \"react\";\nimport { motion, useReducedMotion, useSpring } from \"motion/react\";\nimport \"./magnetic-button.css\";\n\nexport function MagneticButton({\n  children,\n  className = \"\",\n  type = \"button\",\n  ...props\n}: ButtonHTMLAttributes<HTMLButtonElement>) {\n  const reduce = useReducedMotion();\n  const x = useSpring(0, { stiffness: 180, damping: 16 });\n  const y = useSpring(0, { stiffness: 180, damping: 16 });\n  return (\n    <span\n      className=\"forme-magnet\"\n      onPointerMove={(event) => {\n        if (reduce || props.disabled || event.pointerType !== \"mouse\") return;\n        const bounds = event.currentTarget.getBoundingClientRect();\n        x.set((event.clientX - bounds.left - bounds.width / 2) * 0.22);\n        y.set((event.clientY - bounds.top - bounds.height / 2) * 0.22);\n      }}\n      onPointerLeave={() => {\n        x.set(0);\n        y.set(0);\n      }}\n    >\n      <motion.span style={{ x, y }}>\n        <button\n          {...props}\n          type={type}\n          className={`forme-magnet-button ${className}`}\n        >\n          <span>{children}</span>\n          <span className=\"forme-magnet-arrow\" aria-hidden=\"true\">\n            ↗\n          </span>\n        </button>\n      </motion.span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/magnetic-button.css",
+      "type": "registry:file",
+      "target": "@components/forme/magnetic-button.css",
+      "content": ".forme-magnet {\n  display: inline-flex;\n  padding: 18px;\n  max-width: 100%;\n}\n.forme-magnet > span {\n  display: inline-flex;\n  max-width: 100%;\n}\n.forme-magnet-button {\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 28px;\n  max-width: 100%;\n  padding: 18px 25px;\n  border: 1px solid currentColor;\n  border-radius: 50px;\n  background: var(--forme-button-bg, #242d25);\n  color: var(--forme-button-color, #f3f3e8);\n  font: inherit;\n  font-size: 16px;\n  cursor: pointer;\n}\n.forme-magnet-button > span:first-child {\n  overflow-wrap: anywhere;\n  text-align: left;\n}\n.forme-magnet-arrow {\n  display: grid;\n  place-items: center;\n  flex-shrink: 0;\n  font-size: 22px;\n  transition: transform 0.35s;\n}\n.forme-magnet-button:hover .forme-magnet-arrow {\n  transform: rotate(45deg);\n}\n.forme-magnet-button:focus-visible {\n  outline: 3px solid #617cf5;\n  outline-offset: 5px;\n}\n.forme-magnet-button:disabled {\n  opacity: 0.45;\n  cursor: not-allowed;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-magnet-arrow {\n    transition: none;\n  }\n  .forme-magnet-button:hover .forme-magnet-arrow {\n    transform: none;\n  }\n}\n"
+    }
+  ]
+}
