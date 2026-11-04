@@ -193,6 +193,9 @@ code {
 }
 
 /* Header */
+main:focus {
+  outline: 0;
+}
 .site-header {
   position: sticky;
   top: 0;
@@ -344,11 +347,7 @@ code {
   color: #fff;
 }
 /* The recording's own tag competes with the tile caption here. */
-.bento-tile .studio-preview-tag {
-  bottom: 12px;
-  right: 12px;
-}
-.category-links {
+.bento-tile .category-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -500,7 +499,7 @@ code {
 /* Library */
 .library-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
 }
@@ -624,20 +623,6 @@ code {
 }
 .card-live > * {
   min-height: 0 !important;
-}
-.card-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgb(0 0 0 / 0.55);
-  backdrop-filter: blur(8px);
-  color: #ededf0;
-  font-size: 12px;
-  font-weight: 500;
-  pointer-events: none;
 }
 .card-actions {
   position: absolute;
@@ -784,31 +769,6 @@ code {
     radial-gradient(28% 34% at 36% 40%, #3b5bdb55, transparent 70%),
     radial-gradient(24% 30% at 66% 62%, #ae3ec955, transparent 70%),
     radial-gradient(70% 60% at 50% 45%, #121216, #070708);
-}
-.studio-preview {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 220px;
-  background: #070708;
-}
-.studio-preview video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.studio-preview-tag {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgb(0 0 0 / 0.55);
-  backdrop-filter: blur(8px);
-  color: #b5b5bd;
-  font-size: 12px;
 }
 
 /* Code */
@@ -1236,36 +1196,22 @@ a.fact:hover {
   color: var(--ink-2);
   font-size: 13px;
 }
-.studio-gate,
 .prose {
   display: grid;
   gap: 14px;
   max-width: 72ch;
 }
-.studio-gate {
-  justify-items: start;
-}
-.studio-gate h2,
 .prose h2 {
   margin-top: 20px;
   font-size: 24px;
   letter-spacing: -0.02em;
 }
-.studio-gate h2:first-child,
 .prose h2:first-child {
   margin-top: 0;
 }
-.studio-gate h3 {
-  margin-top: 8px;
-  font-size: 17px;
-}
-.studio-gate p,
 .prose > p {
   color: var(--ink-2);
   line-height: 1.7;
-}
-.studio-gate .code-block {
-  width: 100%;
 }
 .prose > .btn {
   justify-self: start;

@@ -1,4 +1,5 @@
 .forme-prism {
+  align-self: center;
   --px: 50%;
   --py: 50%;
   position: relative;

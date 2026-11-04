@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { catalog } from "./catalog";
 import { SilkShader } from "./registry/silk-shader";
 import { DitherShader } from "./registry/dither-shader";
@@ -25,6 +25,12 @@ import { OrbitLoader } from "./registry/orbit-loader";
 import { ShimmerText } from "./registry/shimmer-text";
 import { ProgressBeam } from "./registry/progress-beam";
 import { AsciiGlobe } from "./registry/ascii-globe";
+import { AsciiBlackHole } from "./registry/ascii-black-hole";
+import { AsciiSurface } from "./registry/ascii-surface";
+import { CausticShader } from "./registry/caustic-shader";
+import { SingularityShader } from "./registry/singularity-shader";
+import { OrbitGauge } from "./registry/orbit-gauge";
+import { ShutterButton } from "./registry/shutter-button";
 import { AsciiDecode } from "./registry/ascii-decode";
 import { TelemetryCard } from "./registry/telemetry-card";
 import { RadarSweep } from "./registry/radar-sweep";
@@ -41,6 +47,11 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "dither-shader": (p) => <DitherShader color={p.color} speed={p.speed} />,
   "horizon-shader": (p) => <HorizonShader color={p.color} speed={p.speed} />,
   "aurora-shader": (p) => <AuroraShader color={p.color} speed={p.speed} />,
+  "singularity-shader": (p) => <SingularityShader color={p.color} speed={p.speed} />,
+  "caustic-shader": (p) => <CausticShader color={p.color} speed={p.speed} />,
+  "ascii-black-hole": (p) => <AsciiBlackHole speed={p.speed} />,
+  "ascii-surface": (p) => <AsciiSurface color={p.color} speed={p.speed} />,
+  "orbit-gauge": () => <GaugeDemo />,
   "chrome-shader": (p) => <ChromeShader color={p.color} speed={p.speed} />,
   "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
   "ascii-tide": (p) => <AsciiTide color={p.color} speed={p.speed} />,
@@ -126,6 +137,7 @@ const buttons: Record<
 > = {
   "prism-button": (l, s) => <PrismButton onClick={s}>{l}</PrismButton>,
   "magnetic-button": (l, s) => <MagneticButton onClick={s}>{l}</MagneticButton>,
+  "shutter-button": (l, s) => <ShutterButton onClick={s}>{l}</ShutterButton>,
   "lens-button": (l, s) => <LensButton onClick={s}>{l}</LensButton>,
   "plasma-button": (l, s) => <PlasmaButton onClick={s}>{l}</PlasmaButton>,
   "scramble-button": (l, s) => <ScrambleButton onClick={s}>{String(l)}</ScrambleButton>,
@@ -175,33 +187,28 @@ function TelemetryDemo({ color }: { color?: string }) {
   );
 }
 
-/** Studio pieces ship as recordings: their source never enters this bundle. */
-export function StudioPreview({ slug }: { slug: string }) {
-  const video = useRef<HTMLVideoElement>(null);
-  const name = catalog.find((c) => c.slug === slug)?.name;
+function GaugeDemo() {
+  const [step, setStep] = useState(0);
   useEffect(() => {
-    const node = video.current!;
-    const media = matchMedia("(prefers-reduced-motion:reduce)");
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !media.matches) node.play().catch(() => {});
-      else node.pause();
-    });
-    observer.observe(node);
-    return () => observer.disconnect();
+    const id = setInterval(() => setStep((n) => n + 1), 2200);
+    return () => clearInterval(id);
   }, []);
+  const [cpu, memory, disk] = [
+    [0.72, 0.48, 0.31],
+    [0.86, 0.55, 0.36],
+    [0.64, 0.61, 0.42],
+    [0.91, 0.44, 0.33],
+  ][step % 4];
   return (
-    <div className="studio-preview">
-      <video
-        ref={video}
-        src={`/studio/${slug}.mp4`}
-        poster={`/studio/${slug}.jpg`}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-label={`Recorded preview of ${name}`}
+    <div className="specimen">
+      <OrbitGauge
+        title="Capacity"
+        metrics={[
+          { label: "CPU", value: cpu, color: "#8ab4ff" },
+          { label: "Memory", value: memory, color: "#c4b5fd" },
+          { label: "Disk", value: disk, color: "#5eead4" },
+        ]}
       />
-      <span className="studio-preview-tag">Recorded preview</span>
     </div>
   );
 }
@@ -223,7 +230,6 @@ export function Demo({
 }) {
   const [selected, setSelected] = useState(false);
   const item = catalog.find((c) => c.slug === slug);
-  if (item?.access === "studio") return <StudioPreview slug={slug} />;
   if (live[slug]) return live[slug]({ color, speed, title, image });
   const label = title || item?.text || "Activate";
   return (

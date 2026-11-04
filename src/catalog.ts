@@ -43,7 +43,6 @@ export interface CatalogItem {
   slug: string;
   name: string;
   category: Exclude<Category, "All components">;
-  access?: "studio";
   description: string;
   usage: string;
   props: string;
@@ -281,9 +280,9 @@ export const catalog: CatalogItem[] = [
     slug: "chrome-shader",
     name: "Liquid chrome",
     category: "Shaders",
-    description: "Polished metal that flows, reflecting a studio you never see.",
+    description: "Beads of mercury that merge and pinch apart, reflecting a photo studio.",
     usage: '<ChromeShader color="#7c9cff" speed={1} />',
-    props: `${shaderProps} color tints the reflected floor light; the pointer shifts the surface.`,
+    props: `${shaderProps} color tints the reflected floor; one small bead drifts after the pointer and joins the others.`,
     traits: shader,
     color: "#7c9cff",
     speed: true,
@@ -399,17 +398,17 @@ export const catalog: CatalogItem[] = [
     slug: "singularity-shader",
     name: "Singularity",
     category: "Shaders",
-    access: "studio",
     description: "A black hole, its far side bent into a halo of light.",
     usage: '<SingularityShader color="#e8a25c" speed={1} />',
     props: `${shaderProps} The pointer shifts the observer.`,
     traits: shader,
+    color: "#e8a25c",
+    speed: true,
   },
   {
     slug: "orbit-gauge",
     name: "Orbit gauge",
     category: "HUD",
-    access: "studio",
     description: "Concentric precision arcs that ease to every new value.",
     usage:
       '<OrbitGauge title="Capacity" metrics={[\n  { label: "CPU", value: 0.72, color: "#8ab4ff" },\n  { label: "Memory", value: 0.48, color: "#c4b5fd" },\n  { label: "Disk", value: 0.31, color: "#5eead4" },\n]} />',
@@ -422,12 +421,12 @@ export const catalog: CatalogItem[] = [
     slug: "ascii-black-hole",
     name: "ASCII black hole",
     category: "ASCII",
-    access: "studio",
     description: "A black hole in dense characters, its disk orbiting into the dark.",
     usage: "<AsciiBlackHole speed={1} />",
     props:
       "speed and label are optional. Tens of thousands of glyphs per frame, batched by brightness so it stays fast. Inner rings orbit faster than outer ones, the approaching side burns white, and the far side of the disk is lensed into a ring. Ambient, with a pause control. Stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
     traits: ["reduced-motion", "offscreen-pause", "pause-control", "zero-deps"],
+    speed: true,
   },
 
 
@@ -435,40 +434,40 @@ export const catalog: CatalogItem[] = [
     slug: "caustic-shader",
     name: "Caustic glass",
     category: "Shaders",
-    access: "studio",
     description:
       "Light through moving glass. Refracted edges, depth, and shifting caustics.",
     usage: '<CausticShader color="#73d9ed" speed={1} />',
     props: shaderProps,
     traits: shader,
+    color: "#73d9ed",
+    speed: true,
   },
   {
     slug: "shutter-button",
     name: "Shutter button",
     category: "Buttons",
-    access: "studio",
     description: "A mechanical reveal. Five panels, perfectly sequenced.",
     usage:
       '<ShutterButton onClick={() => console.log("Connect your action")}>\n  Open the future\n</ShutterButton>',
     props:
       "Accepts native button props and children. Hover and keyboard focus open the panels. Activation calls your onClick. Defaults to type=button; reduced motion switches without a transition.",
     traits: button,
+    text: "Open the future",
   },
   {
     slug: "ascii-surface",
     name: "ASCII surface",
     category: "ASCII",
-    access: "studio",
     description:
       "A terrain of characters in perspective. Press into it or send a ripple.",
     usage: '<AsciiSurface color="#a6d5df" speed={1} />',
     props:
       "color, speed, and label are optional. Glyphs are lit by the surface normal and shrink and fade with distance. The pointer presses a lens into the ground where it points; click, tap, Enter, or Space sends a ripple. Includes pause, stops offscreen and in hidden tabs, and holds still for reduced motion.",
     traits: canvas,
+    color: "#9ecbff",
+    speed: true,
   },
 ];
-export const freeCount = catalog.filter((c) => c.access !== "studio").length;
-export const studioCount = catalog.length - freeCount;
 export const code = (slug: string) =>
   `S-${String(catalog.findIndex((c) => c.slug === slug) + 1).padStart(2, "0")}`;
 export function exportName(slug: string) {

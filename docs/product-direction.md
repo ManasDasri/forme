@@ -1,5 +1,9 @@
 # Forme: interfaces from the near future
 
+## Update — 4 November 2026
+
+The Studio tier is gone for now. All 35 components are free with public source, and the recording pipeline has been removed. Any later premium offering would need new pieces, since these are public.
+
 ## Update — 1 November 2026 (later)
 
 Signal grew to 25 components with a fourth channel, HUD. A first futuristic pass (grid backdrop, monospace HUD labels, corner brackets, neon accents) was rejected by the owner as cheap and templated. The site now follows a restrained system closer to 21st.dev's quality bar: true black, one family (Instrument Sans, condensed for display), white primary actions, no accent in the chrome, and previews that carry all the color. The home hero is a live stage that switches between real components. The differentiator is now explicit: verifiable quality. Trait badges are enforced by tests, sizes are measured at build, and Studio previews are recordings so Studio source is never distributed. Demand and willingness to pay remain unvalidated.

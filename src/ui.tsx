@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
-import { catalog, freeCount, traitInfo, type Trait } from "./catalog";
+import { catalog, traitInfo, type Trait } from "./catalog";
 import sizes from "./sizes.json";
 
 export const installCommand = (slug: string) =>
@@ -144,9 +144,9 @@ export function Header({ onSearch }: { onSearch: () => void }) {
     } catch {}
   }
   const path = location.pathname;
+  useEffect(() => setMenu(false), [path]);
   const links = [
     ["/components/", "Components"],
-    ["/studio/", "Studio"],
     ["/docs/", "Docs"],
   ];
   return (
@@ -206,12 +206,11 @@ export function Footer() {
       </a>
       <nav aria-label="Footer navigation">
         <a href="/components/">Components</a>
-        <a href="/studio/">Studio</a>
         <a href="/docs/">Docs</a>
         <a href="/docs/quality/">How we verify</a>
       </nav>
       <p>
-        © {new Date().getFullYear()} Forme. {catalog.length} components, {freeCount} free.
+        © {new Date().getFullYear()} Forme. {catalog.length} components, all free.
       </p>
     </footer>
   );

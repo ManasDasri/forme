@@ -1,5 +1,6 @@
 .forme-command {
   position: relative;
+  align-self: flex-start;
   box-sizing: border-box;
   width: 100%;
   max-width: 460px;
