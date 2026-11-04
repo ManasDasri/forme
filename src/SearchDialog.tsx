@@ -54,7 +54,7 @@ export function SearchDialog({ close }: { close: () => void }) {
           <a key={c.slug} href={`/docs/${c.slug}/`}>
             <span>
               <strong>{c.name}</strong>
-              <small>{c.access === "studio" ? `${c.category}, Studio` : c.category}</small>
+              <small>{c.category}</small>
             </span>
           </a>
         ))}

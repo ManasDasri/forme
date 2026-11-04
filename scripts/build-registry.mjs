@@ -6,10 +6,8 @@ const registry = JSON.parse(
 );
 const directory = new URL("../public/r/", import.meta.url);
 await mkdir(directory, { recursive: true });
-const publicItems = registry.items.filter(
-  (item) => item.meta?.access !== "studio",
-);
-// Remove stale generated payloads, especially when a piece moves into Studio.
+const publicItems = registry.items;
+// Remove stale generated payloads when a component is renamed or deleted.
 const allowed = new Set(publicItems.map((item) => `${item.name}.json`));
 for (const file of await readdir(directory)) {
   if (file.endsWith(".json") && !allowed.has(file))
@@ -57,5 +55,5 @@ await writeFile(
   JSON.stringify(sizes, null, 2) + "\n",
 );
 console.log(
-  `Built ${publicItems.length} public registry items; Studio source excluded.`,
+  `Built ${publicItems.length} public registry items.`,
 );

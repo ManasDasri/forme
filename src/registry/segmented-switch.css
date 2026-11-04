@@ -2,6 +2,7 @@
   position: relative;
   isolation: isolate;
   display: inline-grid;
+  align-self: center;
   box-sizing: border-box;
   padding: 3px;
   border-radius: 12px;

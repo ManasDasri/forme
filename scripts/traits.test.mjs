@@ -21,14 +21,6 @@ const finite = new Set(["ascii-decode", "scramble-button", "hold-button", "orbit
 
 test("catalog and registry describe the same components", () => {
   assert.deepEqual(catalog.map((c) => c.slug), registry.items.map((i) => i.name));
-  for (const c of catalog) {
-    const item = registry.items.find((i) => i.name === c.slug);
-    assert.equal(item.meta?.access, c.access, `${c.slug} access mismatch`);
-    for (const f of item.files) {
-      const shared = f.path.startsWith("src/registry/shader-canvas");
-      if (!shared) assert.ok(f.path.startsWith(c.access === "studio" ? "studio/" : "src/registry/"), `${f.path} is in the wrong tier`);
-    }
-  }
   assert.ok(catalog.length >= 25);
 });
 
@@ -41,9 +33,4 @@ test("every claimed trait is backed by source", async () => {
     if (source.includes("requestAnimationFrame") && !finite.has(c.slug))
       assert.ok(c.traits.includes("offscreen-pause"), `${c.slug} runs a render loop without an offscreen pause`);
   }
-});
-
-test("free components never import Studio source", async () => {
-  for (const item of registry.items.filter((i) => i.meta?.access !== "studio"))
-    assert.ok(!(await sourceOf(item)).includes("studio/"), `${item.name} imports Studio source`);
 });

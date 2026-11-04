@@ -13,7 +13,6 @@ const items = [
     name: "Case study",
     category: "Layouts",
     description: "Project story",
-    access: "studio",
   },
   {
     slug: "c",
@@ -25,18 +24,16 @@ const items = [
 const defaults = {
   query: "",
   category: "All components",
-  access: "all",
   savedOnly: false,
   saved: [],
   sort: "curated",
 };
-test("library combines search, category, tier and saved filters", () => {
+test("library combines search, category and saved filters", () => {
   assert.deepEqual(
     filterLibrary(items, {
       ...defaults,
       query: " IMAGE ",
       category: "Imagery",
-      access: "free",
     }).map((x) => x.slug),
     ["a"],
   );
@@ -45,12 +42,11 @@ test("library combines search, category, tier and saved filters", () => {
       ...defaults,
       savedOnly: true,
       saved: ["b"],
-      access: "studio",
     }).map((x) => x.slug),
     ["b"],
   );
   assert.equal(
-    filterLibrary(items, { ...defaults, access: "free", category: "Layouts" })
+    filterLibrary(items, { ...defaults, query: "image", category: "Layouts" })
       .length,
     0,
   );

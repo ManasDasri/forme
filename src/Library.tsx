@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { catalog, categories, freeCount, studioCount, type Category } from "./catalog";
+import { catalog, categories, type Category } from "./catalog";
 import { Demo } from "./Demo";
 import { Icon, Lazy, installCommand, sizeOf, useCopy } from "./ui";
 import { filterLibrary, restoreBookmarks } from "./library-state";
@@ -7,12 +7,10 @@ import { filterLibrary, restoreBookmarks } from "./library-state";
 export function LibraryBrowser({
   embedded = false,
   savedOnly = false,
-  studioOnly = false,
   initialCategory,
 }: {
   embedded?: boolean;
   savedOnly?: boolean;
-  studioOnly?: boolean;
   initialCategory?: string;
 }) {
   const params = new URLSearchParams(location.search);
@@ -20,7 +18,6 @@ export function LibraryBrowser({
   const [category, setCategory] = useState<Category>(
     valid(initialCategory) ? initialCategory : valid(params.get("category")) ? (params.get("category") as Category) : "All components",
   );
-  const [access, setAccess] = useState(studioOnly ? "studio" : params.get("access") || "all");
   const [query, setQuery] = useState(params.get("q") || "");
   const [saved, setSaved] = useState<string[]>(() => {
     try {
@@ -33,8 +30,7 @@ export function LibraryBrowser({
   const [bookmarkNotice, setBookmarkNotice] = useState("");
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => () => clearTimeout(noticeTimer.current), []);
-  const scoped = catalog.filter((c) => (access === "all" ? true : access === "studio" ? c.access === "studio" : c.access !== "studio"));
-  const visible = filterLibrary(catalog, { query, category, access, savedOnly, saved, sort: "curated" });
+  const visible = filterLibrary(catalog, { query, category, savedOnly, saved, sort: "curated" });
   const shown = embedded ? visible.slice(0, 9) : visible;
   function bookmark(slug: string) {
     const next = saved.includes(slug) ? saved.filter((x) => x !== slug) : [...saved, slug];
@@ -51,20 +47,6 @@ export function LibraryBrowser({
   return (
     <div className="library">
       <div className="library-toolbar">
-        {!studioOnly && (
-          <div className="tabs" role="group" aria-label="Access">
-            {[
-              { key: "all", label: "All", count: catalog.length },
-              { key: "free", label: "Free", count: freeCount },
-              { key: "studio", label: "Studio", count: studioCount },
-            ].map((item) => (
-              <button key={item.key} aria-pressed={access === item.key} onClick={() => setAccess(item.key)}>
-                {item.label}
-                <span>{item.count}</span>
-              </button>
-            ))}
-          </div>
-        )}
         <label className="search-field">
           <Icon name="search" />
           <input
@@ -80,13 +62,12 @@ export function LibraryBrowser({
         {categories.map((c) => (
           <button key={c} aria-pressed={category === c} onClick={() => setCategory(c)}>
             {c === "All components" ? "All" : c}
-            <span>{c === "All components" ? scoped.length : scoped.filter((item) => item.category === c).length}</span>
+            <span>{c === "All components" ? catalog.length : catalog.filter((item) => item.category === c).length}</span>
           </button>
         ))}
       </div>
       <div className="card-grid">
         {shown.map((c) => {
-          const studio = c.access === "studio";
           const isSaved = saved.includes(c.slug);
           return (
             <article className="card" key={c.slug}>
@@ -94,19 +75,16 @@ export function LibraryBrowser({
                 <Lazy className="card-live">
                   <Demo slug={c.slug} />
                 </Lazy>
-                {studio && <span className="card-badge">Studio</span>}
                 <div className="card-actions">
                   <button onClick={() => bookmark(c.slug)} aria-label={`${isSaved ? "Remove" : "Save"} ${c.name}`} aria-pressed={isSaved}>
                     <Icon name={isSaved ? "bookmark-filled" : "bookmark"} />
                   </button>
-                  {!studio && (
-                    <button
-                      onClick={() => copy(installCommand(c.slug), `Copied install command for ${c.name}`)}
-                      aria-label={`Copy install command for ${c.name}`}
-                    >
-                      <Icon name="copy" />
-                    </button>
-                  )}
+                  <button
+                    onClick={() => copy(installCommand(c.slug), `Copied install command for ${c.name}`)}
+                    aria-label={`Copy install command for ${c.name}`}
+                  >
+                    <Icon name="copy" />
+                  </button>
                 </div>
               </div>
               <div className="card-meta">
@@ -131,7 +109,6 @@ export function LibraryBrowser({
             onClick={() => {
               setCategory("All components");
               setQuery("");
-              if (!studioOnly) setAccess("all");
             }}
           >
             Clear filters

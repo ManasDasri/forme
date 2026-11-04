@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { catalog, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
-import { Demo, StudioPreview } from "./Demo";
+import { catalog, traitInfo, type Trait } from "./catalog";
+import { Demo } from "./Demo";
 import { EclipseHero } from "./registry/eclipse-hero";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
@@ -51,7 +51,7 @@ function HomePage() {
   const [copied, copy] = useCopy();
   const command = installCommand("hold-button");
   return (
-    <main id="main">
+    <main id="main" tabIndex={-1}>
       <div className="hero">
         <EclipseHero
           title="Components for interfaces that feel alive."
@@ -73,8 +73,7 @@ function HomePage() {
         <header className="section-head">
           <h2 id="library-title">Touch them. They're running.</h2>
           <p>
-            A few of the {catalog.length}. Free pieces run live in your browser; Studio pieces are recordings. {freeCount}{" "}
-            are free to install.
+            A few of the {catalog.length}, all running live in your browser. Every one installs with a single command.
           </p>
         </header>
         <Showcase />
@@ -145,18 +144,17 @@ function HomePage() {
         </a>
       </section>
 
-      <section className="section shell split" aria-labelledby="studio-title">
+      <section className="section shell split" aria-labelledby="free-title">
         <Lazy className="split-media">
-          <StudioPreview slug="singularity-shader" />
+          <Demo slug="singularity-shader" />
         </Lazy>
         <div className="split-text">
-          <h2 id="studio-title">Studio</h2>
+          <h2 id="free-title">All of it is free</h2>
           <p>
-            {studioCount} heavier pieces, including a black hole drawn in dense ASCII, a cinematic singularity, and an orbital gauge. You can
-            watch recordings of them today. Pricing and source access will be announced before the paid launch.
+            Every component, from the buttons to the black hole, with full source. No account and no package to depend on.
           </p>
-          <a className="btn btn-secondary" href="/studio/">
-            See Studio
+          <a className="btn btn-secondary" href="/components/">
+            Browse components
           </a>
         </div>
       </section>
@@ -193,34 +191,22 @@ function PageIntro({ title, text }: { title: string; text: string }) {
 }
 function LibraryPage({ saved = false, category }: { saved?: boolean; category?: string }) {
   return (
-    <main id="main" className="page shell">
+    <main id="main" tabIndex={-1} className="page shell">
       <PageIntro
         title={saved ? "Bookmarks" : category || "Components"}
         text={
           saved
             ? "Components you saved, kept in this browser."
-            : `${catalog.length} components for React. ${freeCount} install with one command; Studio pieces are shown as recordings.`
+            : `${catalog.length} components for React, all free. Each one installs with a single command.`
         }
       />
       <LibraryBrowser savedOnly={saved} initialCategory={category} />
     </main>
   );
 }
-function StudioPage() {
-  return (
-    <main id="main" className="page shell">
-      <PageIntro
-        title="Studio"
-        text="Our most involved pieces. These previews are recordings of the real components, made by a deterministic capture script. Source access comes with the paid edition."
-      />
-      <p className="notice">Studio isn't on sale yet. Pricing, terms, and source access will be announced before launch.</p>
-      <LibraryBrowser studioOnly />
-    </main>
-  );
-}
 function MessagePage({ title, text }: { title: string; text: string }) {
   return (
-    <main id="main" className="page shell message-page">
+    <main id="main" tabIndex={-1} className="page shell message-page">
       <h1>{title}</h1>
       <p className="lede">{text}</p>
       <a className="btn" href="/components/">
@@ -230,9 +216,40 @@ function MessagePage({ title, text }: { title: string; text: string }) {
   );
 }
 
+const normalize = (pathname: string) => pathname.replace(/\/+$/, "") || "/";
+const isComponentDoc = (path: string) => catalog.some((c) => path === `/docs/${c.slug}`);
+
 export default function App() {
   const [search, setSearch] = useState(false);
-  const path = location.pathname.replace(/\/+$/, "") || "/";
+  const [path, setPath] = useState(() => normalize(location.pathname));
+  // Internal links change the view without a page load, so the docs sidebar and
+  // scroll position survive. Moving between components keeps your place.
+  useEffect(() => {
+    const click = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = (event.target as Element).closest?.<HTMLAnchorElement>("a[href]");
+      if (!link || link.target || link.hasAttribute("download") || link.origin !== location.origin) return;
+      if (/\.\w+$/.test(link.pathname)) return; // Real files such as /registry.json.
+      if (link.hash && link.pathname === location.pathname) return; // Same-page anchors.
+      event.preventDefault();
+      const next = normalize(link.pathname);
+      const current = normalize(location.pathname);
+      setSearch(false);
+      if (next === current && link.search === location.search) return;
+      history.pushState(null, "", link.pathname + link.search);
+      setPath(next);
+      if (isComponentDoc(next) && isComponentDoc(current)) return;
+      scrollTo(0, 0);
+      requestAnimationFrame(() => document.getElementById("main")?.focus({ preventScroll: true }));
+    };
+    const pop = () => setPath(normalize(location.pathname));
+    document.addEventListener("click", click);
+    window.addEventListener("popstate", pop);
+    return () => {
+      document.removeEventListener("click", click);
+      window.removeEventListener("popstate", pop);
+    };
+  }, []);
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
@@ -246,11 +263,10 @@ export default function App() {
   const group = groups.find((g) => path === `/collections/${g.slug}`);
   let page;
   if (path === "/") page = <HomePage />;
-  else if (["/components", "/collections", "/collections/experimental", "/collections/editorial"].includes(path))
-    page = <LibraryPage />;
-  else if (path === "/bookmarks") page = <LibraryPage saved />;
-  else if (group) page = <LibraryPage category={group.name} />;
-  else if (path === "/studio") page = <StudioPage />;
+  else if (["/components", "/studio", "/collections", "/collections/experimental", "/collections/editorial"].includes(path))
+    page = <LibraryPage key={path} />;
+  else if (path === "/bookmarks") page = <LibraryPage key={path} saved />;
+  else if (group) page = <LibraryPage key={path} category={group.name} />;
   else if (["/collections/next", "/collections/object", "/collections/kinetic"].includes(path))
     page = <MessagePage title="More is on the way" text="New components arrive in focused drops. No release date is set yet." />;
   else if (path === "/docs" || path.startsWith("/docs/")) page = <DocsPage slug={path.slice(5).replace(/^\//, "")} />;
@@ -259,7 +275,6 @@ export default function App() {
     const component = catalog.find((c) => path === `/docs/${c.slug}`);
     const titles: [boolean, string][] = [
       [!!component, component?.name || ""],
-      [path === "/studio", "Studio"],
       [path.startsWith("/docs"), "Docs"],
       [path === "/bookmarks", "Bookmarks"],
       [!!group, group?.name || ""],

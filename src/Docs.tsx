@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { catalog, exportName, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
+import { catalog, exportName, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
 import { Code, Icon, Traits, installCommand, sizeOf, useCopy } from "./ui";
 import registry from "../registry.json";
 
-// Free source only: Studio files live outside src/ and cannot be matched here.
 const sources = import.meta.glob("./registry/*.{tsx,css}", {
   query: "?raw",
   import: "default",
@@ -69,7 +68,6 @@ function Source({ slug, copy }: { slug: string; copy: (text: string, label: stri
 
 export function Workbench({ slug }: { slug: string }) {
   const component = catalog.find((c) => c.slug === slug)!;
-  const studio = component.access === "studio";
   const [tab, setTab] = useState(
     new URLSearchParams(location.search).get("view") === "source" ? "source" : "preview",
   );
@@ -80,7 +78,7 @@ export function Workbench({ slug }: { slug: string }) {
   const [mobile, setMobile] = useState(false);
   const [replay, setReplay] = useState(0);
   const [copied, copy] = useCopy();
-  const tabs = studio ? ["preview", "usage"] : ["preview", "usage", "source"];
+  const tabs = ["preview", "usage", "source"];
   // The snippet follows the playground, so what you tune is what you copy.
   let snippet = component.usage
     .replace(/color="#[0-9a-f]{6}"/i, `color="${color}"`)
@@ -103,12 +101,10 @@ export function Workbench({ slug }: { slug: string }) {
             </button>
           ))}
         </div>
-        {!studio && (
-          <button className="btn btn-secondary btn-small" onClick={() => copy(agentPrompt(slug), "Copied prompt for your coding agent")}>
-            <Icon name="copy" /> Copy prompt
-          </button>
-        )}
-        {tab === "preview" && !studio && (
+        <button className="btn btn-secondary btn-small" onClick={() => copy(agentPrompt(slug), "Copied prompt for your coding agent")}>
+          <Icon name="copy" /> Copy prompt
+        </button>
+        {tab === "preview" && (
           <div className="segmented">
             <button onClick={() => setMobile(!mobile)} aria-pressed={mobile}>
               Narrow
@@ -124,8 +120,7 @@ export function Workbench({ slug }: { slug: string }) {
               <Demo slug={slug} title={title} image={image || undefined} color={color} speed={speed} hint />
             </div>
           </div>
-          {!studio && (
-            <div className="workbench-controls">
+          <div className="workbench-controls">
               {component.text && (
                 <label>
                   {component.category === "Buttons" ? "Label" : "Text"}
@@ -167,10 +162,8 @@ export function Workbench({ slug }: { slug: string }) {
               >
                 Reset
               </button>
-            </div>
-          )}
-          {!studio && (
-            <div className="code-snippet">
+          </div>
+          <div className="code-snippet">
               <div className="code-toolbar">
                 <span>Your settings</span>
                 <button onClick={() => copy(snippet, "Copied code")}>
@@ -178,26 +171,10 @@ export function Workbench({ slug }: { slug: string }) {
                 </button>
               </div>
               <Code text={snippet} />
-            </div>
-          )}
+          </div>
         </>
       )}
-      {tab === "usage" && studio && (
-        <div className="studio-gate">
-          <h2>This is a recording. Source comes with Studio.</h2>
-          <p>
-            What you see is a deterministic recording of the real component. Its source is not distributed on this site.
-            Purchasing is not open yet; pricing and terms will be announced before launch.
-          </p>
-          <h3>Props & behavior</h3>
-          <p>{component.props}</p>
-          <Code text={component.usage} />
-          <a className="btn" href="/studio/">
-            See Studio
-          </a>
-        </div>
-      )}
-      {tab === "usage" && !studio && (
+      {tab === "usage" && (
         <div className="prose">
           <h2>Install</h2>
           <p>Run this in a React project with shadcn and import aliases configured.</p>
@@ -218,7 +195,7 @@ export function Workbench({ slug }: { slug: string }) {
           </p>
         </div>
       )}
-      {tab === "source" && !studio && <Source slug={slug} copy={copy} />}
+      {tab === "source" && <Source slug={slug} copy={copy} />}
       <p className="copy-status" role="status">
         {copied}
       </p>
@@ -243,7 +220,6 @@ export function DocsPage({ slug }: { slug: string }) {
           {catalog.map((c) => (
             <a key={c.slug} href={`/docs/${c.slug}/`} aria-current={slug === c.slug ? "page" : undefined}>
               {c.name}
-              {c.access === "studio" && <span>Studio</span>}
             </a>
           ))}
         </nav>
@@ -292,7 +268,7 @@ function Quality() {
       <p>
         Every badge on this site maps to a concrete check in <code>scripts/traits.test.mjs</code>. The test reads each
         component's installed files and fails the build if a claimed behavior is missing from the source. It also fails if
-        a render loop has no offscreen pause, or if Studio source leaks into the site bundle. CI runs it on every push.
+        a render loop has no offscreen pause. CI runs it on every push.
       </p>
       <ul className="check-list">
         {traits.map((t) => (
@@ -398,7 +374,7 @@ function Guide({ slug }: { slug: string }) {
       <div className="prose">
         <h2>Install the source</h2>
         <p>
-          The public registry contains {freeCount} free components. The {studioCount} Studio pieces are excluded. The CLI
+          The public registry contains all {catalog.length} components. The CLI
           copies TypeScript and scoped CSS into your components directory. There is no Forme runtime package.
         </p>
         <Code text={command} />
@@ -413,10 +389,15 @@ function Guide({ slug }: { slug: string }) {
           }
         />
         <p>Use "rsc": false outside Next.js, and point the css path at any stylesheet in your project.</p>
+        <p>
+          The CLI reads the @ alias from your root tsconfig.json. Vite's template only sets paths in tsconfig.app.json, so
+          add them to the root file too, or the CLI reports files as skipped and writes nothing where you expect:
+        </p>
+        <Code text={'{\n  "compilerOptions": { "paths": { "@/*": ["./src/*"] } }\n}'} />
         <p className="note">
-          Last tested on 4 November 2026: all free components installed from this registry into new Next.js 16.4.5 (App
-          Router, production build) and Vite 8.3.5 projects with React 19.3.0. Both type-checked in strict mode and rendered with
-          no hydration or runtime errors in Chromium.
+          Last tested on 4 November 2026: all 35 components installed from this registry into new Next.js 16.4.5 (App Router,
+          production build) and Vite 8.3.5 projects with React 19.3. Both type-checked in strict mode and rendered on one
+          page with no hydration or runtime errors in Chromium. Safari and Firefox have not been tested.
         </p>
         <h2>What goes into your project</h2>
         <Code
@@ -433,8 +414,7 @@ function Guide({ slug }: { slug: string }) {
     <div className="prose">
       <h2>Install your first component</h2>
       <p>
-        Forme has {catalog.length} components across buttons, shaders, ASCII, HUD, surfaces, inputs, and loaders. {freeCount} include installable
-        source. {studioCount} are Studio pieces, shown as recordings, with paid access later.
+        Forme has {catalog.length} components across buttons, shaders, ASCII, HUD, surfaces, inputs, and loaders. All of them are free and include installable source.
       </p>
       <Code text={command} />
       <Code

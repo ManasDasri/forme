@@ -7,8 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "node scripts/build-registry.mjs && tsc -b && vite build && node scripts/build-pages.mjs && node scripts/verify-build.mjs",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test scripts/*.test.mjs",
-    "capture": "node scripts/capture-studio.mjs"
+    "test": "node --test scripts/*.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/instrument-sans": "^5.3.0",
@@ -21,7 +20,6 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "playwright-core": "1.64.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.5"
   }

@@ -7,12 +7,11 @@ const shared = {
   "eclipse-hero": ["horizon-shader.tsx", "shader-canvas.tsx", "shader-canvas.css"],
 };
 const items = catalog.map((c) => {
-  const dir = c.access === "studio" ? "studio" : "src/registry";
   const own = c.slug.endsWith("-shader")
     ? [`${c.slug}.tsx`, "shader-canvas.tsx", "shader-canvas.css"]
     : [`${c.slug}.tsx`, `${c.slug}.css`, ...(shared[c.slug] || [])];
   const files = own.map((name) => ({
-    path: `${name.startsWith("shader-canvas") ? "src/registry" : dir}/${name}`,
+    path: `src/registry/${name}`,
     type: name.endsWith(".css") ? "registry:file" : "registry:component",
     target: `@components/forme/${name}`,
   }));
@@ -23,7 +22,6 @@ const items = catalog.map((c) => {
     description: c.description,
     files,
     ...(c.slug === "magnetic-button" ? { dependencies: ["motion"] } : {}),
-    ...(c.access ? { meta: { access: "studio" } } : {}),
   };
 });
 writeFileSync(

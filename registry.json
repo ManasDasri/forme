@@ -374,7 +374,7 @@
       "name": "chrome-shader",
       "type": "registry:component",
       "title": "Liquid chrome",
-      "description": "Polished metal that flows, reflecting a studio you never see.",
+      "description": "Beads of mercury that merge and pinch apart, reflecting a photo studio.",
       "files": [
         {
           "path": "src/registry/chrome-shader.tsx",
@@ -585,7 +585,7 @@
       "description": "A black hole, its far side bent into a halo of light.",
       "files": [
         {
-          "path": "studio/singularity-shader.tsx",
+          "path": "src/registry/singularity-shader.tsx",
           "type": "registry:component",
           "target": "@components/forme/singularity-shader.tsx"
         },
@@ -599,10 +599,7 @@
           "type": "registry:file",
           "target": "@components/forme/shader-canvas.css"
         }
-      ],
-      "meta": {
-        "access": "studio"
-      }
+      ]
     },
     {
       "name": "orbit-gauge",
@@ -611,19 +608,16 @@
       "description": "Concentric precision arcs that ease to every new value.",
       "files": [
         {
-          "path": "studio/orbit-gauge.tsx",
+          "path": "src/registry/orbit-gauge.tsx",
           "type": "registry:component",
           "target": "@components/forme/orbit-gauge.tsx"
         },
         {
-          "path": "studio/orbit-gauge.css",
+          "path": "src/registry/orbit-gauge.css",
           "type": "registry:file",
           "target": "@components/forme/orbit-gauge.css"
         }
-      ],
-      "meta": {
-        "access": "studio"
-      }
+      ]
     },
     {
       "name": "ascii-black-hole",
@@ -632,19 +626,16 @@
       "description": "A black hole in dense characters, its disk orbiting into the dark.",
       "files": [
         {
-          "path": "studio/ascii-black-hole.tsx",
+          "path": "src/registry/ascii-black-hole.tsx",
           "type": "registry:component",
           "target": "@components/forme/ascii-black-hole.tsx"
         },
         {
-          "path": "studio/ascii-black-hole.css",
+          "path": "src/registry/ascii-black-hole.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-black-hole.css"
         }
-      ],
-      "meta": {
-        "access": "studio"
-      }
+      ]
     },
     {
       "name": "caustic-shader",
@@ -653,7 +644,7 @@
       "description": "Light through moving glass. Refracted edges, depth, and shifting caustics.",
       "files": [
         {
-          "path": "studio/caustic-shader.tsx",
+          "path": "src/registry/caustic-shader.tsx",
           "type": "registry:component",
           "target": "@components/forme/caustic-shader.tsx"
         },
@@ -667,10 +658,7 @@
           "type": "registry:file",
           "target": "@components/forme/shader-canvas.css"
         }
-      ],
-      "meta": {
-        "access": "studio"
-      }
+      ]
     },
     {
       "name": "shutter-button",
@@ -679,19 +667,16 @@
       "description": "A mechanical reveal. Five panels, perfectly sequenced.",
       "files": [
         {
-          "path": "studio/shutter-button.tsx",
+          "path": "src/registry/shutter-button.tsx",
           "type": "registry:component",
           "target": "@components/forme/shutter-button.tsx"
         },
         {
-          "path": "studio/shutter-button.css",
+          "path": "src/registry/shutter-button.css",
           "type": "registry:file",
           "target": "@components/forme/shutter-button.css"
         }
-      ],
-      "meta": {
-        "access": "studio"
-      }
+      ]
     },
     {
       "name": "ascii-surface",
@@ -700,19 +685,16 @@
       "description": "A terrain of characters in perspective. Press into it or send a ripple.",
       "files": [
         {
-          "path": "studio/ascii-surface.tsx",
+          "path": "src/registry/ascii-surface.tsx",
           "type": "registry:component",
           "target": "@components/forme/ascii-surface.tsx"
         },
         {
-          "path": "studio/ascii-surface.css",
+          "path": "src/registry/ascii-surface.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-surface.css"
         }
-      ],
-      "meta": {
-        "access": "studio"
-      }
+      ]
     }
   ]
 }

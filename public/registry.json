@@ -374,7 +374,7 @@
       "name": "chrome-shader",
       "type": "registry:component",
       "title": "Liquid chrome",
-      "description": "Polished metal that flows, reflecting a studio you never see.",
+      "description": "Beads of mercury that merge and pinch apart, reflecting a photo studio.",
       "files": [
         {
           "path": "src/registry/chrome-shader.tsx",
@@ -575,6 +575,124 @@
           "path": "src/registry/ascii-image.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-image.css"
+        }
+      ]
+    },
+    {
+      "name": "singularity-shader",
+      "type": "registry:component",
+      "title": "Singularity",
+      "description": "A black hole, its far side bent into a halo of light.",
+      "files": [
+        {
+          "path": "src/registry/singularity-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/singularity-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "orbit-gauge",
+      "type": "registry:component",
+      "title": "Orbit gauge",
+      "description": "Concentric precision arcs that ease to every new value.",
+      "files": [
+        {
+          "path": "src/registry/orbit-gauge.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/orbit-gauge.tsx"
+        },
+        {
+          "path": "src/registry/orbit-gauge.css",
+          "type": "registry:file",
+          "target": "@components/forme/orbit-gauge.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-black-hole",
+      "type": "registry:component",
+      "title": "ASCII black hole",
+      "description": "A black hole in dense characters, its disk orbiting into the dark.",
+      "files": [
+        {
+          "path": "src/registry/ascii-black-hole.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-black-hole.tsx"
+        },
+        {
+          "path": "src/registry/ascii-black-hole.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-black-hole.css"
+        }
+      ]
+    },
+    {
+      "name": "caustic-shader",
+      "type": "registry:component",
+      "title": "Caustic glass",
+      "description": "Light through moving glass. Refracted edges, depth, and shifting caustics.",
+      "files": [
+        {
+          "path": "src/registry/caustic-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/caustic-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "shutter-button",
+      "type": "registry:component",
+      "title": "Shutter button",
+      "description": "A mechanical reveal. Five panels, perfectly sequenced.",
+      "files": [
+        {
+          "path": "src/registry/shutter-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shutter-button.tsx"
+        },
+        {
+          "path": "src/registry/shutter-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/shutter-button.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-surface",
+      "type": "registry:component",
+      "title": "ASCII surface",
+      "description": "A terrain of characters in perspective. Press into it or send a ripple.",
+      "files": [
+        {
+          "path": "src/registry/ascii-surface.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-surface.tsx"
+        },
+        {
+          "path": "src/registry/ascii-surface.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-surface.css"
         }
       ]
     }

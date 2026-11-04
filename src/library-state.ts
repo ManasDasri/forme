@@ -3,12 +3,10 @@ export interface LibraryItem {
   name: string;
   category: string;
   description: string;
-  access?: "studio";
 }
 export interface LibraryFilters {
   query: string;
   category: string;
-  access: string;
   savedOnly: boolean;
   saved: string[];
   sort: string;
@@ -24,10 +22,6 @@ export function filterLibrary<T extends LibraryItem>(
       (!filters.savedOnly || filters.saved.includes(item.slug)) &&
       (filters.category === "All components" ||
         item.category === filters.category) &&
-      (filters.access === "all" ||
-        (filters.access === "studio"
-          ? item.access === "studio"
-          : item.access !== "studio")) &&
       `${item.name} ${item.description} ${item.category}`
         .toLocaleLowerCase()
         .includes(query),

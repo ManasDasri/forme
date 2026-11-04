@@ -1,4 +1,5 @@
 .forme-shutter {
+  align-self: center;
   position: relative;
   isolation: isolate;
   display: inline-flex;
