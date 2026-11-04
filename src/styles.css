@@ -595,11 +595,6 @@ code {
 .card-live > * {
   min-height: 0 !important;
 }
-.card-live .forme-shader-caption,
-.stage-frame .forme-shader-caption,
-.split-media .forme-shader-caption {
-  display: none;
-}
 .card-badge {
   position: absolute;
   top: 10px;
@@ -1179,6 +1174,10 @@ a.fact:hover {
 }
 .workbench-controls .btn {
   margin-left: auto;
+}
+.code-snippet {
+  display: grid;
+  gap: 8px;
 }
 .copy-status {
   min-height: 1.4em;

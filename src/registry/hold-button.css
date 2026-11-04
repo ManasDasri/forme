@@ -1,4 +1,6 @@
 .forme-hold {
+  box-sizing: border-box;
+  align-self: center;
   --forme-hold-bg: #151517;
   --forme-hold-ink: #ededf0;
   --forme-hold-fill: #f4f4f5;

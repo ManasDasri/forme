@@ -91,7 +91,7 @@ export function AsciiRain({
       context.font = `${size}px ui-monospace,SFMono-Regular,Menlo,monospace`;
       context.textBaseline = "top";
       const cols = Math.ceil(width / size);
-      drops = Array.from({ length: cols }, () => Math.random() * -(height / size));
+      drops = Array.from({ length: cols }, () => Math.random() * (height / size) * 1.6 - (height / size) * 0.6);
       rates = Array.from({ length: cols }, () => 0.35 + Math.random() * 0.65);
       background();
       start();

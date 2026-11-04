@@ -60,7 +60,7 @@ export function TelemetryCard({
           {Array.from(text).map((ch, i) =>
             /\d/.test(ch) ? (
               <span className="forme-telemetry-digit" key={`${text.length}-${i}`}>
-                <span style={{ transform: `translateY(${-Number(ch)}em)` }}>
+                <span style={{ transform: `translateY(${-Number(ch) * 1.2}em)` }}>
                   {digits.map((d) => (
                     <span key={d}>{d}</span>
                   ))}
