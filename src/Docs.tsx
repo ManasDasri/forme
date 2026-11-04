@@ -11,6 +11,24 @@ const sources = import.meta.glob("./registry/*.{tsx,css}", {
 }) as Record<string, () => Promise<string>>;
 const filesOf = (slug: string) =>
   registry.items.find((i) => i.name === slug)!.files.map((f) => f.path.split("/").pop()!);
+/** A paste-ready brief for a coding agent, built from the same data as the docs. */
+const agentPrompt = (slug: string) => {
+  const c = catalog.find((item) => item.slug === slug)!;
+  return `Add the Forme ${c.name} component to this React project.
+
+1. Install the source (TypeScript and scoped CSS, no Forme package):
+   ${installCommand(slug)}
+   If components.json is missing, create one first: https://forme.vercel.app/docs/registry/
+
+2. Import and use it:
+   import { ${exportName(slug)} } from "@/components/forme/${slug}"
+
+   ${c.usage.replace(/\n/g, "\n   ")}
+
+Behavior: ${c.props}
+
+Keep the installed files together, since they import each other. Connect any placeholder handlers to real actions.`;
+};
 const guides = [
   { slug: "", title: "Getting started" },
   { slug: "quality", title: "How we verify" },
@@ -63,6 +81,11 @@ export function Workbench({ slug }: { slug: string }) {
   const [replay, setReplay] = useState(0);
   const [copied, copy] = useCopy();
   const tabs = studio ? ["preview", "usage"] : ["preview", "usage", "source"];
+  // The snippet follows the playground, so what you tune is what you copy.
+  let snippet = component.usage
+    .replace(/color="#[0-9a-f]{6}"/i, `color="${color}"`)
+    .replace(/speed=\{[\d.]+\}/, `speed={${speed}}`);
+  if (component.text && title) snippet = snippet.replace(component.text, title);
   return (
     <div className="workbench">
       <div className="workbench-toolbar">
@@ -80,6 +103,11 @@ export function Workbench({ slug }: { slug: string }) {
             </button>
           ))}
         </div>
+        {!studio && (
+          <button className="btn btn-secondary btn-small" onClick={() => copy(agentPrompt(slug), "Copied prompt for your coding agent")}>
+            <Icon name="copy" /> Copy prompt
+          </button>
+        )}
         {tab === "preview" && !studio && (
           <div className="segmented">
             <button onClick={() => setMobile(!mobile)} aria-pressed={mobile}>
@@ -139,6 +167,17 @@ export function Workbench({ slug }: { slug: string }) {
               >
                 Reset
               </button>
+            </div>
+          )}
+          {!studio && (
+            <div className="code-snippet">
+              <div className="code-toolbar">
+                <span>Your settings</span>
+                <button onClick={() => copy(snippet, "Copied code")}>
+                  <Icon name="copy" /> Copy
+                </button>
+              </div>
+              <Code text={snippet} />
             </div>
           )}
         </>
@@ -363,6 +402,22 @@ function Guide({ slug }: { slug: string }) {
           copies TypeScript and scoped CSS into your components directory. There is no Forme runtime package.
         </p>
         <Code text={command} />
+        <h2>Setup</h2>
+        <p>
+          The CLI needs a components.json and an @ import alias. Forme doesn't use Tailwind, so if you don't already use
+          shadcn, you can skip its init and add this file yourself:
+        </p>
+        <Code
+          text={
+            '{\n  "style": "new-york",\n  "rsc": true,\n  "tsx": true,\n  "tailwind": { "css": "app/globals.css", "baseColor": "neutral", "cssVariables": true },\n  "aliases": {\n    "components": "@/components",\n    "utils": "@/lib/utils",\n    "ui": "@/components/ui",\n    "lib": "@/lib",\n    "hooks": "@/hooks"\n  }\n}'
+          }
+        />
+        <p>Use "rsc": false outside Next.js, and point the css path at any stylesheet in your project.</p>
+        <p className="note">
+          Last tested on 4 November 2026: all free components installed from this registry into new Next.js 16.4.5 (App
+          Router, production build) and Vite 8.3.5 projects with React 19.3.0. Both type-checked in strict mode and rendered with
+          no hydration or runtime errors in Chromium.
+        </p>
         <h2>What goes into your project</h2>
         <Code
           text={

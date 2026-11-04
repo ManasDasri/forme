@@ -5,7 +5,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: 240px;
+  min-height: 120px;
   background: radial-gradient(circle at 50% 45%, #0c1824, #05070b 70%);
   overflow: hidden;
   cursor: grab;

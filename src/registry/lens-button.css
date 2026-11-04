@@ -1,4 +1,6 @@
 .forme-lens {
+  box-sizing: border-box;
+  align-self: center;
   --forme-lens-x: 50%;
   --forme-lens-y: 0%;
   --forme-lens-tint: #7c9cff;

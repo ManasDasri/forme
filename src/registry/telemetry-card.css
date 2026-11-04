@@ -53,15 +53,15 @@
   display: inline-flex;
   font-size: 40px;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.2;
   letter-spacing: -0.03em;
 }
 .forme-telemetry-digit {
   display: inline-block;
-  height: 1em;
+  height: 1.2em;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
-  mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
+  -webkit-mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent);
 }
 .forme-telemetry-digit > span {
   display: flex;
@@ -69,7 +69,7 @@
   transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.1, 1);
 }
 .forme-telemetry-digit > span > span {
-  height: 1em;
+  height: 1.2em;
 }
 .forme-telemetry-unit {
   color: #a1a1aa;

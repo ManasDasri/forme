@@ -1,4 +1,6 @@
 .forme-scramble {
+  box-sizing: border-box;
+  align-self: center;
   --forme-decode-noise: #a1a1aa;
   display: inline-flex;
   align-items: center;

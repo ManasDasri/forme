@@ -198,16 +198,6 @@ export function ShaderCanvas({
       }}
     >
       <canvas ref={canvas} role="img" aria-label={label} />
-      <span className="forme-shader-caption">
-        {label}
-        <span>
-          {fallback
-            ? "Static fallback"
-            : interactive
-              ? "Responds to the pointer"
-              : "Ambient"}
-        </span>
-      </span>
     </div>
   );
 }
