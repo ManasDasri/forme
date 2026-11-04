@@ -377,8 +377,8 @@ function Guide({ slug }: { slug: string }) {
         </p>
         <h2>Pause, keyboard, and touch</h2>
         <p>
-          Canvas pieces include a visible pause control. Glyph rain and radar sweep respond to Enter and Space; the ASCII
-          globe and oscilloscope respond to arrow keys. Buttons are native button elements with focus and disabled states.
+          Canvas pieces include a visible pause control. Radar sweep responds to Enter and Space; the ASCII globe, oscilloscope, command palette, and segmented switch
+          respond to arrow keys. Buttons are native button elements with focus and disabled states.
           Hold to confirm works by holding Space or Enter and announces the confirmation.
         </p>
         <h2>Rendering budget</h2>
@@ -433,7 +433,7 @@ function Guide({ slug }: { slug: string }) {
     <div className="prose">
       <h2>Install your first component</h2>
       <p>
-        Forme has {catalog.length} components across buttons, shaders, ASCII, and HUD. {freeCount} include installable
+        Forme has {catalog.length} components across buttons, shaders, ASCII, HUD, surfaces, inputs, and loaders. {freeCount} include installable
         source. {studioCount} are Studio pieces, shown as recordings, with paid access later.
       </p>
       <Code text={command} />

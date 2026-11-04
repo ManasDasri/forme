@@ -12,6 +12,9 @@ const groups = [
   { name: "Shaders", slug: "shaders" },
   { name: "ASCII", slug: "ascii" },
   { name: "HUD", slug: "hud" },
+  { name: "Surfaces", slug: "surfaces" },
+  { name: "Inputs", slug: "inputs" },
+  { name: "Loaders", slug: "loaders" },
 ];
 const proofRows = ["hold-button", "ascii-globe", "chrome-shader", "radar-sweep", "lens-button", "telemetry-card"];
 const proofTraits: Trait[] = ["reduced-motion", "keyboard", "offscreen-pause", "zero-deps"];
@@ -36,7 +39,7 @@ function HomePage() {
           <h1>Components for interfaces that feel alive.</h1>
           <div className="hero-side">
             <p className="lede">
-              Shaders, ASCII, live instruments, and buttons for React. Install the source with one command, then make
+              Shaders, ASCII, instruments, inputs, and loaders for React. Install the source with one command, then make
               it yours.
             </p>
             <div className="actions">
@@ -56,7 +59,7 @@ function HomePage() {
         <header className="section-head">
           <h2 id="library-title">The library</h2>
           <p>
-            {catalog.length} components across buttons, shaders, ASCII, and HUD. {freeCount} are free to install.
+            {catalog.length} components, from shaders and ASCII to inputs and loaders. {freeCount} are free to install.
           </p>
         </header>
         <LibraryBrowser embedded />

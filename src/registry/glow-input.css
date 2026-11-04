@@ -1,0 +1,76 @@
+.forme-glow-field {
+  --forme-glow-color: #8ab4ff;
+  width: 100%;
+  max-width: 340px;
+  font-size: 15px;
+}
+.forme-glow-box {
+  position: relative;
+  border-radius: 12px;
+}
+.forme-glow-box input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  padding: 22px 14px 8px;
+  border: 0;
+  border-radius: inherit;
+  outline: 0;
+  background: #101013;
+  box-shadow:
+    inset 0 0 0 1px #ffffff1f,
+    inset 0 1px 0 #ffffff0a;
+  color: #f4f4f5;
+  font: inherit;
+  transition: box-shadow 0.25s;
+}
+.forme-glow-box input:hover {
+  box-shadow:
+    inset 0 0 0 1px #ffffff33,
+    inset 0 1px 0 #ffffff0a;
+}
+.forme-glow-box input:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px var(--forme-glow-color),
+    0 0 0 4px color-mix(in srgb, var(--forme-glow-color), transparent 84%),
+    0 8px 30px -8px color-mix(in srgb, var(--forme-glow-color), transparent 55%);
+}
+.forme-glow-box input[aria-invalid="true"] {
+  --forme-glow-color: #f87171;
+  box-shadow: inset 0 0 0 1px #f87171;
+}
+.forme-glow-box input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.forme-glow-box label {
+  position: absolute;
+  top: 18px;
+  left: 14px;
+  color: #8a8a93;
+  line-height: 20px;
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.2s;
+}
+.forme-glow-box input:focus + label,
+.forme-glow-box input:not(:placeholder-shown) + label {
+  transform: translateY(-10px) scale(0.78);
+}
+.forme-glow-box input:focus + label {
+  color: var(--forme-glow-color);
+}
+.forme-glow-hint {
+  margin: 8px 2px 0;
+  color: #8a8a93;
+  font-size: 13px;
+  line-height: 1.4;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-glow-box input,
+  .forme-glow-box label {
+    transition: none;
+  }
+}

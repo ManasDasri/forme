@@ -1,0 +1,65 @@
+.forme-progress {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  border-radius: 99px;
+  background: #ffffff14;
+}
+.forme-progress > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--forme-progress);
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--forme-progress-color), transparent 30%) 60%,
+    var(--forme-progress-color)
+  );
+  box-shadow: 0 0 12px -1px var(--forme-progress-color);
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* Bright head with a soft halo at the leading edge. */
+.forme-progress > span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 8px 2px var(--forme-progress-color),
+    0 0 22px 4px color-mix(in srgb, var(--forme-progress-color), transparent 50%);
+  transform: translateY(-50%);
+}
+.forme-progress[data-indeterminate] {
+  overflow: hidden;
+}
+.forme-progress[data-indeterminate] > span {
+  animation: forme-progress-sweep 1.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+@keyframes forme-progress-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-progress > span {
+    transition: none;
+  }
+  .forme-progress[data-indeterminate] > span {
+    animation: forme-progress-breathe 2.2s ease-in-out infinite;
+  }
+  @keyframes forme-progress-breathe {
+    50% {
+      opacity: 0.4;
+    }
+  }
+}

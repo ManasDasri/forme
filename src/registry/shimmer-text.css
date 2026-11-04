@@ -1,0 +1,31 @@
+.forme-shimmer {
+  --forme-shimmer-base: #71717a;
+  --forme-shimmer-light: #fafafa;
+  display: inline-block;
+  background: linear-gradient(
+    100deg,
+    var(--forme-shimmer-base) 40%,
+    var(--forme-shimmer-light) 50%,
+    var(--forme-shimmer-base) 60%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: forme-shimmer-pass 2.6s linear infinite;
+}
+@keyframes forme-shimmer-pass {
+  from {
+    background-position: 125% 0;
+  }
+  to {
+    background-position: -125% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-shimmer {
+    animation: none;
+    background: none;
+    color: var(--forme-shimmer-light);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "glow-input",
+  "type": "registry:component",
+  "title": "Glow input",
+  "description": "A native input with a floating label and a light that wakes on focus.",
+  "files": [
+    {
+      "path": "src/registry/glow-input.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/glow-input.tsx",
+      "content": "\"use client\";\nimport type { InputHTMLAttributes, ReactNode } from \"react\";\nimport { useId } from \"react\";\nimport \"./glow-input.css\";\n\n/** A native input with a floating label and a band of light that wakes on focus. */\nexport function GlowInput({\n  label,\n  hint,\n  id,\n  className = \"\",\n  ...props\n}: Omit<InputHTMLAttributes<HTMLInputElement>, \"placeholder\"> & {\n  label: string;\n  hint?: ReactNode;\n}) {\n  const auto = useId();\n  const inputId = id || auto;\n  return (\n    <div className={`forme-glow-field ${className}`}>\n      <div className=\"forme-glow-box\">\n        <input\n          {...props}\n          id={inputId}\n          placeholder=\" \"\n          aria-describedby={hint ? `${inputId}-hint` : props[\"aria-describedby\"]}\n        />\n        <label htmlFor={inputId}>{label}</label>\n      </div>\n      {hint && (\n        <p id={`${inputId}-hint`} className=\"forme-glow-hint\">\n          {hint}\n        </p>\n      )}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/glow-input.css",
+      "type": "registry:file",
+      "target": "@components/forme/glow-input.css",
+      "content": ".forme-glow-field {\n  --forme-glow-color: #8ab4ff;\n  width: 100%;\n  max-width: 340px;\n  font-size: 15px;\n}\n.forme-glow-box {\n  position: relative;\n  border-radius: 12px;\n}\n.forme-glow-box input {\n  box-sizing: border-box;\n  width: 100%;\n  height: 56px;\n  padding: 22px 14px 8px;\n  border: 0;\n  border-radius: inherit;\n  outline: 0;\n  background: #101013;\n  box-shadow:\n    inset 0 0 0 1px #ffffff1f,\n    inset 0 1px 0 #ffffff0a;\n  color: #f4f4f5;\n  font: inherit;\n  transition: box-shadow 0.25s;\n}\n.forme-glow-box input:hover {\n  box-shadow:\n    inset 0 0 0 1px #ffffff33,\n    inset 0 1px 0 #ffffff0a;\n}\n.forme-glow-box input:focus-visible {\n  box-shadow:\n    inset 0 0 0 1px var(--forme-glow-color),\n    0 0 0 4px color-mix(in srgb, var(--forme-glow-color), transparent 84%),\n    0 8px 30px -8px color-mix(in srgb, var(--forme-glow-color), transparent 55%);\n}\n.forme-glow-box input[aria-invalid=\"true\"] {\n  --forme-glow-color: #f87171;\n  box-shadow: inset 0 0 0 1px #f87171;\n}\n.forme-glow-box input:disabled {\n  opacity: 0.45;\n  cursor: not-allowed;\n}\n.forme-glow-box label {\n  position: absolute;\n  top: 18px;\n  left: 14px;\n  color: #8a8a93;\n  line-height: 20px;\n  pointer-events: none;\n  transform-origin: left top;\n  transition:\n    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),\n    color 0.2s;\n}\n.forme-glow-box input:focus + label,\n.forme-glow-box input:not(:placeholder-shown) + label {\n  transform: translateY(-10px) scale(0.78);\n}\n.forme-glow-box input:focus + label {\n  color: var(--forme-glow-color);\n}\n.forme-glow-hint {\n  margin: 8px 2px 0;\n  color: #8a8a93;\n  font-size: 13px;\n  line-height: 1.4;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-glow-box input,\n  .forme-glow-box label {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

@@ -4,6 +4,9 @@ export const categories = [
   "Shaders",
   "ASCII",
   "HUD",
+  "Surfaces",
+  "Inputs",
+  "Loaders",
 ] as const;
 export type Category = (typeof categories)[number];
 
@@ -118,6 +121,115 @@ export const catalog: CatalogItem[] = [
     speed: true,
   },
   {
+    slug: "eclipse-hero",
+    name: "Eclipse hero",
+    category: "Surfaces",
+    description: "A full-bleed hero: dawn on a planet, your headline resolving above it.",
+    usage:
+      '<EclipseHero\n  title="Ship something worth looking at."\n  subtitle="Your one-line pitch goes here."\n  actions={<a href="/start">Get started</a>}\n/>',
+    props:
+      "title is required; subtitle, actions, color, and speed are optional. Type scales with the hero's own width through container units, so it fits a card or a full page. Give it a height. Content resolves from blur once on load; reduced motion shows it directly. Installs Horizon and the shader runtime.",
+    traits: shader,
+    color: "#6f8bff",
+    text: "Ship something worth looking at.",
+  },
+  {
+    slug: "spotlight-card",
+    name: "Spotlight card",
+    category: "Surfaces",
+    description: "A dark surface whose edge catches light under the pointer.",
+    usage: '<SpotlightCard>\n  <YourContent />\n</SpotlightCard>',
+    props:
+      "Accepts native div props and any children. A one-pixel edge brightens near the pointer and a soft wash lights the interior on hover or focus within. Set --forme-spot-color to tint the light.",
+    traits: ["reduced-motion", "zero-deps"],
+  },
+  {
+    slug: "beam-card",
+    name: "Beam card",
+    category: "Surfaces",
+    description: "A slow comet of light travelling around the border.",
+    usage: '<BeamCard>\n  <YourContent />\n</BeamCard>',
+    props:
+      "Accepts native div props and any children. The beam is CSS only and loops every seven seconds. Set --forme-beam-color to change it. Reduced motion holds the beam still.",
+    traits: ["reduced-motion", "zero-deps"],
+  },
+  {
+    slug: "command-palette",
+    name: "Command palette",
+    category: "Inputs",
+    description: "A searchable command list with arrow keys, Enter, and live filtering.",
+    usage:
+      '<CommandPalette commands={[\n  { id: "new", label: "New project", group: "Create", shortcut: "N", onSelect: createProject },\n]} />',
+    props:
+      "commands is a list of { id, label, group?, shortcut?, onSelect? }. Uses combobox and listbox roles with an active descendant. Arrow keys move, Enter runs, and the result is announced. Render it inside your own dialog if you want it modal.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+  },
+  {
+    slug: "glow-input",
+    name: "Glow input",
+    category: "Inputs",
+    description: "A native input with a floating label and a light that wakes on focus.",
+    usage: '<GlowInput label="Work email" type="email" hint="We only use this to reply." />',
+    props:
+      "label is required; hint is linked with aria-describedby. Accepts native input props. aria-invalid turns the glow red. Set --forme-glow-color to change the light.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    text: "Work email",
+  },
+  {
+    slug: "segmented-switch",
+    name: "Segmented switch",
+    category: "Inputs",
+    description: "Native radios behind a thumb that springs between options.",
+    usage: '<SegmentedSwitch label="Billing" options={["Monthly", "Yearly"]} onChange={setPlan} />',
+    props:
+      "options and label are required. Works controlled through value or uncontrolled through defaultValue. Built on real radio inputs, so arrow keys and forms work by default.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+  },
+  {
+    slug: "signal-slider",
+    name: "Signal slider",
+    category: "Inputs",
+    description: "A native range input with a lit track and a live readout.",
+    usage: '<SignalSlider label="Volume" defaultValue={60} format={(v) => `${v}%`} />',
+    props:
+      "label is required. min, max, step, value, defaultValue, onChange, format, and color are optional. format also sets aria-valuetext, so screen readers hear the same value.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    color: "#8ab4ff",
+  },
+  {
+    slug: "orbit-loader",
+    name: "Orbit loader",
+    category: "Loaders",
+    description: "Three fine arcs turning at different speeds.",
+    usage: '<OrbitLoader size={56} label="Loading results" />',
+    props:
+      "size, color, and label are optional. CSS only, exposed as a status with your label. Reduced motion swaps rotation for a slow fade, so it still shows activity.",
+    traits: ["reduced-motion", "zero-deps"],
+    color: "#8ab4ff",
+  },
+  {
+    slug: "shimmer-text",
+    name: "Shimmer text",
+    category: "Loaders",
+    description: "Status text with a slow highlight passing through it.",
+    usage: "<ShimmerText>Generating your report</ShimmerText>",
+    props:
+      "Renders children as a polite status. Set --forme-shimmer-base and --forme-shimmer-light to recolor. Reduced motion shows plain text.",
+    traits: ["reduced-motion", "zero-deps"],
+    text: "Generating your report",
+  },
+  {
+    slug: "progress-beam",
+    name: "Progress beam",
+    category: "Loaders",
+    description: "A hairline progress bar with a glowing head.",
+    usage: '<ProgressBeam value={64} label="Uploading" />',
+    props:
+      "value is 0 to 100; leave it out for an indeterminate sweep. Uses the progressbar role with aria-valuenow. Reduced motion turns the sweep into a slow fade.",
+    traits: ["reduced-motion", "zero-deps"],
+    color: "#8ab4ff",
+  },
+  {
     slug: "silk-shader",
     name: "Silk field",
     category: "Shaders",
@@ -140,17 +252,18 @@ export const catalog: CatalogItem[] = [
     text: "Initiate",
   },
   {
-    slug: "ascii-rain",
-    name: "Glyph rain",
+    slug: "ascii-tide",
+    name: "ASCII tide",
     category: "ASCII",
-    description: "Falling columns of code. The pointer stirs them; a click sends a surge.",
-    usage: '<AsciiRain color="#7dffb2" speed={1} />',
+    description: "A night sea in dense characters, with a moonlit glint.",
+    usage: '<AsciiTide color="#8ab4ff" speed={1} />',
     props:
-      "color, speed, and label are optional. Columns under the pointer accelerate. Click, tap, Enter, or Space restarts every column at once. Includes pause, stops offscreen and in hidden tabs, and shows a still field for reduced motion.",
-    traits: canvas,
-    color: "#7dffb2",
+      "color, speed, and label are optional. Every glyph is a point on the water, shaded by wave slope and batched by brightness, with fog at the horizon. Ambient, with a pause control. Stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
+    traits: ["reduced-motion", "offscreen-pause", "pause-control", "zero-deps"],
+    color: "#8ab4ff",
     speed: true,
   },
+
   {
     slug: "telemetry-card",
     name: "Telemetry card",

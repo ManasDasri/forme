@@ -1,0 +1,93 @@
+.forme-slider {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  color: #a1a1aa;
+  font-size: 14px;
+}
+.forme-slider-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.forme-slider output {
+  color: #f4f4f5;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.forme-slider input {
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.forme-slider input::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 99px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--forme-slider-color), transparent 45%),
+    var(--forme-slider-color) var(--forme-slider-fill),
+    #ffffff1c var(--forme-slider-fill)
+  );
+  box-shadow: 0 0 14px -2px color-mix(in srgb, var(--forme-slider-color), transparent 40%);
+}
+.forme-slider input::-moz-range-track {
+  height: 4px;
+  border-radius: 99px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--forme-slider-color), transparent 45%),
+    var(--forme-slider-color) var(--forme-slider-fill),
+    #ffffff1c var(--forme-slider-fill)
+  );
+}
+.forme-slider input::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  margin-top: -7px;
+  border: 0;
+  border-radius: 50%;
+  background: #f4f4f5;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--forme-slider-color), transparent 80%),
+    0 2px 8px #000000b3;
+  transition: box-shadow 0.2s, transform 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.forme-slider input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: #f4f4f5;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--forme-slider-color), transparent 80%),
+    0 2px 8px #000000b3;
+}
+.forme-slider input:hover::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 7px color-mix(in srgb, var(--forme-slider-color), transparent 76%),
+    0 2px 8px #000000b3;
+}
+.forme-slider input:active::-webkit-slider-thumb {
+  transform: scale(0.92);
+}
+.forme-slider input:focus-visible {
+  border-radius: 8px;
+  outline: 2px solid #f4f4f5;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-slider input::-webkit-slider-thumb {
+    transition: none;
+  }
+  .forme-slider input:active::-webkit-slider-thumb {
+    transform: none;
+  }
+}

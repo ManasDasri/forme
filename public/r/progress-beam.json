@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress-beam",
+  "type": "registry:component",
+  "title": "Progress beam",
+  "description": "A hairline progress bar with a glowing head.",
+  "files": [
+    {
+      "path": "src/registry/progress-beam.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/progress-beam.tsx",
+      "content": "\"use client\";\nimport \"./progress-beam.css\";\n\n/** A hairline progress bar with a glowing head. Omit value for unknown progress. */\nexport function ProgressBeam({\n  value,\n  label = \"Progress\",\n  color = \"#8ab4ff\",\n  className = \"\",\n}: {\n  /** 0 to 100. Leave undefined for an indeterminate sweep. */\n  value?: number;\n  label?: string;\n  color?: string;\n  className?: string;\n}) {\n  const known = typeof value === \"number\";\n  const clamped = known ? Math.max(0, Math.min(100, value)) : undefined;\n  return (\n    <div\n      role=\"progressbar\"\n      aria-label={label}\n      aria-valuemin={0}\n      aria-valuemax={100}\n      aria-valuenow={clamped}\n      data-indeterminate={known ? undefined : \"\"}\n      className={`forme-progress ${className}`}\n      style={{ [\"--forme-progress-color\" as string]: color, [\"--forme-progress\" as string]: `${clamped ?? 40}%` }}\n    >\n      <span />\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/progress-beam.css",
+      "type": "registry:file",
+      "target": "@components/forme/progress-beam.css",
+      "content": ".forme-progress {\n  position: relative;\n  width: 100%;\n  height: 3px;\n  border-radius: 99px;\n  background: #ffffff14;\n}\n.forme-progress > span {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  width: var(--forme-progress);\n  border-radius: inherit;\n  background: linear-gradient(\n    90deg,\n    transparent,\n    color-mix(in srgb, var(--forme-progress-color), transparent 30%) 60%,\n    var(--forme-progress-color)\n  );\n  box-shadow: 0 0 12px -1px var(--forme-progress-color);\n  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n/* Bright head with a soft halo at the leading edge. */\n.forme-progress > span::after {\n  content: \"\";\n  position: absolute;\n  top: 50%;\n  right: -1px;\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  box-shadow:\n    0 0 8px 2px var(--forme-progress-color),\n    0 0 22px 4px color-mix(in srgb, var(--forme-progress-color), transparent 50%);\n  transform: translateY(-50%);\n}\n.forme-progress[data-indeterminate] {\n  overflow: hidden;\n}\n.forme-progress[data-indeterminate] > span {\n  animation: forme-progress-sweep 1.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;\n}\n@keyframes forme-progress-sweep {\n  from {\n    transform: translateX(-100%);\n  }\n  to {\n    transform: translateX(260%);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-progress > span {\n    transition: none;\n  }\n  .forme-progress[data-indeterminate] > span {\n    animation: forme-progress-breathe 2.2s ease-in-out infinite;\n  }\n  @keyframes forme-progress-breathe {\n    50% {\n      opacity: 0.4;\n    }\n  }\n}\n"
+    }
+  ]
+}
