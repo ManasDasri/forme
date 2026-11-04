@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { catalog, freeCount, studioCount, traitInfo, type Trait } from "./catalog";
-import { StudioPreview } from "./Demo";
-import { HorizonShader } from "./registry/horizon-shader";
+import { Demo, StudioPreview } from "./Demo";
+import { EclipseHero } from "./registry/eclipse-hero";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
@@ -19,12 +19,30 @@ const groups = [
 const proofRows = ["hold-button", "ascii-globe", "chrome-shader", "radar-sweep", "lens-button", "telemetry-card"];
 const proofTraits: Trait[] = ["reduced-motion", "keyboard", "offscreen-pause", "zero-deps"];
 
-function Stage() {
+// Curated, not exhaustive: size follows how much each piece has to show.
+const showcase = [
+  { slug: "chrome-shader", area: "chrome" },
+  { slug: "command-palette", area: "command" },
+  { slug: "telemetry-card", area: "telemetry" },
+  { slug: "ascii-black-hole", area: "hole" },
+  { slug: "hold-button", area: "hold" },
+  { slug: "segmented-switch", area: "segment" },
+  { slug: "orbit-loader", area: "orbit" },
+  { slug: "lens-button", area: "lens" },
+];
+function Showcase() {
   return (
-    <div className="stage">
-      <div className="stage-frame">
-        <HorizonShader speed={0.8} />
-      </div>
+    <div className="bento">
+      {showcase.map(({ slug, area }) => (
+        <figure className="bento-tile" key={slug} style={{ gridArea: area }}>
+          <Lazy className="bento-live">
+            <Demo slug={slug} />
+          </Lazy>
+          <figcaption>
+            <a href={`/docs/${slug}/`}>{catalog.find((c) => c.slug === slug)!.name}</a>
+          </figcaption>
+        </figure>
+      ))}
     </div>
   );
 }
@@ -34,35 +52,43 @@ function HomePage() {
   const command = installCommand("hold-button");
   return (
     <main id="main">
-      <section className="hero shell">
-        <div className="hero-top">
-          <h1>Components for interfaces that feel alive.</h1>
-          <div className="hero-side">
-            <p className="lede">
-              Shaders, ASCII, instruments, inputs, and loaders for React. Install the source with one command, then make
-              it yours.
-            </p>
-            <div className="actions">
+      <div className="hero">
+        <EclipseHero
+          title="Components for interfaces that feel alive."
+          subtitle="Shaders, ASCII, instruments, inputs, and loaders for React. Install the source with one command, then make it yours."
+          actions={
+            <>
               <a className="btn" href="/components/">
                 Browse components
               </a>
               <a className="btn btn-secondary" href="/docs/">
                 Read the docs
               </a>
-            </div>
-          </div>
-        </div>
-        <Stage />
-      </section>
+            </>
+          }
+        />
+      </div>
 
       <section className="section shell" aria-labelledby="library-title">
         <header className="section-head">
-          <h2 id="library-title">The library</h2>
+          <h2 id="library-title">Touch them. They're running.</h2>
           <p>
-            {catalog.length} components, from shaders and ASCII to inputs and loaders. {freeCount} are free to install.
+            A few of the {catalog.length}. Free pieces run live in your browser; Studio pieces are recordings. {freeCount}{" "}
+            are free to install.
           </p>
         </header>
-        <LibraryBrowser embedded />
+        <Showcase />
+        <nav className="category-links" aria-label="Browse by category">
+          {groups.map((g) => (
+            <a key={g.slug} href={`/collections/${g.slug}/`}>
+              {g.name}
+              <span>{catalog.filter((c) => c.category === g.name).length}</span>
+            </a>
+          ))}
+          <a className="category-all" href="/components/">
+            View all {catalog.length}
+          </a>
+        </nav>
       </section>
 
       <section className="section shell proof" aria-labelledby="proof-title">
