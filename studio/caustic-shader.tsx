@@ -14,7 +14,7 @@ vec2 cells(vec2 p,float t){
 }
 void main(){
  vec2 uv=gl_FragCoord.xy/u_resolution;vec2 p=(uv-.5)*vec2(u_resolution.x/u_resolution.y,1.0);
- float t=u_time*.28;p+=(u_mouse-.5)*.12;
+ float t=u_time*.28;p+=(u_mouse-.5)*.05;
  vec2 q=p*3.1;
  q+=.38*sin(q.yx*1.8+vec2(t,-t*.8))+.16*sin(q.xy*3.4-t*.6);
  vec2 field=cells(q,t);

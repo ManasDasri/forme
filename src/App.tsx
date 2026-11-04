@@ -123,7 +123,7 @@ function HomePage() {
         <div className="split-text">
           <h2 id="studio-title">Studio</h2>
           <p>
-            {studioCount} heavier pieces, including a black hole, a holographic card, and an endless ASCII tunnel. You can
+            {studioCount} heavier pieces, including a black hole drawn in dense ASCII, a cinematic singularity, and an orbital gauge. You can
             watch recordings of them today. Pricing and source access will be announced before the paid launch.
           </p>
           <a className="btn btn-secondary" href="/studio/">

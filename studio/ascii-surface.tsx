@@ -71,11 +71,14 @@ export function AsciiSurface({
       geometry.current = { f, cx, horizon };
       context.fillStyle = "#04060a";
       context.fillRect(0, 0, width, height);
-      const sky = context.createLinearGradient(0, 0, 0, horizon * 1.6);
+      // Glow peaks at the horizon and fades both ways, so there is no seam.
+      const sky = context.createLinearGradient(0, 0, 0, height);
+      const h = Math.min(0.95, horizon / height);
       sky.addColorStop(0, "rgba(0,0,0,0)");
-      sky.addColorStop(1, `rgba(${tint},0.08)`);
+      sky.addColorStop(h, `rgba(${tint},0.09)`);
+      sky.addColorStop(Math.min(1, h + 0.3), "rgba(0,0,0,0)");
       context.fillStyle = sky;
-      context.fillRect(0, 0, width, horizon * 1.6);
+      context.fillRect(0, 0, width, height);
       context.textAlign = "center";
       context.textBaseline = "middle";
       // Back to front so nearer, larger glyphs sit on top.

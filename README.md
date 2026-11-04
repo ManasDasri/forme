@@ -24,9 +24,9 @@ npm run build
 | Channel | Free | Studio |
 | ------- | ---- | ------ |
 | Buttons | Lens, Plasma, Hold to confirm, Scramble, Prism, Magnetic | Shutter |
-| Shaders | Horizon, Liquid chrome, Warp field, Silk field, Dither terrain | Singularity, Caustic glass |
-| ASCII | ASCII globe, Glyph rain, Decode text, ASCII orbit, ASCII reveal | ASCII tunnel, ASCII surface |
-| HUD | Telemetry card, Radar sweep, Oscilloscope | Holo card |
+| Shaders | Horizon, Liquid chrome, Aurora, Silk field, Dither terrain | Singularity, Caustic glass |
+| ASCII | ASCII globe, Glyph rain, Decode text, ASCII orbit, ASCII reveal | ASCII black hole, ASCII surface |
+| HUD | Telemetry card, Radar sweep, Oscilloscope | Orbit gauge |
 
 ## The edge: verifiable quality
 
@@ -51,7 +51,7 @@ Requires ffmpeg and Playwright's Chromium (`npx playwright-core install chromium
 
 ```sh
 npm run capture                 # all Studio pieces
-npm run capture -- holo-card    # one piece
+npm run capture -- orbit-gauge  # one piece
 ```
 
 Outputs `public/studio/<slug>.mp4` and a poster `.jpg`.

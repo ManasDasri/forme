@@ -3,7 +3,7 @@
   "name": "ascii-decode",
   "type": "registry:component",
   "title": "Decode text",
-  "description": "Headlines that resolve out of noise as they scroll into view.",
+  "description": "Headlines that resolve letter by letter as they scroll into view.",
   "files": [
     {
       "path": "src/registry/ascii-decode.tsx",

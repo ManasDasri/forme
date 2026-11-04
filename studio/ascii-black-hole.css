@@ -1,32 +1,24 @@
-.forme-ascii-tunnel {
+.forme-ascii-black-hole {
   position: relative;
   width: 100%;
   height: 100%;
   min-height: 240px;
-  background: #050406;
+  background: #050302;
   overflow: hidden;
 }
-.forme-ascii-tunnel canvas {
+.forme-ascii-black-hole canvas {
   display: block;
   width: 100%;
   height: 100%;
 }
-.forme-ascii-tunnel-footer {
+.forme-ascii-black-hole-footer {
   position: absolute;
-  left: 14px;
   right: 14px;
   bottom: 14px;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
   font: 500 12px/1 system-ui, sans-serif;
-  color: #a1a1aa;
-  font-variant-numeric: tabular-nums;
-  pointer-events: none;
 }
-.forme-ascii-tunnel-footer button {
-  pointer-events: auto;
+.forme-ascii-black-hole-footer button {
   height: 26px;
   padding: 0 11px;
   border: 1px solid #ffffff1f;
@@ -37,12 +29,12 @@
   font: inherit;
   cursor: pointer;
 }
-.forme-ascii-tunnel-footer button:hover {
-  background: #000000b3;
-}
-.forme-ascii-tunnel-footer button:focus-visible {
+.forme-ascii-black-hole-footer button:focus-visible {
   outline: 2px solid #e4e4e7;
   outline-offset: 3px;
 }
 @media (prefers-reduced-motion: reduce) {
+  .forme-ascii-black-hole-footer button {
+    transition: none;
   }
+}

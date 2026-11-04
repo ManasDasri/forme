@@ -18,7 +18,6 @@ const slugs = process.argv.slice(2).length ? process.argv.slice(2) : studio;
 const orbit = (t) => [0.5 + 0.28 * Math.cos(t * 6.283), 0.5 + 0.2 * Math.sin(t * 12.566)];
 const paths = {
   "shutter-button": (t) => (t % 0.5 < 0.25 ? [0.5, 0.5] : [0.5, 0.92]),
-  "holo-card": (t) => [0.5 + 0.12 * Math.cos(t * 6.283), 0.5 + 0.16 * Math.sin(t * 6.283)],
 };
 const clicks = { "ascii-surface": [0.2, 0.55], "caustic-shader": [] };
 

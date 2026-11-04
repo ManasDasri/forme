@@ -16,7 +16,7 @@ void main(){
  float radius=1.1;
  float d=length(p-center)-radius;
  float angle=atan(p.x-center.x,p.y-center.y);
- float sun=(u_mouse.x-.5)*.9+sin(u_time*.12)*.35;
+ float sun=(u_mouse.x-.5)*.3+sin(u_time*.12)*.35;
  float light=pow(max(0.0,cos(angle-sun)),5.0);
  float rim=exp(-abs(d)*90.0)*(.25+1.6*light);
  float atmosphere=exp(-max(d,0.0)*6.0)*step(0.0,d)*(.08+.9*light);
