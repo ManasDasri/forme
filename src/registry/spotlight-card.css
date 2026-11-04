@@ -1,0 +1,52 @@
+.forme-spotlight {
+  --forme-spot-x: 50%;
+  --forme-spot-y: 0%;
+  --forme-spot-color: #ffffff;
+  position: relative;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #131316, #0b0b0d);
+  color: #f4f4f5;
+}
+.forme-spotlight::before,
+.forme-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+/* One-pixel edge, always faintly visible, brightest near the pointer. */
+.forme-spotlight::before {
+  padding: 1px;
+  background: radial-gradient(
+    240px circle at var(--forme-spot-x) var(--forme-spot-y),
+    color-mix(in srgb, var(--forme-spot-color), transparent 35%),
+    #ffffff14 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.forme-spotlight::after {
+  background: radial-gradient(
+    320px circle at var(--forme-spot-x) var(--forme-spot-y),
+    color-mix(in srgb, var(--forme-spot-color), transparent 92%),
+    transparent 70%
+  );
+  opacity: 0;
+}
+.forme-spotlight:hover::after,
+.forme-spotlight:focus-within::after {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-spotlight::before,
+  .forme-spotlight::after {
+    transition: none;
+  }
+}

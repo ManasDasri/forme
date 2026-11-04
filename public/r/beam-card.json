@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "beam-card",
+  "type": "registry:component",
+  "title": "Beam card",
+  "description": "A slow comet of light travelling around the border.",
+  "files": [
+    {
+      "path": "src/registry/beam-card.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/beam-card.tsx",
+      "content": "\"use client\";\nimport type { HTMLAttributes } from \"react\";\nimport \"./beam-card.css\";\n\n/** A surface with a slow comet of light travelling around its border. */\nexport function BeamCard({ children, className = \"\", ...props }: HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div {...props} className={`forme-beam ${className}`}>\n      <span className=\"forme-beam-light\" aria-hidden=\"true\" />\n      {children}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/beam-card.css",
+      "type": "registry:file",
+      "target": "@components/forme/beam-card.css",
+      "content": "@property --forme-beam-angle {\n  syntax: \"<angle>\";\n  inherits: false;\n  initial-value: 0deg;\n}\n.forme-beam {\n  --forme-beam-color: #8ab4ff;\n  position: relative;\n  box-sizing: border-box;\n  padding: 24px;\n  border-radius: 18px;\n  background: linear-gradient(180deg, #121215, #0a0a0c);\n  box-shadow: inset 0 0 0 1px #ffffff14;\n  color: #f4f4f5;\n}\n.forme-beam-light {\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  background: conic-gradient(\n    from var(--forme-beam-angle),\n    transparent 0deg 290deg,\n    color-mix(in srgb, var(--forme-beam-color), transparent 70%) 330deg,\n    var(--forme-beam-color) 356deg,\n    #fff 360deg\n  );\n  animation: forme-beam-orbit 7s linear infinite;\n  pointer-events: none;\n}\n.forme-beam-light {\n  padding: 1px;\n  -webkit-mask:\n    linear-gradient(#000 0 0) content-box,\n    linear-gradient(#000 0 0);\n  -webkit-mask-composite: xor;\n  mask-composite: exclude;\n}\n@keyframes forme-beam-orbit {\n  to {\n    --forme-beam-angle: 360deg;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-beam-light {\n    animation: none;\n    --forme-beam-angle: 220deg;\n  }\n}\n"
+    }
+  ]
+}

@@ -19,14 +19,17 @@ npm run build
 
 ## Signal, the first drop
 
-25 components across four channels. 19 free, 6 Studio.
+35 components across seven categories. 29 free, 6 Studio.
 
 | Channel | Free | Studio |
 | ------- | ---- | ------ |
 | Buttons | Lens, Plasma, Hold to confirm, Scramble, Prism, Magnetic | Shutter |
 | Shaders | Horizon, Liquid chrome, Aurora, Silk field, Dither terrain | Singularity, Caustic glass |
-| ASCII | ASCII globe, Glyph rain, Decode text, ASCII orbit, ASCII reveal | ASCII black hole, ASCII surface |
+| ASCII | ASCII globe, ASCII tide, Decode text, ASCII orbit, ASCII reveal | ASCII black hole, ASCII surface |
 | HUD | Telemetry card, Radar sweep, Oscilloscope | Orbit gauge |
+| Surfaces | Eclipse hero, Spotlight card, Beam card | |
+| Inputs | Command palette, Glow input, Segmented switch, Signal slider | |
+| Loaders | Orbit loader, Shimmer text, Progress beam | |
 
 ## The edge: verifiable quality
 

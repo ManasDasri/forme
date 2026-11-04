@@ -13,7 +13,17 @@ import { HoldButton } from "./registry/hold-button";
 import { ScrambleButton } from "./registry/scramble-button";
 import { AsciiOrbit } from "./registry/ascii-orbit";
 import { AsciiImage } from "./registry/ascii-image";
-import { AsciiRain } from "./registry/ascii-rain";
+import { AsciiTide } from "./registry/ascii-tide";
+import { EclipseHero } from "./registry/eclipse-hero";
+import { SpotlightCard } from "./registry/spotlight-card";
+import { BeamCard } from "./registry/beam-card";
+import { CommandPalette } from "./registry/command-palette";
+import { GlowInput } from "./registry/glow-input";
+import { SegmentedSwitch } from "./registry/segmented-switch";
+import { SignalSlider } from "./registry/signal-slider";
+import { OrbitLoader } from "./registry/orbit-loader";
+import { ShimmerText } from "./registry/shimmer-text";
+import { ProgressBeam } from "./registry/progress-beam";
 import { AsciiGlobe } from "./registry/ascii-globe";
 import { AsciiDecode } from "./registry/ascii-decode";
 import { TelemetryCard } from "./registry/telemetry-card";
@@ -33,7 +43,69 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "aurora-shader": (p) => <AuroraShader color={p.color} speed={p.speed} />,
   "chrome-shader": (p) => <ChromeShader color={p.color} speed={p.speed} />,
   "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
-  "ascii-rain": (p) => <AsciiRain color={p.color} speed={p.speed} />,
+  "ascii-tide": (p) => <AsciiTide color={p.color} speed={p.speed} />,
+  "eclipse-hero": (p) => (
+    <EclipseHero
+      color={p.color}
+      title={p.title || "Ship something worth looking at."}
+      subtitle="Your one-line pitch goes here."
+      actions={<LensButton>Get started</LensButton>}
+    />
+  ),
+  "spotlight-card": () => (
+    <div className="specimen">
+      <SpotlightCard className="specimen-card">
+        <CardBody title="Edge light" text="Move across this surface. The border and interior follow you." />
+      </SpotlightCard>
+    </div>
+  ),
+  "beam-card": () => (
+    <div className="specimen">
+      <BeamCard className="specimen-card">
+        <CardBody title="Always on" text="A slow comet of light keeps circling, without demanding attention." />
+      </BeamCard>
+    </div>
+  ),
+  "command-palette": () => (
+    <div className="specimen">
+      <CommandPalette
+        placeholder="Search commands"
+        commands={[
+          { id: "deploy", label: "Deploy to production", group: "Project", shortcut: "D" },
+          { id: "invite", label: "Invite a teammate", group: "Team", shortcut: "I" },
+          { id: "logs", label: "Open live logs", group: "Project", shortcut: "L" },
+          { id: "theme", label: "Switch theme", group: "Settings", shortcut: "T" },
+          { id: "keys", label: "Rotate API keys", group: "Settings" },
+        ]}
+      />
+    </div>
+  ),
+  "glow-input": (p) => (
+    <div className="specimen">
+      <GlowInput label={p.title || "Work email"} type="email" hint="We only use this to reply." />
+    </div>
+  ),
+  "segmented-switch": () => (
+    <div className="specimen">
+      <SegmentedSwitch label="Billing period" options={["Monthly", "Yearly", "Lifetime"]} />
+    </div>
+  ),
+  "signal-slider": (p) => (
+    <div className="specimen">
+      <SignalSlider label="Output level" defaultValue={62} color={p.color} format={(v) => `${v}%`} />
+    </div>
+  ),
+  "orbit-loader": (p) => (
+    <div className="specimen">
+      <OrbitLoader size={72} color={p.color} label="Loading preview" />
+    </div>
+  ),
+  "shimmer-text": (p) => (
+    <div className="specimen specimen-large">
+      <ShimmerText>{p.title || "Generating your report"}</ShimmerText>
+    </div>
+  ),
+  "progress-beam": (p) => <ProgressDemo color={p.color} />,
   "ascii-globe": (p) => <AsciiGlobe color={p.color} speed={p.speed} />,
   "radar-sweep": (p) => <RadarSweep color={p.color} speed={p.speed} />,
   oscilloscope: (p) => <Oscilloscope color={p.color} speed={p.speed} />,
@@ -60,6 +132,29 @@ const buttons: Record<
   "hold-button": (l, s) => <HoldButton onConfirm={s}>{l}</HoldButton>,
 };
 
+function CardBody({ title, text }: { title: string; text: string }) {
+  return (
+    <>
+      <h3>{title}</h3>
+      <p>{text}</p>
+    </>
+  );
+}
+function ProgressDemo({ color }: { color?: string }) {
+  const [value, setValue] = useState(18);
+  useEffect(() => {
+    const id = setInterval(() => setValue((v) => (v >= 100 ? 8 : Math.min(100, v + 9))), 900);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="specimen">
+      <div className="specimen-stack">
+        <ProgressBeam value={value} label="Uploading" color={color} />
+        <ProgressBeam label="Preparing" color={color} />
+      </div>
+    </div>
+  );
+}
 /** Feeds the card a gentle random walk so the preview shows real updates. */
 function TelemetryDemo({ color }: { color?: string }) {
   const [history, setHistory] = useState(() => {

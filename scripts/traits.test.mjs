@@ -9,7 +9,7 @@ const sourceOf = async (item) =>
 // Each claimed trait must be backed by this evidence in the installed files.
 const evidence = {
   "reduced-motion": (s) => s.includes("prefers-reduced-motion"),
-  keyboard: (s) => /<button|onKeyDown/.test(s),
+  keyboard: (s) => /<button|<input|onKeyDown/.test(s),
   "offscreen-pause": (s) => s.includes("IntersectionObserver") && s.includes("visibilitychange"),
   "pause-control": (s) => /aria-pressed=\{paused\}/.test(s),
   "webgl-fallback": (s) => s.includes("webglcontextlost") && s.includes("data-fallback"),

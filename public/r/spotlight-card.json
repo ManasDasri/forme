@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spotlight-card",
+  "type": "registry:component",
+  "title": "Spotlight card",
+  "description": "A dark surface whose edge catches light under the pointer.",
+  "files": [
+    {
+      "path": "src/registry/spotlight-card.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/spotlight-card.tsx",
+      "content": "\"use client\";\nimport type { HTMLAttributes } from \"react\";\nimport \"./spotlight-card.css\";\n\n/** A dark surface whose edge and interior catch a soft light under the pointer. */\nexport function SpotlightCard({\n  children,\n  className = \"\",\n  ...props\n}: HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      {...props}\n      className={`forme-spotlight ${className}`}\n      onPointerMove={(e) => {\n        const r = e.currentTarget.getBoundingClientRect();\n        e.currentTarget.style.setProperty(\"--forme-spot-x\", `${e.clientX - r.left}px`);\n        e.currentTarget.style.setProperty(\"--forme-spot-y\", `${e.clientY - r.top}px`);\n        props.onPointerMove?.(e);\n      }}\n    >\n      {children}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/spotlight-card.css",
+      "type": "registry:file",
+      "target": "@components/forme/spotlight-card.css",
+      "content": ".forme-spotlight {\n  --forme-spot-x: 50%;\n  --forme-spot-y: 0%;\n  --forme-spot-color: #ffffff;\n  position: relative;\n  box-sizing: border-box;\n  padding: 24px;\n  border-radius: 18px;\n  background: linear-gradient(180deg, #131316, #0b0b0d);\n  color: #f4f4f5;\n}\n.forme-spotlight::before,\n.forme-spotlight::after {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  pointer-events: none;\n  transition: opacity 0.4s;\n}\n/* One-pixel edge, always faintly visible, brightest near the pointer. */\n.forme-spotlight::before {\n  padding: 1px;\n  background: radial-gradient(\n    240px circle at var(--forme-spot-x) var(--forme-spot-y),\n    color-mix(in srgb, var(--forme-spot-color), transparent 35%),\n    #ffffff14 70%\n  );\n  -webkit-mask:\n    linear-gradient(#000 0 0) content-box,\n    linear-gradient(#000 0 0);\n  -webkit-mask-composite: xor;\n  mask-composite: exclude;\n}\n.forme-spotlight::after {\n  background: radial-gradient(\n    320px circle at var(--forme-spot-x) var(--forme-spot-y),\n    color-mix(in srgb, var(--forme-spot-color), transparent 92%),\n    transparent 70%\n  );\n  opacity: 0;\n}\n.forme-spotlight:hover::after,\n.forme-spotlight:focus-within::after {\n  opacity: 1;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-spotlight::before,\n  .forme-spotlight::after {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

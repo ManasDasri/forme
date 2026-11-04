@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "orbit-loader",
+  "type": "registry:component",
+  "title": "Orbit loader",
+  "description": "Three fine arcs turning at different speeds.",
+  "files": [
+    {
+      "path": "src/registry/orbit-loader.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/orbit-loader.tsx",
+      "content": "\"use client\";\nimport \"./orbit-loader.css\";\n\n/** Three fine arcs turning at different speeds, for waits of unknown length. */\nexport function OrbitLoader({\n  size = 56,\n  color = \"#8ab4ff\",\n  label = \"Loading\",\n  className = \"\",\n}: {\n  size?: number;\n  color?: string;\n  label?: string;\n  className?: string;\n}) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      className={`forme-orbit-loader ${className}`}\n      style={{ width: size, height: size, color }}\n    >\n      <svg viewBox=\"0 0 48 48\" aria-hidden=\"true\">\n        <circle cx=\"24\" cy=\"24\" r=\"21\" pathLength=\"100\" strokeDasharray=\"28 72\" />\n        <circle cx=\"24\" cy=\"24\" r=\"15\" pathLength=\"100\" strokeDasharray=\"20 80\" />\n        <circle cx=\"24\" cy=\"24\" r=\"9\" pathLength=\"100\" strokeDasharray=\"34 66\" />\n      </svg>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/orbit-loader.css",
+      "type": "registry:file",
+      "target": "@components/forme/orbit-loader.css",
+      "content": ".forme-orbit-loader {\n  display: inline-block;\n  filter: drop-shadow(0 0 5px currentColor);\n}\n.forme-orbit-loader svg {\n  display: block;\n  width: 100%;\n  height: 100%;\n  overflow: visible;\n}\n.forme-orbit-loader circle {\n  fill: none;\n  stroke: currentColor;\n  stroke-width: 1.6;\n  stroke-linecap: round;\n  transform-origin: 50% 50%;\n  animation: forme-orbit-spin 2.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;\n}\n.forme-orbit-loader circle:nth-child(2) {\n  opacity: 0.7;\n  animation-duration: 1.8s;\n  animation-direction: reverse;\n}\n.forme-orbit-loader circle:nth-child(3) {\n  opacity: 0.45;\n  animation-duration: 1.3s;\n}\n@keyframes forme-orbit-spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-orbit-loader circle {\n    animation: forme-orbit-breathe 2.4s ease-in-out infinite;\n  }\n  @keyframes forme-orbit-breathe {\n    50% {\n      opacity: 0.25;\n    }\n  }\n}\n"
+    }
+  ]
+}

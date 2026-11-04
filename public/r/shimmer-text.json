@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shimmer-text",
+  "type": "registry:component",
+  "title": "Shimmer text",
+  "description": "Status text with a slow highlight passing through it.",
+  "files": [
+    {
+      "path": "src/registry/shimmer-text.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/shimmer-text.tsx",
+      "content": "\"use client\";\nimport type { ReactNode } from \"react\";\nimport \"./shimmer-text.css\";\n\n/** Status text with a slow highlight passing through it. Announced politely. */\nexport function ShimmerText({\n  children,\n  className = \"\",\n}: {\n  children: ReactNode;\n  className?: string;\n}) {\n  return (\n    <span role=\"status\" className={`forme-shimmer ${className}`}>\n      {children}\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/shimmer-text.css",
+      "type": "registry:file",
+      "target": "@components/forme/shimmer-text.css",
+      "content": ".forme-shimmer {\n  --forme-shimmer-base: #71717a;\n  --forme-shimmer-light: #fafafa;\n  display: inline-block;\n  background: linear-gradient(\n    100deg,\n    var(--forme-shimmer-base) 40%,\n    var(--forme-shimmer-light) 50%,\n    var(--forme-shimmer-base) 60%\n  );\n  background-size: 250% 100%;\n  -webkit-background-clip: text;\n  background-clip: text;\n  color: transparent;\n  animation: forme-shimmer-pass 2.6s linear infinite;\n}\n@keyframes forme-shimmer-pass {\n  from {\n    background-position: 125% 0;\n  }\n  to {\n    background-position: -125% 0;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-shimmer {\n    animation: none;\n    background: none;\n    color: var(--forme-shimmer-light);\n  }\n}\n"
+    }
+  ]
+}

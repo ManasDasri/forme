@@ -99,6 +99,201 @@
       ]
     },
     {
+      "name": "eclipse-hero",
+      "type": "registry:component",
+      "title": "Eclipse hero",
+      "description": "A full-bleed hero: dawn on a planet, your headline resolving above it.",
+      "files": [
+        {
+          "path": "src/registry/eclipse-hero.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/eclipse-hero.tsx"
+        },
+        {
+          "path": "src/registry/eclipse-hero.css",
+          "type": "registry:file",
+          "target": "@components/forme/eclipse-hero.css"
+        },
+        {
+          "path": "src/registry/horizon-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/horizon-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "spotlight-card",
+      "type": "registry:component",
+      "title": "Spotlight card",
+      "description": "A dark surface whose edge catches light under the pointer.",
+      "files": [
+        {
+          "path": "src/registry/spotlight-card.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/spotlight-card.tsx"
+        },
+        {
+          "path": "src/registry/spotlight-card.css",
+          "type": "registry:file",
+          "target": "@components/forme/spotlight-card.css"
+        }
+      ]
+    },
+    {
+      "name": "beam-card",
+      "type": "registry:component",
+      "title": "Beam card",
+      "description": "A slow comet of light travelling around the border.",
+      "files": [
+        {
+          "path": "src/registry/beam-card.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/beam-card.tsx"
+        },
+        {
+          "path": "src/registry/beam-card.css",
+          "type": "registry:file",
+          "target": "@components/forme/beam-card.css"
+        }
+      ]
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:component",
+      "title": "Command palette",
+      "description": "A searchable command list with arrow keys, Enter, and live filtering.",
+      "files": [
+        {
+          "path": "src/registry/command-palette.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/command-palette.tsx"
+        },
+        {
+          "path": "src/registry/command-palette.css",
+          "type": "registry:file",
+          "target": "@components/forme/command-palette.css"
+        }
+      ]
+    },
+    {
+      "name": "glow-input",
+      "type": "registry:component",
+      "title": "Glow input",
+      "description": "A native input with a floating label and a light that wakes on focus.",
+      "files": [
+        {
+          "path": "src/registry/glow-input.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/glow-input.tsx"
+        },
+        {
+          "path": "src/registry/glow-input.css",
+          "type": "registry:file",
+          "target": "@components/forme/glow-input.css"
+        }
+      ]
+    },
+    {
+      "name": "segmented-switch",
+      "type": "registry:component",
+      "title": "Segmented switch",
+      "description": "Native radios behind a thumb that springs between options.",
+      "files": [
+        {
+          "path": "src/registry/segmented-switch.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/segmented-switch.tsx"
+        },
+        {
+          "path": "src/registry/segmented-switch.css",
+          "type": "registry:file",
+          "target": "@components/forme/segmented-switch.css"
+        }
+      ]
+    },
+    {
+      "name": "signal-slider",
+      "type": "registry:component",
+      "title": "Signal slider",
+      "description": "A native range input with a lit track and a live readout.",
+      "files": [
+        {
+          "path": "src/registry/signal-slider.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/signal-slider.tsx"
+        },
+        {
+          "path": "src/registry/signal-slider.css",
+          "type": "registry:file",
+          "target": "@components/forme/signal-slider.css"
+        }
+      ]
+    },
+    {
+      "name": "orbit-loader",
+      "type": "registry:component",
+      "title": "Orbit loader",
+      "description": "Three fine arcs turning at different speeds.",
+      "files": [
+        {
+          "path": "src/registry/orbit-loader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/orbit-loader.tsx"
+        },
+        {
+          "path": "src/registry/orbit-loader.css",
+          "type": "registry:file",
+          "target": "@components/forme/orbit-loader.css"
+        }
+      ]
+    },
+    {
+      "name": "shimmer-text",
+      "type": "registry:component",
+      "title": "Shimmer text",
+      "description": "Status text with a slow highlight passing through it.",
+      "files": [
+        {
+          "path": "src/registry/shimmer-text.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shimmer-text.tsx"
+        },
+        {
+          "path": "src/registry/shimmer-text.css",
+          "type": "registry:file",
+          "target": "@components/forme/shimmer-text.css"
+        }
+      ]
+    },
+    {
+      "name": "progress-beam",
+      "type": "registry:component",
+      "title": "Progress beam",
+      "description": "A hairline progress bar with a glowing head.",
+      "files": [
+        {
+          "path": "src/registry/progress-beam.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/progress-beam.tsx"
+        },
+        {
+          "path": "src/registry/progress-beam.css",
+          "type": "registry:file",
+          "target": "@components/forme/progress-beam.css"
+        }
+      ]
+    },
+    {
       "name": "silk-shader",
       "type": "registry:component",
       "title": "Silk field",
@@ -140,20 +335,20 @@
       ]
     },
     {
-      "name": "ascii-rain",
+      "name": "ascii-tide",
       "type": "registry:component",
-      "title": "Glyph rain",
-      "description": "Falling columns of code. The pointer stirs them; a click sends a surge.",
+      "title": "ASCII tide",
+      "description": "A night sea in dense characters, with a moonlit glint.",
       "files": [
         {
-          "path": "src/registry/ascii-rain.tsx",
+          "path": "src/registry/ascii-tide.tsx",
           "type": "registry:component",
-          "target": "@components/forme/ascii-rain.tsx"
+          "target": "@components/forme/ascii-tide.tsx"
         },
         {
-          "path": "src/registry/ascii-rain.css",
+          "path": "src/registry/ascii-tide.css",
           "type": "registry:file",
-          "target": "@components/forme/ascii-rain.css"
+          "target": "@components/forme/ascii-tide.css"
         }
       ]
     },
