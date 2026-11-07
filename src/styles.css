@@ -1479,7 +1479,7 @@ a.fact:hover {
   border-radius: 14px;
   background: var(--surface);
 }
-.workbench-controls label {
+.workbench-controls > label:not(.forme-slider) {
   display: grid;
   gap: 6px;
   color: var(--ink-2);
@@ -1494,17 +1494,43 @@ a.fact:hover {
   background: var(--bg);
   font-size: 14px;
 }
-.workbench-controls input[type="color"] {
-  width: 52px;
+/* A round swatch over the native picker, with the hex value beside it. */
+.color-swatch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   height: 34px;
-  padding: 3px;
+  padding: 0 12px 0 6px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 999px;
   background: var(--bg);
 }
-.workbench-controls input[type="range"] {
-  width: 180px;
-  accent-color: var(--ink);
+.color-swatch > span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18), 0 0 14px -2px currentColor;
+}
+.color-swatch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.color-swatch code {
+  color: var(--ink);
+  font-size: 12.5px;
+  text-transform: uppercase;
+}
+.color-swatch:has(input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.workbench-controls .control-speed {
+  width: 240px;
 }
 .workbench-controls .btn {
   margin-left: auto;
