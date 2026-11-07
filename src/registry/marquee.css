@@ -1,0 +1,41 @@
+.forme-marquee {
+  --forme-marquee-gap: 48px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.forme-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: var(--forme-marquee-gap);
+  animation: forme-marquee var(--forme-marquee-duration) linear infinite;
+}
+.forme-marquee[data-reverse] .forme-marquee-track {
+  animation-direction: reverse;
+}
+.forme-marquee[data-pause]:hover .forme-marquee-track,
+.forme-marquee[data-pause]:focus-within .forme-marquee-track {
+  animation-play-state: paused;
+}
+.forme-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--forme-marquee-gap);
+}
+@keyframes forme-marquee {
+  to {
+    transform: translateX(calc(-50% - var(--forme-marquee-gap) / 2));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-marquee {
+    overflow-x: auto;
+  }
+  .forme-marquee-track {
+    animation: none;
+  }
+  .forme-marquee-group[aria-hidden] {
+    display: none;
+  }
+}

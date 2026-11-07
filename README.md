@@ -19,7 +19,7 @@ npm run build
 
 ## Signal, the first drop
 
-35 components across seven categories, all free.
+46 components across ten categories, all free.
 
 | Category | Components |
 | -------- | ---------- |
@@ -27,9 +27,12 @@ npm run build
 | Shaders | Horizon, Liquid chrome, Aurora, Silk field, Dither terrain, Singularity, Caustic glass |
 | ASCII | ASCII globe, ASCII tide, Decode text, ASCII orbit, ASCII reveal, ASCII black hole, ASCII surface |
 | HUD | Telemetry card, Radar sweep, Oscilloscope, Orbit gauge |
-| Surfaces | Eclipse hero, Spotlight card, Beam card |
-| Inputs | Command palette, Glow input, Segmented switch, Signal slider |
+| Surfaces | Eclipse hero, Spotlight card, Beam card, Accordion, Marquee, Image compare |
+| Inputs | Command palette, Glow input, Segmented switch, Signal slider, OTP input, Copy button |
 | Loaders | Orbit loader, Shimmer text, Progress beam |
+| Navigation | Dock, Animated tabs |
+| Feedback | Toast, Tooltip |
+| Text | Text reveal, Number ticker |
 
 Run `node scripts/generate-registry.mjs` after adding or removing a component.
 

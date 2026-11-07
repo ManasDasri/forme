@@ -294,6 +294,204 @@
       ]
     },
     {
+      "name": "dock",
+      "type": "registry:component",
+      "title": "Dock",
+      "description": "Icons that swell toward your pointer, like a desktop dock.",
+      "files": [
+        {
+          "path": "src/registry/dock.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/dock.tsx"
+        },
+        {
+          "path": "src/registry/dock.css",
+          "type": "registry:file",
+          "target": "@components/forme/dock.css"
+        }
+      ]
+    },
+    {
+      "name": "animated-tabs",
+      "type": "registry:component",
+      "title": "Animated tabs",
+      "description": "A pill that glides to the active tab, with full keyboard support.",
+      "files": [
+        {
+          "path": "src/registry/animated-tabs.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/animated-tabs.tsx"
+        },
+        {
+          "path": "src/registry/animated-tabs.css",
+          "type": "registry:file",
+          "target": "@components/forme/animated-tabs.css"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:component",
+      "title": "Toast",
+      "description": "Stacked notifications that fan out on hover and swipe away.",
+      "files": [
+        {
+          "path": "src/registry/toast.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/toast.tsx"
+        },
+        {
+          "path": "src/registry/toast.css",
+          "type": "registry:file",
+          "target": "@components/forme/toast.css"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:component",
+      "title": "Tooltip",
+      "description": "A small label on hover or focus, wired up for screen readers.",
+      "files": [
+        {
+          "path": "src/registry/tooltip.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/tooltip.tsx"
+        },
+        {
+          "path": "src/registry/tooltip.css",
+          "type": "registry:file",
+          "target": "@components/forme/tooltip.css"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:component",
+      "title": "Text reveal",
+      "description": "Words light up one by one as the paragraph scrolls past.",
+      "files": [
+        {
+          "path": "src/registry/text-reveal.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/text-reveal.tsx"
+        },
+        {
+          "path": "src/registry/text-reveal.css",
+          "type": "registry:file",
+          "target": "@components/forme/text-reveal.css"
+        }
+      ]
+    },
+    {
+      "name": "number-ticker",
+      "type": "registry:component",
+      "title": "Number ticker",
+      "description": "Counts up when it scrolls into view, then eases between values.",
+      "files": [
+        {
+          "path": "src/registry/number-ticker.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/number-ticker.tsx"
+        },
+        {
+          "path": "src/registry/number-ticker.css",
+          "type": "registry:file",
+          "target": "@components/forme/number-ticker.css"
+        }
+      ]
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:component",
+      "title": "OTP input",
+      "description": "A one-time code field with separate cells and working paste and autofill.",
+      "files": [
+        {
+          "path": "src/registry/otp-input.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/otp-input.tsx"
+        },
+        {
+          "path": "src/registry/otp-input.css",
+          "type": "registry:file",
+          "target": "@components/forme/otp-input.css"
+        }
+      ]
+    },
+    {
+      "name": "copy-button",
+      "type": "registry:component",
+      "title": "Copy button",
+      "description": "Copies with one click; the icon morphs into a check.",
+      "files": [
+        {
+          "path": "src/registry/copy-button.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/copy-button.tsx"
+        },
+        {
+          "path": "src/registry/copy-button.css",
+          "type": "registry:file",
+          "target": "@components/forme/copy-button.css"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:component",
+      "title": "Accordion",
+      "description": "Disclosure rows that open with a smooth height change.",
+      "files": [
+        {
+          "path": "src/registry/accordion.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/accordion.tsx"
+        },
+        {
+          "path": "src/registry/accordion.css",
+          "type": "registry:file",
+          "target": "@components/forme/accordion.css"
+        }
+      ]
+    },
+    {
+      "name": "marquee",
+      "type": "registry:component",
+      "title": "Marquee",
+      "description": "An endless strip for logos or quotes, with soft faded edges.",
+      "files": [
+        {
+          "path": "src/registry/marquee.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/marquee.tsx"
+        },
+        {
+          "path": "src/registry/marquee.css",
+          "type": "registry:file",
+          "target": "@components/forme/marquee.css"
+        }
+      ]
+    },
+    {
+      "name": "image-compare",
+      "type": "registry:component",
+      "title": "Image compare",
+      "description": "Before and after, split by a handle you can drag or key.",
+      "files": [
+        {
+          "path": "src/registry/image-compare.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/image-compare.tsx"
+        },
+        {
+          "path": "src/registry/image-compare.css",
+          "type": "registry:file",
+          "target": "@components/forme/image-compare.css"
+        }
+      ]
+    },
+    {
       "name": "silk-shader",
       "type": "registry:component",
       "title": "Silk field",

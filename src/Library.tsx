@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { catalog, categories, type Category } from "./catalog";
 import { Demo } from "./Demo";
-import { Icon, Lazy, installCommand, sizeOf, useCopy } from "./ui";
+import { Icon, Lazy, installCommand, sizeOf } from "./ui";
+import { toast } from "./registry/toast";
 import { filterLibrary, restoreBookmarks } from "./library-state";
 
 export function LibraryBrowser({
@@ -26,10 +27,14 @@ export function LibraryBrowser({
       return [];
     }
   });
-  const [notice, copy] = useCopy();
-  const [bookmarkNotice, setBookmarkNotice] = useState("");
-  const noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  useEffect(() => () => clearTimeout(noticeTimer.current), []);
+  const copy = async (text: string, name: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Install command copied", { description: name, tone: "success" });
+    } catch {
+      toast("Couldn't copy", { description: "Open the component to copy the command manually.", tone: "error" });
+    }
+  };
   const visible = filterLibrary(catalog, { query, category, savedOnly, saved, sort: "curated" });
   const shown = embedded ? visible.slice(0, 9) : visible;
   function bookmark(slug: string) {
@@ -37,12 +42,12 @@ export function LibraryBrowser({
     setSaved(next);
     try {
       localStorage.setItem("forme-bookmarks", JSON.stringify(next));
-      setBookmarkNotice(next.includes(slug) ? "Saved to bookmarks" : "Removed from bookmarks");
+      toast(next.includes(slug) ? "Saved to bookmarks" : "Removed from bookmarks", {
+        description: catalog.find((c) => c.slug === slug)?.name,
+      });
     } catch {
-      setBookmarkNotice("Saved for this visit only. Browser storage is unavailable.");
+      toast("Saved for this visit only", { description: "Browser storage is unavailable." });
     }
-    clearTimeout(noticeTimer.current);
-    noticeTimer.current = setTimeout(() => setBookmarkNotice(""), 2200);
   }
   return (
     <div className="library">
@@ -80,7 +85,7 @@ export function LibraryBrowser({
                     <Icon name={isSaved ? "bookmark-filled" : "bookmark"} />
                   </button>
                   <button
-                    onClick={() => copy(installCommand(c.slug), `Copied install command for ${c.name}`)}
+                    onClick={() => copy(installCommand(c.slug), c.name)}
                     aria-label={`Copy install command for ${c.name}`}
                   >
                     <Icon name="copy" />
@@ -122,9 +127,6 @@ export function LibraryBrowser({
           </a>
         </div>
       )}
-      <p className="toast" role="status" data-visible={Boolean(notice || bookmarkNotice) || undefined}>
-        {notice || bookmarkNotice}
-      </p>
     </div>
   );
 }

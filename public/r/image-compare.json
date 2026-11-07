@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-compare",
+  "type": "registry:component",
+  "title": "Image compare",
+  "description": "Before and after, split by a handle you can drag or key.",
+  "files": [
+    {
+      "path": "src/registry/image-compare.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/image-compare.tsx",
+      "content": "\"use client\";\nimport { useState } from \"react\";\nimport \"./image-compare.css\";\n\n/** Before and after, split by a handle. Drag anywhere, or use the arrow keys: it is a real range input. */\nexport function ImageCompare({\n  before,\n  after,\n  beforeAlt,\n  afterAlt,\n  beforeLabel = \"Before\",\n  afterLabel = \"After\",\n  initial = 50,\n  className = \"\",\n}: {\n  before: string;\n  after: string;\n  beforeAlt: string;\n  afterAlt: string;\n  beforeLabel?: string;\n  afterLabel?: string;\n  initial?: number;\n  className?: string;\n}) {\n  const [split, setSplit] = useState(initial);\n  return (\n    <div className={`forme-compare ${className}`} style={{ [\"--forme-compare\" as string]: `${split}%` }}>\n      <img src={after} alt={afterAlt} draggable={false} />\n      <img src={before} alt={beforeAlt} draggable={false} className=\"forme-compare-before\" />\n      <span className=\"forme-compare-tag\" data-side=\"before\" aria-hidden=\"true\">\n        {beforeLabel}\n      </span>\n      <span className=\"forme-compare-tag\" data-side=\"after\" aria-hidden=\"true\">\n        {afterLabel}\n      </span>\n      <span className=\"forme-compare-handle\" aria-hidden=\"true\">\n        <span />\n      </span>\n      <input\n        type=\"range\"\n        min={0}\n        max={100}\n        step={0.5}\n        value={split}\n        aria-label={`Show more of ${beforeLabel.toLowerCase()} or ${afterLabel.toLowerCase()}`}\n        aria-valuetext={`${Math.round(split)}% ${beforeLabel.toLowerCase()}`}\n        onChange={(e) => setSplit(Number(e.target.value))}\n      />\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/image-compare.css",
+      "type": "registry:file",
+      "target": "@components/forme/image-compare.css",
+      "content": ".forme-compare {\n  --forme-compare: 50%;\n  position: relative;\n  overflow: hidden;\n  border-radius: 16px;\n  aspect-ratio: 16 / 10;\n  background: #000;\n  user-select: none;\n}\n.forme-compare img {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  pointer-events: none;\n}\n.forme-compare-before {\n  clip-path: inset(0 calc(100% - var(--forme-compare)) 0 0);\n}\n.forme-compare-handle {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: var(--forme-compare);\n  width: 2px;\n  background: #fff;\n  box-shadow: 0 0 12px #0008;\n  transform: translateX(-50%);\n  pointer-events: none;\n}\n.forme-compare-handle span {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  width: 36px;\n  height: 36px;\n  border-radius: 50%;\n  background: #ffffffeb;\n  box-shadow: 0 4px 16px #0006;\n  transform: translate(-50%, -50%);\n}\n.forme-compare-handle span::before,\n.forme-compare-handle span::after {\n  content: \"\";\n  position: absolute;\n  top: 50%;\n  width: 6px;\n  height: 6px;\n  border: solid #111;\n  border-width: 0 0 1.6px 1.6px;\n}\n.forme-compare-handle span::before {\n  left: 9px;\n  transform: translateY(-50%) rotate(45deg);\n}\n.forme-compare-handle span::after {\n  right: 9px;\n  transform: translateY(-50%) rotate(-135deg);\n}\n.forme-compare-tag {\n  position: absolute;\n  top: 12px;\n  padding: 4px 9px;\n  border-radius: 999px;\n  background: #0009;\n  backdrop-filter: blur(8px);\n  color: #fff;\n  font-size: 12px;\n  font-weight: 500;\n}\n.forme-compare-tag[data-side=\"before\"] {\n  left: 12px;\n}\n.forme-compare-tag[data-side=\"after\"] {\n  right: 12px;\n}\n/* The real control: invisible, full size, so drag works anywhere and keys work on focus. */\n.forme-compare input {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  opacity: 0;\n  cursor: ew-resize;\n}\n.forme-compare:has(input:focus-visible) .forme-compare-handle span {\n  outline: 2px solid #fff;\n  outline-offset: 3px;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-compare-handle {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

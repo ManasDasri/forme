@@ -31,6 +31,17 @@ import { CausticShader } from "./registry/caustic-shader";
 import { SingularityShader } from "./registry/singularity-shader";
 import { OrbitGauge } from "./registry/orbit-gauge";
 import { ShutterButton } from "./registry/shutter-button";
+import { Dock } from "./registry/dock";
+import { AnimatedTabs } from "./registry/animated-tabs";
+import { toast } from "./registry/toast";
+import { Tooltip } from "./registry/tooltip";
+import { TextReveal } from "./registry/text-reveal";
+import { NumberTicker } from "./registry/number-ticker";
+import { OtpInput } from "./registry/otp-input";
+import { CopyButton } from "./registry/copy-button";
+import { Accordion } from "./registry/accordion";
+import { Marquee } from "./registry/marquee";
+import { ImageCompare } from "./registry/image-compare";
 import { AsciiDecode } from "./registry/ascii-decode";
 import { TelemetryCard } from "./registry/telemetry-card";
 import { RadarSweep } from "./registry/radar-sweep";
@@ -42,7 +53,168 @@ const images: Record<string, string> = {
   "/images/interior.jpg": "A bright living room with sculptural furniture",
   "/images/landscape.jpg": "Mountains reflected in a lake",
 };
+const glyph = (d: string) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    <path d={d} />
+  </svg>
+);
+const dockIcons = {
+  Home: glyph("M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"),
+  Search: glyph("M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm5-2 4 4"),
+  Projects: glyph("M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"),
+  Inbox: glyph("M4 13h4l2 3h4l2-3h4M4 13l2-7h12l2 7v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"),
+  Calendar: glyph("M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm-1 5h16M8 3v4m8-4v4"),
+  Settings: glyph("M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7-3 2-1-1-3-2 .5-1.5-1.5L17 5l-3-1-1 2h-2L10 4 7 5l.5 2L6 8.5 4 8l-1 3 2 1v0l-2 1 1 3 2-.5 1.5 1.5L7 19l3 1 1-2h2l1 2 3-1-.5-2 1.5-1.5 2 .5 1-3z"),
+};
 const live: Record<string, (p: Props) => ReactNode> = {
+  dock: () => (
+    <div className="specimen dock-specimen">
+      <Dock
+        items={Object.entries(dockIcons).map(([label, icon], i) => ({
+          label,
+          icon,
+          active: i === 0,
+          onClick: () => toast(label, { description: "Dock items are real links or buttons." }),
+        }))}
+      />
+    </div>
+  ),
+  "animated-tabs": () => (
+    <div className="specimen">
+      <div className="specimen-wide">
+        <AnimatedTabs
+          label="Plan details"
+          tabs={[
+            { id: "overview", label: "Overview", content: <p>Everything you need to ship a polished interface, in one place.</p> },
+            { id: "pricing", label: "Pricing", content: <p>Free for every component. Keep the source, change anything.</p> },
+            { id: "changelog", label: "Changelog", content: <p>Eleven new components this week, from Dock to Toast.</p> },
+            { id: "faq", label: "FAQ", content: <p>Use the arrow keys, Home, and End to move between tabs.</p> },
+          ]}
+        />
+      </div>
+    </div>
+  ),
+  toast: () => (
+    <div className="specimen">
+      <div className="row">
+        <LensButton onClick={() => toast("Changes saved", { description: "Your profile is up to date." })}>Show toast</LensButton>
+        <LensButton
+          onClick={() =>
+            toast("Deployed to production", {
+              description: "Build 412 is live.",
+              tone: "success",
+              action: { label: "Open", onClick: () => toast("Opening the site") },
+            })
+          }
+        >
+          Success with action
+        </LensButton>
+        <LensButton onClick={() => toast("Payment failed", { description: "Your card was declined.", tone: "error" })}>
+          Error
+        </LensButton>
+      </div>
+      <span className="specimen-hint">Stack a few, then hover them. Swipe right to dismiss.</span>
+    </div>
+  ),
+  tooltip: () => (
+    <div className="specimen">
+      <div className="row">
+        <Tooltip content="Copy link to this page">
+          <button className="btn btn-secondary">Share</button>
+        </Tooltip>
+        <Tooltip content="Saved drafts stay for 30 days" side="bottom">
+          <button className="btn btn-secondary">Drafts</button>
+        </Tooltip>
+        <Tooltip content="Archive (E)">
+          <button className="btn btn-secondary">Archive</button>
+        </Tooltip>
+      </div>
+    </div>
+  ),
+  "text-reveal": (p) => (
+    <div className="specimen">
+      <TextReveal as="h3" className="reveal-specimen" text={p.title || "We build tools for people who sweat the details, and it shows in every one of them."} />
+    </div>
+  ),
+  "number-ticker": () => (
+    <div className="specimen">
+      <div className="stats">
+        <div>
+          <strong>
+            <NumberTicker value={12480} format={{ style: "currency", currency: "USD", maximumFractionDigits: 0 }} />
+          </strong>
+          <span className="stat-label">Monthly revenue</span>
+        </div>
+        <div>
+          <strong>
+            <NumberTicker value={0.9987} format={{ style: "percent", minimumFractionDigits: 2 }} />
+          </strong>
+          <span className="stat-label">Uptime</span>
+        </div>
+        <div>
+          <strong>
+            <NumberTicker value={1240000} format={{ notation: "compact", maximumFractionDigits: 1 }} />
+          </strong>
+          <span className="stat-label">Requests</span>
+        </div>
+      </div>
+    </div>
+  ),
+  "otp-input": () => (
+    <div className="specimen">
+      <OtpInput onComplete={(code) => toast("Code entered", { description: `${code}. Wire onComplete to your check.`, tone: "success" })} />
+    </div>
+  ),
+  "copy-button": () => (
+    <div className="specimen">
+      <div className="code-line">
+        <code>npx shadcn@latest add forme/copy-button</code>
+        <CopyButton value="npx shadcn@latest add https://forme.vercel.app/r/copy-button.json" label="Copy install command" />
+      </div>
+    </div>
+  ),
+  accordion: () => (
+    <div className="specimen">
+      <div className="specimen-wide">
+        <Accordion
+          defaultOpen={["free"]}
+          items={[
+            { id: "free", title: "Is everything really free?", content: "Yes. Every component installs with its full source, and nothing phones home." },
+            { id: "frameworks", title: "Which frameworks does it work with?", content: "Any React app. It has been installed and tested in Next.js and Vite projects." },
+            { id: "themes", title: "Will it match my site?", content: "Components like this one draw from your text color, so they follow light and dark pages." },
+            { id: "a11y", title: "What about accessibility?", content: "Real buttons, labelled regions, and closed panels that keyboard focus skips." },
+          ]}
+        />
+      </div>
+    </div>
+  ),
+  marquee: () => (
+    <div className="specimen">
+      <div className="specimen-wide" style={{ width: "100%" }}>
+        <Marquee label="Teams using the product" duration={28}>
+          {["Northwind", "Lumen", "Halcyon", "Parallax", "Quill & Co", "Meridian", "Arcadia", "Foundry"].map((name) => (
+            <span key={name} className="wordmark-chip">
+              {name}
+            </span>
+          ))}
+        </Marquee>
+      </div>
+    </div>
+  ),
+  "image-compare": () => (
+    <div className="specimen">
+      <div className="specimen-wide">
+        <ImageCompare
+          before="/images/landscape-raw.jpg"
+          beforeAlt="Mountains reflected in a lake, as shot: flat and grey"
+          after="/images/landscape.jpg"
+          afterAlt="The same photo after color grading, with deep blues and warm light"
+          beforeLabel="As shot"
+          afterLabel="Graded"
+        />
+      </div>
+    </div>
+  ),
   "silk-shader": (p) => <SilkShader color={p.color} speed={p.speed} />,
   "dither-shader": (p) => <DitherShader color={p.color} speed={p.speed} />,
   "horizon-shader": (p) => <HorizonShader color={p.color} speed={p.speed} />,

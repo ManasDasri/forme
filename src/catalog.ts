@@ -7,6 +7,9 @@ export const categories = [
   "Surfaces",
   "Inputs",
   "Loaders",
+  "Navigation",
+  "Feedback",
+  "Text",
 ] as const;
 export type Category = (typeof categories)[number];
 
@@ -51,6 +54,8 @@ export interface CatalogItem {
   color?: string;
   speed?: boolean;
   text?: string;
+  /** Draws from currentColor, so it suits light and dark pages; the playground offers a light page. */
+  adaptive?: boolean;
 }
 
 const shader: Trait[] = ["reduced-motion", "offscreen-pause", "webgl-fallback", "zero-deps"];
@@ -227,6 +232,130 @@ export const catalog: CatalogItem[] = [
       "value is 0 to 100; leave it out for an indeterminate sweep. Uses the progressbar role with aria-valuenow. Reduced motion turns the sweep into a slow fade.",
     traits: ["reduced-motion", "zero-deps"],
     color: "#8ab4ff",
+  },
+  {
+    slug: "dock",
+    name: "Dock",
+    category: "Navigation",
+    description: "Icons that swell toward your pointer, like a desktop dock.",
+    usage:
+      '<Dock items={[\n  { label: "Home", icon: <HomeIcon />, href: "/", active: true },\n  { label: "Search", icon: <SearchIcon />, onClick: openSearch },\n]} />',
+    props:
+      "items take label, icon, and either href or onClick; active marks the current one. Renders a nav landmark with real links and buttons, and labels appear on hover and keyboard focus. Magnification runs only for a mouse and switches off for reduced motion. Inherits your text color.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "animated-tabs",
+    name: "Animated tabs",
+    category: "Navigation",
+    description: "A pill that glides to the active tab, with full keyboard support.",
+    usage:
+      '<AnimatedTabs tabs={[\n  { id: "overview", label: "Overview", content: <Overview /> },\n  { id: "pricing", label: "Pricing", content: <Pricing /> },\n]} />',
+    props:
+      "tabs take id, label, and optional content; omit content to use them as a filter bar. Follows the WAI-ARIA tabs pattern: roving focus, with arrow keys, Home, and End. defaultId and onChange are optional. Inherits your text color.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "toast",
+    name: "Toast",
+    category: "Feedback",
+    description: "Stacked notifications that fan out on hover and swipe away.",
+    usage:
+      '// Once, near the root:\n<Toaster />\n\n// Anywhere:\ntoast("Deployed to production", {\n  description: "Your site is live.",\n  tone: "success",\n  action: { label: "Open", onClick: openSite },\n});',
+    props:
+      "toast(title, { description, tone, action, duration }) returns an id; toast.dismiss(id) removes it. The stack holds five, announces politely, pauses its timers while hovered or focused, and dismisses on a rightward swipe. Reduced motion removes the transitions.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+  },
+  {
+    slug: "tooltip",
+    name: "Tooltip",
+    category: "Feedback",
+    description: "A small label on hover or focus, wired up for screen readers.",
+    usage: '<Tooltip content="Copy link">\n  <button>Share</button>\n</Tooltip>',
+    props:
+      "Wraps one element and links it to the bubble with aria-describedby. Opens after a short delay on hover and immediately on keyboard focus; Escape closes it. side is top or bottom.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+  },
+  {
+    slug: "text-reveal",
+    name: "Text reveal",
+    category: "Text",
+    description: "Words light up one by one as the paragraph scrolls past.",
+    usage: '<TextReveal as="h2" text="We build tools for people who sweat the details." />',
+    props:
+      "text is required; as picks the element. Listens to scroll only while on screen. The text is real text the whole time, so it stays readable to assistive technology and search. Reduced motion shows it fully lit. Inherits your text color.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+    text: "We build tools for people who sweat the details, and it shows in every one of them.",
+  },
+  {
+    slug: "number-ticker",
+    name: "Number ticker",
+    category: "Text",
+    description: "Counts up when it scrolls into view, then eases between values.",
+    usage: '<NumberTicker value={12480} format={{ style: "currency", currency: "USD", maximumFractionDigits: 0 }} />',
+    props:
+      "value is required. format takes Intl.NumberFormat options and locale sets the locale, so currency, percent, and compact forms work. Screen readers hear only the final value. Reduced motion jumps straight to it.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "otp-input",
+    name: "OTP input",
+    category: "Inputs",
+    description: "A one-time code field with separate cells and working paste and autofill.",
+    usage: "<OtpInput length={6} onComplete={(code) => verify(code)} />",
+    props:
+      "One real input sits over the cells, so paste, one-time-code autofill from SMS, and screen readers work without special handling. length, label, numeric, and onComplete are optional. Inherits your text color.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "copy-button",
+    name: "Copy button",
+    category: "Inputs",
+    description: "Copies with one click; the icon morphs into a check.",
+    usage: '<CopyButton value="npm install forme" />',
+    props:
+      "value is required; label sets the accessible name. Announces Copied, or Copy failed when the clipboard is blocked. Inherits your text color.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "accordion",
+    name: "Accordion",
+    category: "Surfaces",
+    description: "Disclosure rows that open with a smooth height change.",
+    usage:
+      '<Accordion items={[\n  { id: "refunds", title: "Can I get a refund?", content: "Yes, within 30 days." },\n]} />',
+    props:
+      "items take id, title, and content; multiple allows several open at once and defaultOpen sets the start. Real buttons with aria-expanded and labelled regions. Closed panels are inert, so focus skips them. Inherits your text color.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "marquee",
+    name: "Marquee",
+    category: "Surfaces",
+    description: "An endless strip for logos or quotes, with soft faded edges.",
+    usage: '<Marquee label="Customers" duration={40}>\n  {logos}\n</Marquee>',
+    props:
+      "Wraps any children and repeats them seamlessly; the copy is hidden from assistive technology. duration, reverse, and pauseOnHover are optional, and it also pauses on focus. Reduced motion stops it and makes the strip scroll by hand. Set --forme-marquee-gap for spacing.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "image-compare",
+    name: "Image compare",
+    category: "Surfaces",
+    description: "Before and after, split by a handle you can drag or key.",
+    usage:
+      '<ImageCompare\n  before="/edit-before.jpg" beforeAlt="Original photo"\n  after="/edit-after.jpg" afterAlt="Color graded photo"\n/>',
+    props:
+      "before, after, and their alt texts are required; labels and the starting split are optional. The control is a real range input across the whole image, so dragging works anywhere and arrow keys work with focus.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
   },
   {
     slug: "silk-shader",

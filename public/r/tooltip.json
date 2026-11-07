@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:component",
+  "title": "Tooltip",
+  "description": "A small label on hover or focus, wired up for screen readers.",
+  "files": [
+    {
+      "path": "src/registry/tooltip.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/tooltip.tsx",
+      "content": "\"use client\";\nimport type { ReactElement, ReactNode } from \"react\";\nimport { cloneElement, isValidElement, useEffect, useId, useRef, useState } from \"react\";\nimport \"./tooltip.css\";\n\n/** A small label that appears on hover or keyboard focus, wired with aria-describedby. Escape closes it. */\nexport function Tooltip({\n  content,\n  children,\n  side = \"top\",\n  delay = 250,\n}: {\n  content: ReactNode;\n  children: ReactElement<{ \"aria-describedby\"?: string }>;\n  side?: \"top\" | \"bottom\";\n  delay?: number;\n}) {\n  const id = useId();\n  const [open, setOpen] = useState(false);\n  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);\n  useEffect(() => () => clearTimeout(timer.current), []);\n  const show = (wait: number) => {\n    clearTimeout(timer.current);\n    timer.current = setTimeout(() => setOpen(true), wait);\n  };\n  const hide = () => {\n    clearTimeout(timer.current);\n    setOpen(false);\n  };\n  return (\n    <span\n      className=\"forme-tooltip\"\n      data-side={side}\n      onPointerEnter={() => show(delay)}\n      onPointerLeave={hide}\n      onFocus={() => show(0)}\n      onBlur={hide}\n      onKeyDown={(e) => e.key === \"Escape\" && hide()}\n    >\n      {isValidElement(children) ? cloneElement(children, { \"aria-describedby\": id }) : children}\n      <span role=\"tooltip\" id={id} className=\"forme-tooltip-bubble\" data-open={open || undefined}>\n        {content}\n      </span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/tooltip.css",
+      "type": "registry:file",
+      "target": "@components/forme/tooltip.css",
+      "content": ".forme-tooltip {\n  position: relative;\n  display: inline-flex;\n}\n.forme-tooltip-bubble {\n  position: absolute;\n  left: 50%;\n  bottom: calc(100% + 8px);\n  z-index: 50;\n  width: max-content;\n  max-width: 240px;\n  padding: 6px 10px;\n  border-radius: 8px;\n  background: #18181b;\n  box-shadow:\n    inset 0 0 0 1px #ffffff1f,\n    0 8px 24px -8px #0008;\n  color: #fafafa;\n  font-size: 12.5px;\n  font-weight: 500;\n  line-height: 1.4;\n  text-align: center;\n  opacity: 0;\n  visibility: hidden;\n  transform: translate(-50%, 4px) scale(0.96);\n  transform-origin: bottom center;\n  transition:\n    opacity 0.15s,\n    transform 0.15s,\n    visibility 0.15s;\n  pointer-events: none;\n}\n.forme-tooltip[data-side=\"bottom\"] .forme-tooltip-bubble {\n  top: calc(100% + 8px);\n  bottom: auto;\n  transform: translate(-50%, -4px) scale(0.96);\n  transform-origin: top center;\n}\n.forme-tooltip-bubble[data-open] {\n  opacity: 1;\n  visibility: visible;\n  transform: translate(-50%, 0) scale(1);\n}\n.forme-tooltip[data-side=\"bottom\"] .forme-tooltip-bubble[data-open] {\n  transform: translate(-50%, 0) scale(1);\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-tooltip-bubble {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

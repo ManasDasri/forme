@@ -6,8 +6,7 @@ Original application source is reserved under the repository LICENSE. Dependenci
 - Motion: MIT — https://github.com/motiondivision/motion
 - Vite: MIT — https://github.com/vitejs/vite
 - TypeScript: Apache-2.0 — https://github.com/microsoft/TypeScript
-- DM Sans: SIL Open Font License — https://github.com/googlefonts/dm-fonts
-- Space Grotesk: SIL Open Font License — https://github.com/floriankarsten/space-grotesk
+- Instrument Sans: SIL Open Font License — https://github.com/Instrument/instrument-sans
 - Fontsource package notices: see the corresponding installed package directories.
 - Unsplash example photography: https://unsplash.com/license
 

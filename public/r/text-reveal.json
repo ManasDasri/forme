@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-reveal",
+  "type": "registry:component",
+  "title": "Text reveal",
+  "description": "Words light up one by one as the paragraph scrolls past.",
+  "files": [
+    {
+      "path": "src/registry/text-reveal.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/text-reveal.tsx",
+      "content": "\"use client\";\nimport { createElement, useEffect, useRef } from \"react\";\nimport \"./text-reveal.css\";\n\n/** A paragraph whose words light up one by one as it scrolls through the viewport. */\nexport function TextReveal({\n  text,\n  as = \"p\",\n  className = \"\",\n}: {\n  text: string;\n  as?: \"p\" | \"h2\" | \"h3\" | \"blockquote\";\n  className?: string;\n}) {\n  const ref = useRef<HTMLElement>(null);\n  useEffect(() => {\n    const node = ref.current!;\n    const words = [...node.querySelectorAll<HTMLElement>(\".forme-reveal-word\")];\n    const media = matchMedia(\"(prefers-reduced-motion:reduce)\");\n    let queued = 0;\n    const update = () => {\n      queued = 0;\n      if (media.matches) return words.forEach((w) => w.style.setProperty(\"--forme-reveal\", \"1\"));\n      const r = node.getBoundingClientRect();\n      // 0 when the top enters the lower fifth of the viewport, 1 when the bottom passes the middle.\n      const start = innerHeight * 0.85,\n        end = innerHeight * 0.45;\n      const progress = Math.max(0, Math.min(1, (start - r.top) / (start - end + r.height * 0.6)));\n      const lit = progress * words.length;\n      words.forEach((w, i) => w.style.setProperty(\"--forme-reveal\", String(Math.max(0, Math.min(1, lit - i)))));\n    };\n    const schedule = () => {\n      if (!queued) queued = requestAnimationFrame(update);\n    };\n    update();\n    // Listen only while on screen, so long pages pay nothing for it.\n    const observer = new IntersectionObserver(([entry]) => {\n      if (entry.isIntersecting) addEventListener(\"scroll\", schedule, { passive: true });\n      else removeEventListener(\"scroll\", schedule);\n      schedule();\n    });\n    observer.observe(node);\n    addEventListener(\"resize\", schedule);\n    media.addEventListener(\"change\", schedule);\n    return () => {\n      observer.disconnect();\n      cancelAnimationFrame(queued);\n      removeEventListener(\"scroll\", schedule);\n      removeEventListener(\"resize\", schedule);\n      media.removeEventListener(\"change\", schedule);\n    };\n  }, [text]);\n  return createElement(\n    as,\n    { ref, className: `forme-reveal ${className}` },\n    text.split(/(\\s+)/).map((part, i) =>\n      /\\s/.test(part) ? part : (\n        <span key={i} className=\"forme-reveal-word\">\n          {part}\n        </span>\n      ),\n    ),\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/text-reveal.css",
+      "type": "registry:file",
+      "target": "@components/forme/text-reveal.css",
+      "content": ".forme-reveal-word {\n  --forme-reveal: 0;\n  opacity: calc(0.16 + var(--forme-reveal) * 0.84);\n  filter: blur(calc((1 - var(--forme-reveal)) * 2px));\n  transition:\n    opacity 0.25s,\n    filter 0.25s;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-reveal-word {\n    opacity: 1;\n    filter: none;\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

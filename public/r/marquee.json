@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "marquee",
+  "type": "registry:component",
+  "title": "Marquee",
+  "description": "An endless strip for logos or quotes, with soft faded edges.",
+  "files": [
+    {
+      "path": "src/registry/marquee.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/marquee.tsx",
+      "content": "\"use client\";\nimport type { ReactNode } from \"react\";\nimport \"./marquee.css\";\n\n/** An endless strip for logos or quotes. Pauses on hover; edges fade; reduced motion makes it scrollable. */\nexport function Marquee({\n  children,\n  duration = 40,\n  reverse = false,\n  pauseOnHover = true,\n  label,\n  className = \"\",\n}: {\n  children: ReactNode;\n  duration?: number;\n  reverse?: boolean;\n  pauseOnHover?: boolean;\n  label?: string;\n  className?: string;\n}) {\n  return (\n    <div\n      className={`forme-marquee ${className}`}\n      role={label ? \"region\" : undefined}\n      aria-label={label}\n      data-reverse={reverse || undefined}\n      data-pause={pauseOnHover || undefined}\n      style={{ [\"--forme-marquee-duration\" as string]: `${duration}s` }}\n    >\n      <div className=\"forme-marquee-track\">\n        <div className=\"forme-marquee-group\">{children}</div>\n        <div className=\"forme-marquee-group\" aria-hidden=\"true\">\n          {children}\n        </div>\n      </div>\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/marquee.css",
+      "type": "registry:file",
+      "target": "@components/forme/marquee.css",
+      "content": ".forme-marquee {\n  --forme-marquee-gap: 48px;\n  overflow: hidden;\n  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);\n  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);\n}\n.forme-marquee-track {\n  display: flex;\n  width: max-content;\n  gap: var(--forme-marquee-gap);\n  animation: forme-marquee var(--forme-marquee-duration) linear infinite;\n}\n.forme-marquee[data-reverse] .forme-marquee-track {\n  animation-direction: reverse;\n}\n.forme-marquee[data-pause]:hover .forme-marquee-track,\n.forme-marquee[data-pause]:focus-within .forme-marquee-track {\n  animation-play-state: paused;\n}\n.forme-marquee-group {\n  display: flex;\n  flex-shrink: 0;\n  align-items: center;\n  gap: var(--forme-marquee-gap);\n}\n@keyframes forme-marquee {\n  to {\n    transform: translateX(calc(-50% - var(--forme-marquee-gap) / 2));\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-marquee {\n    overflow-x: auto;\n  }\n  .forme-marquee-track {\n    animation: none;\n  }\n  .forme-marquee-group[aria-hidden] {\n    display: none;\n  }\n}\n"
+    }
+  ]
+}

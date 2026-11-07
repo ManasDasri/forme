@@ -690,28 +690,6 @@ main:focus {
   justify-content: center;
   margin-top: 40px;
 }
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  z-index: 40;
-  padding: 10px 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface-2);
-  box-shadow: 0 12px 32px rgb(0 0 0 / 0.4);
-  font-size: 14px;
-  opacity: 0;
-  transform: translate(-50%, 8px);
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-  pointer-events: none;
-}
-.toast[data-visible] {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
 
 /* Specimens: the component alone on a dark stage */
 .specimen,
@@ -751,6 +729,64 @@ main:focus {
   display: grid;
   gap: 28px;
   width: min(320px, 100%);
+}
+.specimen-wide {
+  width: min(560px, 100%);
+}
+.dock-specimen {
+  padding-top: 70px;
+}
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px 44px;
+}
+.stats > div {
+  display: grid;
+  gap: 4px;
+  text-align: center;
+}
+.stats strong {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 600;
+  font-stretch: 85%;
+  letter-spacing: -0.03em;
+}
+.stat-label {
+  color: #a1a1aa;
+  font-size: 13px;
+}
+.reveal-specimen {
+  max-width: 24ch;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.wordmark-chip {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+.code-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 10%, transparent);
+  font: 13px var(--mono);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 .specimen-hint {
   position: absolute;
@@ -1127,6 +1163,12 @@ a.fact:hover {
   color: var(--ink);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
 }
+.workbench-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
 .workbench-canvas {
   overflow: hidden;
   border: 1px solid var(--line);
@@ -1140,6 +1182,15 @@ a.fact:hover {
   display: grid;
   overflow: hidden;
   transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.workbench-stage.is-light,
+.workbench-stage.is-light .specimen {
+  background: #fafafa;
+  color: #18181b;
+}
+.workbench-stage.is-light .specimen-card p,
+.workbench-stage.is-light .stat-label {
+  color: #52525b;
 }
 .workbench-stage.is-narrow {
   width: min(390px, 100%);
@@ -1364,7 +1415,6 @@ a.fact:hover {
   .btn,
   .card-preview,
   .card-actions,
-  .toast,
   .workbench-stage {
     transition: none;
   }

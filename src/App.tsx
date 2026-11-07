@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { catalog, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
+import { Toaster } from "./registry/toast";
 import { EclipseHero } from "./registry/eclipse-hero";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
@@ -15,6 +16,9 @@ const groups = [
   { name: "Surfaces", slug: "surfaces" },
   { name: "Inputs", slug: "inputs" },
   { name: "Loaders", slug: "loaders" },
+  { name: "Navigation", slug: "navigation" },
+  { name: "Feedback", slug: "feedback" },
+  { name: "Text", slug: "text" },
 ];
 const proofRows = ["hold-button", "ascii-globe", "chrome-shader", "radar-sweep", "lens-button", "telemetry-card"];
 const proofTraits: Trait[] = ["reduced-motion", "keyboard", "offscreen-pause", "zero-deps"];
@@ -55,7 +59,7 @@ function HomePage() {
       <div className="hero">
         <EclipseHero
           title="Components for interfaces that feel alive."
-          subtitle="Shaders, ASCII, instruments, inputs, and loaders for React. Install the source with one command, then make it yours."
+          subtitle="Shaders, ASCII, navigation, inputs, and feedback for React. Install the source with one command, then make it yours."
           actions={
             <>
               <a className="btn" href="/components/">
@@ -288,6 +292,7 @@ export default function App() {
       {page}
       <Footer />
       {search && <SearchDialog close={() => setSearch(false)} />}
+      <Toaster />
     </>
   );
 }
