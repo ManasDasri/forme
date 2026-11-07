@@ -3,10 +3,13 @@ import { catalog, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
 import { Toaster } from "./registry/toast";
 import { EclipseHero } from "./registry/eclipse-hero";
+import { WordRotator } from "./registry/word-rotator";
+import { NumberTicker } from "./registry/number-ticker";
+import { TextReveal } from "./registry/text-reveal";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
-import { Code, Footer, Header, Icon, Lazy, installCommand, sizeOf, useCopy } from "./ui";
+import { Code, Footer, Header, proof, Icon, Lazy, cardHandlers, installCommand, medianSize, sizeOf, useCopy } from "./ui";
 
 const groups = [
   { name: "Buttons", slug: "buttons" },
@@ -38,7 +41,7 @@ function Showcase() {
   return (
     <div className="bento">
       {showcase.map(({ slug, area }) => (
-        <figure className="bento-tile" key={slug} style={{ gridArea: area }}>
+        <figure className="bento-tile" key={slug} style={{ gridArea: area }} {...cardHandlers(`/docs/${slug}/`)}>
           <Lazy className="bento-live">
             <Demo slug={slug} />
           </Lazy>
@@ -58,7 +61,11 @@ function HomePage() {
     <main id="main" tabIndex={-1}>
       <div className="hero">
         <EclipseHero
-          title="Components for interfaces that feel alive."
+          title={
+            <>
+              Components for interfaces that <WordRotator words={["feel alive.", "glow.", "move.", "stick in your head."]} interval={2800} from="#c7d2fe" to="#fde68a" />
+            </>
+          }
           subtitle="Shaders, ASCII, navigation, inputs, and feedback for React. Install the source with one command, then make it yours."
           actions={
             <>
@@ -72,6 +79,31 @@ function HomePage() {
           }
         />
       </div>
+
+      <section className="stats-strip shell" aria-label="Forme in numbers">
+        <div>
+          <strong>
+            <NumberTicker value={catalog.length} />
+          </strong>
+          <span>components, all free</span>
+        </div>
+        <div>
+          <strong>
+            <NumberTicker value={catalog.filter((c) => c.traits.includes("zero-deps")).length} />
+          </strong>
+          <span>with zero dependencies</span>
+        </div>
+        <div>
+          <strong>2</strong>
+          <span>
+            frameworks every component is installed into on each change. <a href={proof.installRuns}>See the runs</a>
+          </span>
+        </div>
+        <div>
+          <strong>{medianSize()}</strong>
+          <span>median install, gzipped</span>
+        </div>
+      </section>
 
       <section className="section shell" aria-labelledby="library-title">
         <header className="section-head">
@@ -92,6 +124,13 @@ function HomePage() {
             View all {catalog.length}
           </a>
         </nav>
+      </section>
+
+      <section className="manifesto shell" aria-label="Why Forme">
+        <TextReveal
+          as="p"
+          text="Most libraries hand you rectangles. These glow, bend, count, and listen, and every one still works from a keyboard."
+        />
       </section>
 
       <section className="section shell proof" aria-labelledby="proof-title">
@@ -143,9 +182,17 @@ function HomePage() {
             </tbody>
           </table>
         </div>
-        <a className="link" href="/docs/quality/">
-          See the checks for all {catalog.length} components
-        </a>
+        <div className="proof-links">
+          <a className="link" href="/docs/quality/">
+            See the checks for all {catalog.length} components
+          </a>
+          <a className="link" href={proof.traitTest}>
+            Read the test
+          </a>
+          <a className="link" href={proof.checkRuns}>
+            Latest test runs
+          </a>
+        </div>
       </section>
 
       <section className="section shell split" aria-labelledby="free-title">

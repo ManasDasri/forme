@@ -1,5 +1,7 @@
+import { PlanetShader } from "./registry/planet-shader";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
+import type React from "react";
 import { catalog, traitInfo, type Trait } from "./catalog";
 import sizes from "./sizes.json";
 
@@ -37,8 +39,23 @@ export function Arrow({
     </svg>
   );
 }
-export function Icon({ name }: { name: "search" | "bookmark" | "bookmark-filled" | "copy" | "check" | "sun" | "moon" }) {
+export const REPO = "https://github.com/ManasDasri/forme";
+/** Where each claim on the site can be checked. */
+export const proof = {
+  traitTest: `${REPO}/blob/main/scripts/traits.test.mjs`,
+  checkRuns: `${REPO}/actions/workflows/check.yml`,
+  installRuns: `${REPO}/actions/workflows/install-smoke.yml`,
+  installRunner: `${REPO}/blob/main/scripts/smoke/run.mjs`,
+};
+export function Icon({ name }: { name: "search" | "bookmark" | "bookmark-filled" | "copy" | "check" | "sun" | "moon" | "github" }) {
   const paths = {
+    github: (
+      <path
+        fill="currentColor"
+        stroke="none"
+        d="M12 2.5a9.5 9.5 0 0 0-3 18.52c.47.09.65-.2.65-.46v-1.6c-2.64.57-3.2-1.27-3.2-1.27-.43-1.1-1.05-1.4-1.05-1.4-.86-.59.07-.58.07-.58.95.07 1.45.98 1.45.98.85 1.45 2.22 1.03 2.76.79.09-.61.33-1.03.6-1.27-2.1-.24-4.32-1.05-4.32-4.69 0-1.04.37-1.88.98-2.55-.1-.24-.42-1.2.1-2.5 0 0 .8-.26 2.6.97a9 9 0 0 1 4.74 0c1.8-1.23 2.6-.97 2.6-.97.52 1.3.2 2.26.1 2.5.6.67.97 1.51.97 2.55 0 3.65-2.22 4.45-4.34 4.68.34.3.65.88.65 1.78v2.64c0 .26.17.56.66.46A9.5 9.5 0 0 0 12 2.5Z"
+      />
+    ),
     search: (
       <>
         <circle cx="10.5" cy="10.5" r="6.5" />
@@ -104,6 +121,29 @@ export function Traits({ traits, compact = false }: { traits: Trait[]; compact?:
       ))}
     </ul>
   );
+}
+/** Card behavior shared by the library and the home showcase:
+ * clicking the card opens its docs unless the click lands on one of the component's own controls,
+ * and a soft edge light follows the pointer. */
+const interactive = "button, a, input, select, textarea, label, [role=tab], [role=slider], [role=combobox], [tabindex]";
+export function cardHandlers(href: string) {
+  return {
+    onClick: (e: React.MouseEvent<HTMLElement>) => {
+      // Only controls inside the card count; ancestors like <main tabindex=-1> don't.
+      const hit = (e.target as Element).closest(interactive);
+      if ((hit && e.currentTarget.contains(hit)) || window.getSelection()?.toString()) return;
+      const link = document.createElement("a");
+      link.href = href;
+      e.currentTarget.appendChild(link);
+      link.click(); // Routed by the app, so no page reload.
+      link.remove();
+    },
+    onPointerMove: (e: React.PointerEvent<HTMLElement>) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      e.currentTarget.style.setProperty("--edge-x", `${e.clientX - r.left}px`);
+      e.currentTarget.style.setProperty("--edge-y", `${e.clientY - r.top}px`);
+    },
+  };
 }
 export function useCopy() {
   const [copied, setCopied] = useState("");
@@ -173,6 +213,9 @@ export function Header({ onSearch }: { onSearch: () => void }) {
               <span>Search</span>
               <kbd>⌘K</kbd>
             </button>
+            <a className="icon-button" href={REPO} aria-label="Forme on GitHub">
+              <Icon name="github" />
+            </a>
             <a className="icon-button" href="/bookmarks/" aria-label="Bookmarks">
               <Icon name="bookmark" />
             </a>
@@ -197,21 +240,72 @@ export function Header({ onSearch }: { onSearch: () => void }) {
     </>
   );
 }
+const footerGuides = [
+  ["/docs/", "Getting started"],
+  ["/docs/theming/", "Theming"],
+  ["/docs/accessibility/", "Motion & accessibility"],
+  ["/docs/registry/", "Using the registry"],
+];
 export function Footer() {
+  const recent = catalog.slice(-4).reverse();
   return (
-    <footer className="footer shell">
-      <a className="wordmark" href="/">
-        <Mark />
-        forme
-      </a>
-      <nav aria-label="Footer navigation">
-        <a href="/components/">Components</a>
-        <a href="/docs/">Docs</a>
-        <a href="/docs/quality/">How we verify</a>
-      </nav>
-      <p>
-        © {new Date().getFullYear()} Forme. {catalog.length} components, all free.
-      </p>
+    <footer className="footer">
+      <div className="shell">
+        <div className="footer-cta">
+          <h2>Make something people remember.</h2>
+          <div className="footer-cta-actions">
+            <a className="btn" href="/components/">
+              Browse components
+            </a>
+            <a className="btn btn-secondary" href="/docs/">
+              Read the docs
+            </a>
+          </div>
+        </div>
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <a className="wordmark" href="/">
+              <Mark />
+              forme
+            </a>
+            <p>
+              {catalog.length} components for React. Free, MIT licensed, and{" "}
+              <a href={proof.installRuns}>installed into real Next.js and Vite apps</a> on every change.
+            </p>
+          </div>
+          <nav aria-label="Library">
+            <h3>Library</h3>
+            <a href="/components/">All components</a>
+            <a href="/docs/quality/">How we verify</a>
+          </nav>
+          <nav aria-label="Guides">
+            <h3>Guides</h3>
+            {footerGuides.map(([href, label]) => (
+              <a key={href} href={href}>
+                {label}
+              </a>
+            ))}
+          </nav>
+          <nav aria-label="Recently added">
+            <h3>Recently added</h3>
+            {recent.map((c) => (
+              <a key={c.slug} href={`/docs/${c.slug}/`}>
+                {c.name}
+              </a>
+            ))}
+          </nav>
+          <nav aria-label="Project">
+            <h3>Project</h3>
+            <a href={REPO}>GitHub</a>
+            <a href={`${REPO}/blob/main/LICENSE`}>MIT license</a>
+            <a href={proof.checkRuns}>Test runs</a>
+          </nav>
+        </div>
+        <p className="footer-legal">© {new Date().getFullYear()} Forme</p>
+      </div>
+      <div className="footer-art">
+        <PlanetShader />
+      </div>
     </footer>
   );
 }

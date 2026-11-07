@@ -669,6 +669,42 @@
       ]
     },
     {
+      "name": "word-rotator",
+      "type": "registry:component",
+      "title": "Word rotator",
+      "description": "Rotates words or whole phrases in a headline, letter by letter.",
+      "files": [
+        {
+          "path": "src/registry/word-rotator.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/word-rotator.tsx"
+        },
+        {
+          "path": "src/registry/word-rotator.css",
+          "type": "registry:file",
+          "target": "@components/forme/word-rotator.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-banner",
+      "type": "registry:component",
+      "title": "ASCII banner",
+      "description": "Any text drawn as dense ASCII art, with a light that follows your pointer and an optional rippling reflection.",
+      "files": [
+        {
+          "path": "src/registry/ascii-banner.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-banner.tsx"
+        },
+        {
+          "path": "src/registry/ascii-banner.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-banner.css"
+        }
+      ]
+    },
+    {
       "name": "silk-shader",
       "type": "registry:component",
       "title": "Silk field",
@@ -713,7 +749,7 @@
       "name": "ascii-tide",
       "type": "registry:component",
       "title": "ASCII tide",
-      "description": "A night sea in dense characters, with a moonlit glint.",
+      "description": "A moonlit ocean in dense characters, with a glittering moon path.",
       "files": [
         {
           "path": "src/registry/ascii-tide.tsx",
@@ -770,24 +806,6 @@
           "path": "src/registry/ascii-decode.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-decode.css"
-        }
-      ]
-    },
-    {
-      "name": "ascii-orbit",
-      "type": "registry:component",
-      "title": "ASCII orbit",
-      "description": "A dense, dimensional object, drawn entirely from characters.",
-      "files": [
-        {
-          "path": "src/registry/ascii-orbit.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/ascii-orbit.tsx"
-        },
-        {
-          "path": "src/registry/ascii-orbit.css",
-          "type": "registry:file",
-          "target": "@components/forme/ascii-orbit.css"
         }
       ]
     },
@@ -851,24 +869,6 @@
       ]
     },
     {
-      "name": "ascii-decode",
-      "type": "registry:component",
-      "title": "Decode text",
-      "description": "Headlines that resolve letter by letter as they scroll into view.",
-      "files": [
-        {
-          "path": "src/registry/ascii-decode.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/ascii-decode.tsx"
-        },
-        {
-          "path": "src/registry/ascii-decode.css",
-          "type": "registry:file",
-          "target": "@components/forme/ascii-decode.css"
-        }
-      ]
-    },
-    {
       "name": "dither-shader",
       "type": "registry:component",
       "title": "Dither terrain",
@@ -927,6 +927,29 @@
           "path": "src/registry/ascii-image.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-image.css"
+        }
+      ]
+    },
+    {
+      "name": "planet-shader",
+      "type": "registry:component",
+      "title": "ASCII planet",
+      "description": "A ringed planet rising over a glyph sea, drawn as ASCII on the GPU.",
+      "files": [
+        {
+          "path": "src/registry/planet-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/planet-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
         }
       ]
     },

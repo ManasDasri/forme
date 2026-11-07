@@ -284,11 +284,16 @@ main:focus {
 .hero .forme-eclipse h1 {
   font-stretch: 85%;
 }
+/* A dark glass fill, so the label stays readable over the bright eclipse rim. */
 .hero .btn-secondary {
-  border-color: rgb(255 255 255 / 0.14);
-  background: rgb(255 255 255 / 0.07);
-  color: #ededf0;
-  backdrop-filter: blur(10px);
+  border-color: rgb(255 255 255 / 0.16);
+  background: rgb(12 12 16 / 0.62);
+  color: #f4f4f5;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+.hero .btn-secondary:hover {
+  background: rgb(24 24 30 / 0.72);
 }
 .hero .btn:not(.btn-secondary) {
   background: #f4f4f5;
@@ -347,7 +352,7 @@ main:focus {
   color: #fff;
 }
 /* The recording's own tag competes with the tile caption here. */
-.bento-tile .category-links {
+.category-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -615,6 +620,73 @@ main:focus {
 }
 .card:hover .card-preview {
   border-color: var(--line-2);
+}
+.card-preview,
+.bento-tile {
+  cursor: pointer;
+}
+/* A soft edge light that follows the pointer around each card. */
+.card-preview::after,
+.bento-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(220px circle at var(--edge-x, 50%) var(--edge-y, 0%), rgb(255 255 255 / 0.55), transparent 70%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.card:hover .card-preview::after,
+.bento-tile:hover::after {
+  opacity: 1;
+}
+[data-theme="light"] .card-preview::after,
+[data-theme="light"] .bento-tile::after {
+  background: radial-gradient(220px circle at var(--edge-x, 50%) var(--edge-y, 0%), rgb(0 0 0 / 0.35), transparent 70%);
+}
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 56px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stats-strip > div {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 26px 24px 26px 0;
+}
+.stats-strip > div + div {
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+.stats-strip strong {
+  color: var(--ink);
+  font-size: clamp(32px, 3.6vw, 46px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.stats-strip > div > span {
+  max-width: 24ch;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.4;
+}
+/* The rotating phrase gets its own line, so the line above never reflows. */
+.hero .forme-rotator {
+  display: grid;
 }
 .card-live {
   position: absolute;
@@ -904,6 +976,15 @@ main:focus {
   background: #f4f4f5;
   color: #09090b;
 }
+.rotator-specimen {
+  max-width: 18ch;
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  text-align: center;
+}
 .specimen-hint {
   position: absolute;
   bottom: 18px;
@@ -981,32 +1062,106 @@ main:focus {
   color: var(--ink);
 }
 
+/* Manifesto */
+.manifesto {
+  padding-top: 160px;
+}
+.manifesto .forme-reveal {
+  max-width: 22ch;
+  margin: 0;
+  font-size: clamp(36px, 5.6vw, 76px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
 /* Footer */
 .footer {
+  position: relative;
+  margin-top: 160px;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  background: radial-gradient(60% 50% at 50% 100%, rgb(129 140 248 / 0.07), transparent 70%);
+}
+.footer-cta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 16px 32px;
-  margin-top: 160px;
-  padding: 28px 0 40px;
-  border-top: 1px solid var(--line);
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--line);
+}
+.footer-cta h2 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(36px, 5.4vw, 68px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.footer-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
+  gap: 40px 32px;
+  padding: 56px 0 24px;
+}
+.footer-brand p {
+  max-width: 34ch;
+  margin: 14px 0 0;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.55;
 }
 .footer nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.footer h3 {
+  margin: 0 0 4px;
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .footer nav a {
   color: var(--ink-2);
   font-size: 14px;
+  transition: color 0.15s;
 }
 .footer nav a:hover {
   color: var(--ink);
 }
-.footer p {
-  margin-left: auto;
+.footer-legal {
+  margin: 0;
+  padding-top: 24px;
   color: var(--ink-3);
   font-size: 13px;
+}
+/* Full-bleed art at the very end; its top fades into the footer. */
+.footer-art {
+  height: clamp(340px, 46vw, 680px);
+  margin-top: 8px;
+  -webkit-mask-image: linear-gradient(transparent, #000 22%);
+  mask-image: linear-gradient(transparent, #000 22%);
+}
+@media (max-width: 860px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Inner pages */
@@ -1324,7 +1479,7 @@ a.fact:hover {
   border-radius: 14px;
   background: var(--surface);
 }
-.workbench-controls label {
+.workbench-controls > label:not(.forme-slider) {
   display: grid;
   gap: 6px;
   color: var(--ink-2);
@@ -1339,17 +1494,43 @@ a.fact:hover {
   background: var(--bg);
   font-size: 14px;
 }
-.workbench-controls input[type="color"] {
-  width: 52px;
+/* A round swatch over the native picker, with the hex value beside it. */
+.color-swatch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   height: 34px;
-  padding: 3px;
+  padding: 0 12px 0 6px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 999px;
   background: var(--bg);
 }
-.workbench-controls input[type="range"] {
-  width: 180px;
-  accent-color: var(--ink);
+.color-swatch > span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18), 0 0 14px -2px currentColor;
+}
+.color-swatch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.color-swatch code {
+  color: var(--ink);
+  font-size: 12.5px;
+  text-transform: uppercase;
+}
+.color-swatch:has(input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.workbench-controls .control-speed {
+  width: 240px;
 }
 .workbench-controls .btn {
   margin-left: auto;
@@ -1461,6 +1642,16 @@ a.fact:hover {
   .header-search span {
     display: none;
   }
+  .stats-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stats-strip > div:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .stats-strip > div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
   .hero {
     height: 72svh;
     min-height: 480px;
@@ -1511,9 +1702,6 @@ a.fact:hover {
   .workbench-stage {
     height: 400px;
   }
-  .footer p {
-    margin-left: 0;
-  }
 }
 @media (max-width: 560px) {
   .card-grid {
@@ -1534,4 +1722,21 @@ a.fact:hover {
   .workbench-stage {
     transition: none;
   }
+}
+
+.proof-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+.stats-strip > div > span a,
+.footer-brand p a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+.stats-strip > div > span a:hover,
+.footer-brand p a:hover {
+  text-decoration-color: currentColor;
 }

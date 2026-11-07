@@ -19,20 +19,20 @@ npm run build
 
 ## Signal, the first drop
 
-51 components across ten categories, all free.
+52 components across ten categories, all free.
 
 | Category | Components |
 | -------- | ---------- |
 | Buttons | Lens, Plasma, Hold to confirm, Scramble, Prism, Magnetic, Shutter |
 | Shaders | Horizon, Mesh gradient, Light rays, Aurora, Silk field, Dither terrain, Caustic glass, Contours |
-| ASCII | ASCII tide, Decode text, ASCII orbit, ASCII reveal, ASCII black hole |
+| ASCII | ASCII banner, ASCII tide, ASCII reveal, ASCII black hole, ASCII planet |
 | HUD | Telemetry card, Radar sweep, Oscilloscope |
 | Surfaces | Eclipse hero, Spotlight card, Beam card, Dot grid, Accordion, Marquee, Image compare |
 | Inputs | Command palette, Glow input, Segmented switch, Signal slider, OTP input, Copy button |
 | Loaders | Orbit loader, Infinity loader, Spinner, Typing dots, Equalizer, Skeleton, Shimmer text, Progress beam |
 | Navigation | Dock, Animated tabs |
 | Feedback | Toast, Tooltip |
-| Text | Text reveal, Number ticker, Gradient text |
+| Text | Word rotator, Text reveal, Number ticker, Gradient text |
 
 Run `node scripts/generate-registry.mjs` after adding or removing a component, and add a sample render for it in `scripts/smoke/fixtures.tsx` (a test fails until you do).
 
@@ -61,7 +61,7 @@ npx shadcn@latest add https://forme.vercel.app/r/lens-button.json
 npx shadcn@latest add https://forme.vercel.app/r/horizon-shader.json
 ```
 
-Shaders share `shader-canvas.tsx` and `.css`; Scramble button includes `ascii-decode`. Magnetic button installs Motion. Everything else uses React and browser APIs only.
+Shaders share `shader-canvas.tsx` and `.css`; Scramble button includes its shared `ascii-decode` helper. Magnetic button installs Motion. Everything else uses React and browser APIs only.
 
 ## Layout
 

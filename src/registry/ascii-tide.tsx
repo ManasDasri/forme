@@ -8,7 +8,7 @@ const rgb = (hex: string) => {
   const h = /^#[0-9a-f]{6}$/i.test(hex) ? hex : "#8ab4ff";
   return [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 };
-/** A night sea in dense characters: slope-lit water, fog at the horizon, a moonlit glint. */
+/** A moonlit ocean in dense characters: rolling swells, a glittering moon path, foam on the crests. */
 export function AsciiTide({
   color = "#8ab4ff",
   speed = 1,
@@ -41,11 +41,23 @@ export function AsciiTide({
       width = 0,
       height = 0,
       cellW = 4.8;
-    const wave = (a: number, b: number) =>
-      Math.sin(a * 0.9 + b * 1.2 + t * 0.5) +
-      0.5 * Math.sin(a * 1.9 - b * 2.1 - t * 0.7) +
-      0.25 * Math.sin(a * 3.7 + b * 4.3 + t * 1.1) +
-      0.12 * Math.sin(a * 7.1 - b * 8.7 - t * 1.6);
+    // Several swells crossing at different angles; returns height for a point on the water.
+    const swells = [
+      [0.9, 0.35, 0.55, 0.42],
+      [-0.6, 0.8, 0.8, 0.3],
+      [0.3, 1.0, 1.3, 0.18],
+      [-0.9, 0.45, 2.1, 0.1],
+      [0.7, -0.7, 3.4, 0.05],
+    ];
+    const sea = (x: number, z: number) => {
+      let h = 0;
+      for (const [dx, dz, f, a] of swells) h += a * Math.sin((x * dx + z * dz) * f + t * (0.6 + f * 0.35));
+      return h;
+    };
+    const hash = (x: number, y: number) => {
+      const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+      return n - Math.floor(n);
+    };
     const paint = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
@@ -61,22 +73,41 @@ export function AsciiTide({
         const parts: string[][] = Array.from({ length: LEVELS }, () => []);
         for (let col = 0; col < cols; col++) {
           const x = (col / cols - 0.5) * aspect * 2;
-          // A sea in perspective: each cell below the horizon is a point on the water,
-          // shaded by its slope, fading into fog with a moonlit glint down the middle.
-          const v = (y - 0.28) / 0.72;
+          // Moonlit ocean: a sky with a moon, and below the horizon, water shaded by its slope.
+          const horizon = 0.4,
+            moonX = aspect * 0.32,
+            moonY = 0.17;
           let k = 0;
-          if (v > 0) {
-            const z = 1 / (v + 0.045);
-            const wx = x * z * 1.5;
-            const light = Math.max(0, Math.min(1, 0.42 + (wave(wx, z * 2.2 + 0.09) - wave(wx, z * 2.2)) * 3.6));
-            const fog = 1 - Math.exp(-v * 7);
-            const glint = Math.exp(-x * x * (1.1 + 5 * (1 - v))) * Math.pow(light, 1.6) * 1.15;
-            k = Math.min(1, fog * (0.08 + 0.7 * light * light) + glint * (0.35 + 0.65 * Math.min(1, v * 3)));
+          if (y < horizon) {
+            const dx = (x - moonX) * 0.9,
+              dy = (y - moonY) * 1.7,
+              dm = Math.hypot(dx, dy),
+              R = 0.095;
+            // A lit sphere: brightest toward the upper left, softly darker at the limb.
+            const disc = dm < R ? 0.72 + 0.28 * Math.max(0, (-dx - dy) / R * 0.5 + Math.sqrt(1 - (dm / R) ** 2) * 0.6) : 0;
+            // Only a thin, faint rim of glow, so the sky around the moon stays dark.
+            const halo = dm >= R ? 0.1 * Math.exp(-(dm - R) * 40) : 0;
+            const glow = 0.1 * Math.exp(-(horizon - y) * 16);
+            const star = hash(col, row) > 0.994 ? 0.25 + 0.2 * Math.sin(t * 2 + col) : 0;
+            k = Math.max(disc, halo + glow + star);
           } else {
-            k = 0.16 * Math.exp(v * 26) * Math.exp(-x * x * 0.5);
+            const v = (y - horizon) / (1 - horizon);
+            const z = 1 / (v + 0.035);
+            const wx = x * z * 0.55,
+              wz = z * 1.4;
+            const h = sea(wx, wz);
+            const sx = (sea(wx + 0.06, wz) - h) / 0.06,
+              sz = (sea(wx, wz + 0.06) - h) / 0.06;
+            // Faces tilted toward the horizon reflect the bright sky; the rest stays dark.
+            const sky = Math.max(0, 0.38 + sz * 0.7 - Math.abs(sx) * 0.06) * (0.45 + 0.55 * (1 - v));
+            const path = Math.exp(-Math.pow((x - moonX) / (0.08 + 0.6 * v), 2));
+            const glitter = path * Math.pow(Math.max(0, 0.6 + sx * 0.5 + sz * 0.35), 5) * 2.4;
+            const foam = Math.max(0, h - 0.62) * 2.2 * (0.5 + 0.5 * v);
+            const fog = Math.exp(-v * 9) * 0.22;
+            k = Math.min(1, sky * 1.05 + glitter + foam + fog);
           }
           const level = Math.min(LEVELS - 1, Math.floor(k * LEVELS));
-          const ch = k < 0.03 ? " " : ramp[Math.min(ramp.length - 1, 1 + Math.floor(k * (ramp.length - 1)))];
+          const ch = k < 0.045 ? " " : ramp[Math.min(ramp.length - 1, 1 + Math.floor(k * (ramp.length - 1)))];
           for (let l = 0; l < LEVELS; l++) parts[l].push(l === level ? ch : " ");
         }
         for (let l = 0; l < LEVELS; l++) lines[l].push(parts[l].join(""));

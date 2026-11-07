@@ -36,13 +36,15 @@ export function NumberTicker({
       shown.current = value;
       return setDisplay(value);
     }
+    // Round in-between values to the target's precision, so 51 never shows as 49.0009.
+    const places = Math.min(20, (String(value).split(".")[1] ?? "").length);
     const from = shown.current,
       began = performance.now();
     let frame = 0;
     const tick = (now: number) => {
       const k = Math.min(1, (now - began) / duration);
       shown.current = from + (value - from) * (1 - Math.pow(1 - k, 4));
-      setDisplay(shown.current);
+      setDisplay(k < 1 ? Number(shown.current.toFixed(places)) : value);
       if (k < 1) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { catalog, exportName, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
-import { Code, Icon, Traits, installCommand, sizeOf, useCopy } from "./ui";
+import { SignalSlider } from "./registry/signal-slider";
+import { Code, Icon, Traits, installCommand, proof, sizeOf, useCopy } from "./ui";
 import registry from "../registry.json";
 
 const sources = import.meta.glob("./registry/*.{tsx,css}", {
@@ -138,14 +139,25 @@ export function Workbench({ slug }: { slug: string }) {
               {component.color && (
                 <label className="control-color">
                   Color
-                  <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+                  <span className="color-swatch">
+                    <span style={{ background: color }} />
+                    <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+                    <code>{color}</code>
+                  </span>
                 </label>
               )}
               {component.speed && (
-                <label className="control-speed">
-                  Speed {speed.toFixed(1)}×
-                  <input type="range" min="0" max="3" step="0.1" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} />
-                </label>
+                <SignalSlider
+                  className="control-speed"
+                  label="Speed"
+                  min={0}
+                  max={3}
+                  step={0.1}
+                  value={speed}
+                  onChange={setSpeed}
+                  format={(v) => `${v.toFixed(1)}×`}
+                  color={color || "#8ab4ff"}
+                />
               )}
               {slug === "ascii-image" && (
                 <label>
@@ -275,9 +287,18 @@ function Quality() {
     <div className="prose">
       <h2>Badges you can audit</h2>
       <p>
-        Every badge on this site maps to a concrete check in <code>scripts/traits.test.mjs</code>. The test reads each
-        component's installed files and fails the build if a claimed behavior is missing from the source. It also fails if
-        a render loop has no offscreen pause. CI runs it on every push.
+        Every badge on this site maps to a concrete check in{" "}
+        <a href={proof.traitTest}>
+          <code>scripts/traits.test.mjs</code>
+        </a>
+        . The test reads each component's installed files and fails the build if a claimed behavior is missing from the
+        source. It also fails if a render loop has no offscreen pause. CI runs it on every push, and{" "}
+        <a href={proof.checkRuns}>every run is public</a>.
+      </p>
+      <p>
+        A second job, <a href={proof.installRunner}>the install test</a>, creates fresh Next.js and Vite apps, installs every
+        component with the shadcn CLI, builds both, and renders each component in a browser. It fails on any build error
+        or page crash. <a href={proof.installRuns}>See its runs</a>.
       </p>
       <ul className="check-list">
         {traits.map((t) => (
