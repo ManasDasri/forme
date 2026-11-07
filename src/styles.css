@@ -1085,13 +1085,19 @@ main:focus {
   background: radial-gradient(60% 50% at 50% 100%, rgb(129 140 248 / 0.07), transparent 70%);
 }
 .footer-cta {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 88px 0 72px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;
+  min-height: clamp(480px, 46vw, 660px);
+  padding: 72px 0;
   border-bottom: 1px solid var(--line);
+}
+.footer-cta > :not(.footer-art) {
+  position: relative;
+  z-index: 1;
 }
 .footer-cta h2 {
   max-width: 14ch;
@@ -1148,12 +1154,25 @@ main:focus {
   color: var(--ink-3);
   font-size: 13px;
 }
-/* Full-bleed art at the very end; its top fades into the footer. */
+/* The scene fills the right of the closing block and bleeds to the viewport edge,
+   fading in from the left behind the headline and out at the top and bottom. */
 .footer-art {
-  height: clamp(340px, 46vw, 680px);
-  margin-top: 8px;
-  -webkit-mask-image: linear-gradient(transparent, #000 12%);
-  mask-image: linear-gradient(transparent, #000 12%);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 26%;
+  right: calc((100vw - 100%) / -2);
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%), linear-gradient(transparent, #000 14%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 30%), linear-gradient(transparent, #000 14%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+@media (max-width: 860px) {
+  .footer-art {
+    left: -30%;
+    opacity: 0.55;
+  }
 }
 @media (max-width: 860px) {
   .footer-grid {
