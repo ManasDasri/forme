@@ -1,0 +1,43 @@
+.forme-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+.forme-typing i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: forme-typing 1.3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.forme-typing i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.forme-typing i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+@keyframes forme-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-typing i {
+    animation: forme-typing-fade 1.6s ease-in-out infinite;
+  }
+  @keyframes forme-typing-fade {
+    50% {
+      opacity: 0.35;
+    }
+  }
+}

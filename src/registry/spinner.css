@@ -1,0 +1,28 @@
+.forme-spinner {
+  position: relative;
+  display: inline-block;
+}
+.forme-spinner i {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 6%);
+  width: 12%;
+  height: 28%;
+  border-radius: 99px;
+  background: currentColor;
+  transform-origin: 50% 178%;
+  animation: forme-spinner 0.9s linear infinite;
+}
+@keyframes forme-spinner {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.15;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-spinner i {
+    animation-duration: 2.4s;
+  }
+}

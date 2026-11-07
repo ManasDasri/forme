@@ -4,7 +4,6 @@ import { SilkShader } from "./registry/silk-shader";
 import { DitherShader } from "./registry/dither-shader";
 import { HorizonShader } from "./registry/horizon-shader";
 import { AuroraShader } from "./registry/aurora-shader";
-import { ChromeShader } from "./registry/chrome-shader";
 import { PrismButton } from "./registry/prism-button";
 import { MagneticButton } from "./registry/magnetic-button";
 import { LensButton } from "./registry/lens-button";
@@ -24,12 +23,9 @@ import { SignalSlider } from "./registry/signal-slider";
 import { OrbitLoader } from "./registry/orbit-loader";
 import { ShimmerText } from "./registry/shimmer-text";
 import { ProgressBeam } from "./registry/progress-beam";
-import { AsciiGlobe } from "./registry/ascii-globe";
 import { AsciiBlackHole } from "./registry/ascii-black-hole";
 import { AsciiSurface } from "./registry/ascii-surface";
 import { CausticShader } from "./registry/caustic-shader";
-import { SingularityShader } from "./registry/singularity-shader";
-import { OrbitGauge } from "./registry/orbit-gauge";
 import { ShutterButton } from "./registry/shutter-button";
 import { Dock } from "./registry/dock";
 import { AnimatedTabs } from "./registry/animated-tabs";
@@ -42,6 +38,15 @@ import { CopyButton } from "./registry/copy-button";
 import { Accordion } from "./registry/accordion";
 import { Marquee } from "./registry/marquee";
 import { ImageCompare } from "./registry/image-compare";
+import { MeshGradientShader } from "./registry/mesh-gradient-shader";
+import { LightRaysShader } from "./registry/light-rays-shader";
+import { DotGrid } from "./registry/dot-grid";
+import { GradientText } from "./registry/gradient-text";
+import { TypingDots } from "./registry/typing-dots";
+import { Spinner } from "./registry/spinner";
+import { Skeleton, SkeletonGroup } from "./registry/skeleton";
+import { InfinityLoader } from "./registry/infinity-loader";
+import { Equalizer } from "./registry/equalizer";
 import { AsciiDecode } from "./registry/ascii-decode";
 import { TelemetryCard } from "./registry/telemetry-card";
 import { RadarSweep } from "./registry/radar-sweep";
@@ -67,6 +72,73 @@ const dockIcons = {
   Settings: glyph("M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7-3 2-1-1-3-2 .5-1.5-1.5L17 5l-3-1-1 2h-2L10 4 7 5l.5 2L6 8.5 4 8l-1 3 2 1v0l-2 1 1 3 2-.5 1.5 1.5L7 19l3 1 1-2h2l1 2 3-1-.5-2 1.5-1.5 2 .5 1-3z"),
 };
 const live: Record<string, (p: Props) => ReactNode> = {
+  "mesh-gradient-shader": (p) => <MeshGradientShader speed={p.speed} />,
+  "light-rays-shader": (p) => <LightRaysShader color={p.color} speed={p.speed} />,
+  "dot-grid": () => (
+    <div className="specimen dot-specimen">
+      <DotGrid />
+      <p className="dot-specimen-copy">Move across the grid</p>
+    </div>
+  ),
+  "gradient-text": (p) => (
+    <div className="specimen">
+      <GradientText as="h3" className="gradient-specimen" text={p.title || "Build something unforgettable."} />
+    </div>
+  ),
+  "typing-dots": () => (
+    <div className="specimen">
+      <div className="chat-specimen">
+        <p className="chat-bubble">Can you summarize the launch notes?</p>
+        <TypingDots label="Assistant is typing" />
+      </div>
+    </div>
+  ),
+  spinner: () => (
+    <div className="specimen">
+      <div className="row loader-row">
+        <Spinner size={18} />
+        <Spinner size={28} />
+        <Spinner size={44} />
+        <button className="btn btn-secondary" disabled>
+          <Spinner size={14} label="Saving" /> Saving
+        </button>
+      </div>
+    </div>
+  ),
+  skeleton: () => (
+    <div className="specimen">
+      <div className="specimen-card skeleton-card">
+        <SkeletonGroup label="Loading profile">
+          <div className="skeleton-head">
+            <Skeleton width={44} height={44} radius="50%" />
+            <div className="skeleton-lines">
+              <Skeleton width="55%" height={13} />
+              <Skeleton width="35%" height={11} />
+            </div>
+          </div>
+          <Skeleton height={84} radius={12} />
+          <Skeleton width="92%" />
+          <Skeleton width="78%" />
+        </SkeletonGroup>
+      </div>
+    </div>
+  ),
+  "infinity-loader": (p) => (
+    <div className="specimen">
+      <InfinityLoader size={96} color={p.color} />
+    </div>
+  ),
+  equalizer: () => (
+    <div className="specimen">
+      <div className="row loader-row">
+        <Equalizer />
+        <Equalizer bars={7} height={40} />
+        <span className="now-playing">
+          <Equalizer bars={3} height={14} label="Now playing" /> Now playing
+        </span>
+      </div>
+    </div>
+  ),
   dock: () => (
     <div className="specimen dock-specimen">
       <Dock
@@ -219,12 +291,9 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "dither-shader": (p) => <DitherShader color={p.color} speed={p.speed} />,
   "horizon-shader": (p) => <HorizonShader color={p.color} speed={p.speed} />,
   "aurora-shader": (p) => <AuroraShader color={p.color} speed={p.speed} />,
-  "singularity-shader": (p) => <SingularityShader color={p.color} speed={p.speed} />,
   "caustic-shader": (p) => <CausticShader color={p.color} speed={p.speed} />,
   "ascii-black-hole": (p) => <AsciiBlackHole speed={p.speed} />,
   "ascii-surface": (p) => <AsciiSurface color={p.color} speed={p.speed} />,
-  "orbit-gauge": () => <GaugeDemo />,
-  "chrome-shader": (p) => <ChromeShader color={p.color} speed={p.speed} />,
   "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
   "ascii-tide": (p) => <AsciiTide color={p.color} speed={p.speed} />,
   "eclipse-hero": (p) => (
@@ -289,7 +358,6 @@ const live: Record<string, (p: Props) => ReactNode> = {
     </div>
   ),
   "progress-beam": (p) => <ProgressDemo color={p.color} />,
-  "ascii-globe": (p) => <AsciiGlobe color={p.color} speed={p.speed} />,
   "radar-sweep": (p) => <RadarSweep color={p.color} speed={p.speed} />,
   oscilloscope: (p) => <Oscilloscope color={p.color} speed={p.speed} />,
   "ascii-image": (p) => {
@@ -359,31 +427,6 @@ function TelemetryDemo({ color }: { color?: string }) {
   );
 }
 
-function GaugeDemo() {
-  const [step, setStep] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setStep((n) => n + 1), 2200);
-    return () => clearInterval(id);
-  }, []);
-  const [cpu, memory, disk] = [
-    [0.72, 0.48, 0.31],
-    [0.86, 0.55, 0.36],
-    [0.64, 0.61, 0.42],
-    [0.91, 0.44, 0.33],
-  ][step % 4];
-  return (
-    <div className="specimen">
-      <OrbitGauge
-        title="Capacity"
-        metrics={[
-          { label: "CPU", value: cpu, color: "#8ab4ff" },
-          { label: "Memory", value: memory, color: "#c4b5fd" },
-          { label: "Disk", value: disk, color: "#5eead4" },
-        ]}
-      />
-    </div>
-  );
-}
 
 export function Demo({
   slug,

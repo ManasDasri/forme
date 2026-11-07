@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:component",
+  "title": "Skeleton",
+  "description": "Shimmering placeholders that sketch the content on its way.",
+  "files": [
+    {
+      "path": "src/registry/skeleton.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/skeleton.tsx",
+      "content": "\"use client\";\nimport type { CSSProperties, ReactNode } from \"react\";\nimport \"./skeleton.css\";\n\n/** A placeholder block with a soft sheen. Compose several to sketch the content that is loading. */\nexport function Skeleton({\n  width = \"100%\",\n  height = 14,\n  radius = 8,\n  className = \"\",\n  style,\n}: {\n  width?: number | string;\n  height?: number | string;\n  radius?: number | string;\n  className?: string;\n  style?: CSSProperties;\n}) {\n  return <span aria-hidden=\"true\" className={`forme-skeleton ${className}`} style={{ width, height, borderRadius: radius, ...style }} />;\n}\n/** Wrap skeletons in this so assistive technology hears one loading message instead of nothing. */\nexport function SkeletonGroup({ label = \"Loading\", children }: { label?: string; children: ReactNode }) {\n  return (\n    <div role=\"status\" aria-label={label} aria-busy=\"true\" className=\"forme-skeleton-group\">\n      {children}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/skeleton.css",
+      "type": "registry:file",
+      "target": "@components/forme/skeleton.css",
+      "content": ".forme-skeleton {\n  display: block;\n  background: linear-gradient(\n      100deg,\n      transparent 30%,\n      color-mix(in srgb, currentColor 10%, transparent) 50%,\n      transparent 70%\n    )\n    0 0 / 250% 100%,\n    color-mix(in srgb, currentColor 9%, transparent);\n  animation: forme-skeleton 1.6s ease-in-out infinite;\n}\n.forme-skeleton-group {\n  display: grid;\n  gap: 10px;\n}\n@keyframes forme-skeleton {\n  from {\n    background-position: 125% 0, 0 0;\n  }\n  to {\n    background-position: -125% 0, 0 0;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-skeleton {\n    animation: none;\n  }\n}\n"
+    }
+  ]
+}

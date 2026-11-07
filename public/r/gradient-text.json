@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gradient-text",
+  "type": "registry:component",
+  "title": "Gradient text",
+  "description": "Headings filled with a slowly moving gradient.",
+  "files": [
+    {
+      "path": "src/registry/gradient-text.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/gradient-text.tsx",
+      "content": "\"use client\";\nimport { createElement } from \"react\";\nimport \"./gradient-text.css\";\n\n/** Text filled with a slowly moving gradient. Still real, selectable text. */\nexport function GradientText({\n  text,\n  as = \"span\",\n  colors = [\"#7c9cff\", \"#e879f9\", \"#fb923c\", \"#7c9cff\"],\n  duration = 8,\n  className = \"\",\n}: {\n  text: string;\n  as?: \"span\" | \"h1\" | \"h2\" | \"h3\" | \"p\";\n  colors?: string[];\n  duration?: number;\n  className?: string;\n}) {\n  return createElement(\n    as,\n    {\n      className: `forme-gradient-text ${className}`,\n      style: {\n        [\"--forme-gradient\" as string]: `linear-gradient(90deg, ${colors.join(\", \")})`,\n        [\"--forme-gradient-duration\" as string]: `${duration}s`,\n      },\n    },\n    text,\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/gradient-text.css",
+      "type": "registry:file",
+      "target": "@components/forme/gradient-text.css",
+      "content": ".forme-gradient-text {\n  background: var(--forme-gradient);\n  background-size: 300% 100%;\n  -webkit-background-clip: text;\n  background-clip: text;\n  color: transparent;\n  /* Room for descenders, which background-clip would otherwise cut. */\n  padding-bottom: 0.12em;\n  animation: forme-gradient-shift var(--forme-gradient-duration, 8s) ease-in-out infinite alternate;\n}\n@keyframes forme-gradient-shift {\n  from {\n    background-position: 0% 50%;\n  }\n  to {\n    background-position: 100% 50%;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-gradient-text {\n    animation: none;\n    background-size: 100% 100%;\n  }\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typing-dots",
+  "type": "registry:component",
+  "title": "Typing dots",
+  "description": "Three dots that lift in turn, like someone is typing.",
+  "files": [
+    {
+      "path": "src/registry/typing-dots.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/typing-dots.tsx",
+      "content": "\"use client\";\nimport \"./typing-dots.css\";\n\n/** Three dots that lift in turn, for \"someone is typing\" and other short waits. */\nexport function TypingDots({ label = \"Typing\", className = \"\" }: { label?: string; className?: string }) {\n  return (\n    <span role=\"status\" aria-label={label} className={`forme-typing ${className}`}>\n      <i />\n      <i />\n      <i />\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/typing-dots.css",
+      "type": "registry:file",
+      "target": "@components/forme/typing-dots.css",
+      "content": ".forme-typing {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  padding: 12px 14px;\n  border-radius: 16px;\n  background: color-mix(in srgb, currentColor 8%, transparent);\n}\n.forme-typing i {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: currentColor;\n  animation: forme-typing 1.3s cubic-bezier(0.45, 0, 0.55, 1) infinite;\n}\n.forme-typing i:nth-child(2) {\n  animation-delay: 0.16s;\n}\n.forme-typing i:nth-child(3) {\n  animation-delay: 0.32s;\n}\n@keyframes forme-typing {\n  0%,\n  60%,\n  100% {\n    opacity: 0.35;\n    transform: translateY(0);\n  }\n  30% {\n    opacity: 1;\n    transform: translateY(-5px);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-typing i {\n    animation: forme-typing-fade 1.6s ease-in-out infinite;\n  }\n  @keyframes forme-typing-fade {\n    50% {\n      opacity: 0.35;\n    }\n  }\n}\n"
+    }
+  ]
+}

@@ -45,24 +45,6 @@
       ]
     },
     {
-      "name": "ascii-globe",
-      "type": "registry:component",
-      "title": "ASCII globe",
-      "description": "A planet of characters. Drag it, spin it, steer it with keys.",
-      "files": [
-        {
-          "path": "src/registry/ascii-globe.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/ascii-globe.tsx"
-        },
-        {
-          "path": "src/registry/ascii-globe.css",
-          "type": "registry:file",
-          "target": "@components/forme/ascii-globe.css"
-        }
-      ]
-    },
-    {
       "name": "hold-button",
       "type": "registry:component",
       "title": "Hold to confirm",
@@ -492,6 +474,178 @@
       ]
     },
     {
+      "name": "mesh-gradient-shader",
+      "type": "registry:component",
+      "title": "Mesh gradient",
+      "description": "Four soft colors drifting through each other, with fine grain.",
+      "files": [
+        {
+          "path": "src/registry/mesh-gradient-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/mesh-gradient-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "light-rays-shader",
+      "type": "registry:component",
+      "title": "Light rays",
+      "description": "Shafts of light falling from above, with dust drifting through them.",
+      "files": [
+        {
+          "path": "src/registry/light-rays-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/light-rays-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
+      "name": "dot-grid",
+      "type": "registry:component",
+      "title": "Dot grid",
+      "description": "A dot-matrix background that glows softly around the pointer.",
+      "files": [
+        {
+          "path": "src/registry/dot-grid.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/dot-grid.tsx"
+        },
+        {
+          "path": "src/registry/dot-grid.css",
+          "type": "registry:file",
+          "target": "@components/forme/dot-grid.css"
+        }
+      ]
+    },
+    {
+      "name": "gradient-text",
+      "type": "registry:component",
+      "title": "Gradient text",
+      "description": "Headings filled with a slowly moving gradient.",
+      "files": [
+        {
+          "path": "src/registry/gradient-text.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/gradient-text.tsx"
+        },
+        {
+          "path": "src/registry/gradient-text.css",
+          "type": "registry:file",
+          "target": "@components/forme/gradient-text.css"
+        }
+      ]
+    },
+    {
+      "name": "typing-dots",
+      "type": "registry:component",
+      "title": "Typing dots",
+      "description": "Three dots that lift in turn, like someone is typing.",
+      "files": [
+        {
+          "path": "src/registry/typing-dots.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/typing-dots.tsx"
+        },
+        {
+          "path": "src/registry/typing-dots.css",
+          "type": "registry:file",
+          "target": "@components/forme/typing-dots.css"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:component",
+      "title": "Spinner",
+      "description": "The classic spoke spinner, in your text color at any size.",
+      "files": [
+        {
+          "path": "src/registry/spinner.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/spinner.tsx"
+        },
+        {
+          "path": "src/registry/spinner.css",
+          "type": "registry:file",
+          "target": "@components/forme/spinner.css"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:component",
+      "title": "Skeleton",
+      "description": "Shimmering placeholders that sketch the content on its way.",
+      "files": [
+        {
+          "path": "src/registry/skeleton.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/skeleton.tsx"
+        },
+        {
+          "path": "src/registry/skeleton.css",
+          "type": "registry:file",
+          "target": "@components/forme/skeleton.css"
+        }
+      ]
+    },
+    {
+      "name": "infinity-loader",
+      "type": "registry:component",
+      "title": "Infinity loader",
+      "description": "A comet of light tracing a figure eight.",
+      "files": [
+        {
+          "path": "src/registry/infinity-loader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/infinity-loader.tsx"
+        },
+        {
+          "path": "src/registry/infinity-loader.css",
+          "type": "registry:file",
+          "target": "@components/forme/infinity-loader.css"
+        }
+      ]
+    },
+    {
+      "name": "equalizer",
+      "type": "registry:component",
+      "title": "Equalizer",
+      "description": "Bars that rise and fall like an audio meter.",
+      "files": [
+        {
+          "path": "src/registry/equalizer.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/equalizer.tsx"
+        },
+        {
+          "path": "src/registry/equalizer.css",
+          "type": "registry:file",
+          "target": "@components/forme/equalizer.css"
+        }
+      ]
+    },
+    {
       "name": "silk-shader",
       "type": "registry:component",
       "title": "Silk field",
@@ -565,29 +719,6 @@
           "path": "src/registry/telemetry-card.css",
           "type": "registry:file",
           "target": "@components/forme/telemetry-card.css"
-        }
-      ]
-    },
-    {
-      "name": "chrome-shader",
-      "type": "registry:component",
-      "title": "Liquid chrome",
-      "description": "Beads of mercury that merge and pinch apart, reflecting a photo studio.",
-      "files": [
-        {
-          "path": "src/registry/chrome-shader.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/chrome-shader.tsx"
-        },
-        {
-          "path": "src/registry/shader-canvas.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/shader-canvas.tsx"
-        },
-        {
-          "path": "src/registry/shader-canvas.css",
-          "type": "registry:file",
-          "target": "@components/forme/shader-canvas.css"
         }
       ]
     },
@@ -773,47 +904,6 @@
           "path": "src/registry/ascii-image.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-image.css"
-        }
-      ]
-    },
-    {
-      "name": "singularity-shader",
-      "type": "registry:component",
-      "title": "Singularity",
-      "description": "A black hole, its far side bent into a halo of light.",
-      "files": [
-        {
-          "path": "src/registry/singularity-shader.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/singularity-shader.tsx"
-        },
-        {
-          "path": "src/registry/shader-canvas.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/shader-canvas.tsx"
-        },
-        {
-          "path": "src/registry/shader-canvas.css",
-          "type": "registry:file",
-          "target": "@components/forme/shader-canvas.css"
-        }
-      ]
-    },
-    {
-      "name": "orbit-gauge",
-      "type": "registry:component",
-      "title": "Orbit gauge",
-      "description": "Concentric precision arcs that ease to every new value.",
-      "files": [
-        {
-          "path": "src/registry/orbit-gauge.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/orbit-gauge.tsx"
-        },
-        {
-          "path": "src/registry/orbit-gauge.css",
-          "type": "registry:file",
-          "target": "@components/forme/orbit-gauge.css"
         }
       ]
     },
