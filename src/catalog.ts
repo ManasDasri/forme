@@ -453,6 +453,30 @@ export const catalog: CatalogItem[] = [
     speed: true,
   },
   {
+    slug: "word-rotator",
+    name: "Word rotator",
+    category: "Text",
+    description: "Rotates words in a headline while the line eases to fit each one.",
+    usage: '<h1>\n  Build <WordRotator words={["faster", "better", "together"]} />\n</h1>',
+    props:
+      "words is required; interval sets the time per word. Each word measures itself in your font, so the line resizes smoothly instead of jumping. Cycles only while on screen. Screen readers hear every word once. Reduced motion shows the first word.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "ascii-banner",
+    name: "ASCII banner",
+    category: "ASCII",
+    description: "Any text drawn as dense ASCII art, with a slow light sweeping across it.",
+    usage: '<div style={{ height: 220 }}>\n  <AsciiBanner as="h1" text="FORME" color="#e4e4e7" />\n</div>',
+    props:
+      "text is required; as, color, font, and speed are optional. The text is rasterized once per size and redrawn as batched glyphs. It renders as a real heading whose text assistive technology and search can read. Stops offscreen and in hidden tabs, and holds still for reduced motion.",
+    traits: ["reduced-motion", "offscreen-pause", "zero-deps"],
+    color: "#e4e4e7",
+    speed: true,
+    text: "FORME",
+  },
+  {
     slug: "silk-shader",
     name: "Silk field",
     category: "Shaders",
@@ -478,10 +502,10 @@ export const catalog: CatalogItem[] = [
     slug: "ascii-tide",
     name: "ASCII tide",
     category: "ASCII",
-    description: "A night sea in dense characters, with a moonlit glint.",
+    description: "A moonlit ocean in dense characters, with a glittering moon path.",
     usage: '<AsciiTide color="#8ab4ff" speed={1} />',
     props:
-      "color, speed, and label are optional. Every glyph is a point on the water, shaded by wave slope and batched by brightness, with fog at the horizon. Ambient, with a pause control. Stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
+      "color, speed, and label are optional. Five crossing swells shade every glyph by its slope; the moon's reflection glitters down the water and foam catches on the crests. Thousands of glyphs, batched by brightness. Ambient, with a pause control. Stops offscreen and in hidden tabs, and renders one still frame for reduced motion.",
     traits: ["reduced-motion", "offscreen-pause", "pause-control", "zero-deps"],
     color: "#8ab4ff",
     speed: true,
@@ -513,19 +537,7 @@ export const catalog: CatalogItem[] = [
     traits: button,
     text: "Run sequence",
   },
-  {
-    slug: "ascii-orbit",
-    name: "ASCII orbit",
-    category: "ASCII",
-    description: "A dense, dimensional object, drawn entirely from characters.",
-    usage:
-      '<AsciiOrbit color="#d2d7e3" speed={1} label="Rotating ASCII torus" />',
-    props:
-      "color, speed, and accessible label are optional. The ASCII torus responds to pointer movement, includes a pause control, stops offscreen, and becomes still for reduced motion.",
-    traits: ["reduced-motion", "offscreen-pause", "pause-control", "zero-deps"],
-    color: "#d2d7e3",
-    speed: true,
-  },
+
   {
     slug: "oscilloscope",
     name: "Oscilloscope",
@@ -562,17 +574,7 @@ export const catalog: CatalogItem[] = [
     traits: button,
     text: "Enter the experience",
   },
-  {
-    slug: "ascii-decode",
-    name: "Decode text",
-    category: "ASCII",
-    description: "Headlines that resolve letter by letter as they scroll into view.",
-    usage: '<AsciiDecode as="h2" text="Signal acquired." />',
-    props:
-      "text is required. as picks the element (span, h1, h2, h3, or p). Decodes once on entering the viewport and again on hover. The real text holds the layout and remains readable to assistive technology. Each letter settles on its own staggered schedule; unresolved letters glow in --forme-decode-noise. useDecode and DecodeCells are exported for your own triggers. Reduced motion shows the text directly.",
-    traits: ["reduced-motion", "zero-deps"],
-    text: "Signal acquired.",
-  },
+
   {
     slug: "dither-shader",
     name: "Dither terrain",

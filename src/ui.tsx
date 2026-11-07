@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
+import type React from "react";
 import { catalog, traitInfo, type Trait } from "./catalog";
 import sizes from "./sizes.json";
 
@@ -104,6 +105,29 @@ export function Traits({ traits, compact = false }: { traits: Trait[]; compact?:
       ))}
     </ul>
   );
+}
+/** Card behavior shared by the library and the home showcase:
+ * clicking the card opens its docs unless the click lands on one of the component's own controls,
+ * and a soft edge light follows the pointer. */
+const interactive = "button, a, input, select, textarea, label, [role=tab], [role=slider], [role=combobox], [tabindex]";
+export function cardHandlers(href: string) {
+  return {
+    onClick: (e: React.MouseEvent<HTMLElement>) => {
+      // Only controls inside the card count; ancestors like <main tabindex=-1> don't.
+      const hit = (e.target as Element).closest(interactive);
+      if ((hit && e.currentTarget.contains(hit)) || window.getSelection()?.toString()) return;
+      const link = document.createElement("a");
+      link.href = href;
+      e.currentTarget.appendChild(link);
+      link.click(); // Routed by the app, so no page reload.
+      link.remove();
+    },
+    onPointerMove: (e: React.PointerEvent<HTMLElement>) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      e.currentTarget.style.setProperty("--edge-x", `${e.clientX - r.left}px`);
+      e.currentTarget.style.setProperty("--edge-y", `${e.clientY - r.top}px`);
+    },
+  };
 }
 export function useCopy() {
   const [copied, setCopied] = useState("");

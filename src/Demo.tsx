@@ -10,7 +10,8 @@ import { LensButton } from "./registry/lens-button";
 import { PlasmaButton } from "./registry/plasma-button";
 import { HoldButton } from "./registry/hold-button";
 import { ScrambleButton } from "./registry/scramble-button";
-import { AsciiOrbit } from "./registry/ascii-orbit";
+import { AsciiBanner } from "./registry/ascii-banner";
+import { WordRotator } from "./registry/word-rotator";
 import { AsciiImage } from "./registry/ascii-image";
 import { AsciiTide } from "./registry/ascii-tide";
 import { EclipseHero } from "./registry/eclipse-hero";
@@ -47,7 +48,6 @@ import { Spinner } from "./registry/spinner";
 import { Skeleton, SkeletonGroup } from "./registry/skeleton";
 import { InfinityLoader } from "./registry/infinity-loader";
 import { Equalizer } from "./registry/equalizer";
-import { AsciiDecode } from "./registry/ascii-decode";
 import { TelemetryCard } from "./registry/telemetry-card";
 import { RadarSweep } from "./registry/radar-sweep";
 import { Oscilloscope } from "./registry/oscilloscope";
@@ -313,7 +313,14 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "caustic-shader": (p) => <CausticShader color={p.color} speed={p.speed} />,
   "ascii-black-hole": (p) => <AsciiBlackHole speed={p.speed} />,
   "contours-shader": (p) => <ContoursShader color={p.color} speed={p.speed} />,
-  "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
+  "ascii-banner": (p) => <AsciiBanner text={p.title || "FORME"} color={p.color} speed={p.speed} />,
+  "word-rotator": () => (
+    <div className="specimen">
+      <h3 className="rotator-specimen">
+        Build interfaces <WordRotator words={["faster", "together", "that feel alive", "people remember"]} />
+      </h3>
+    </div>
+  ),
   "ascii-tide": (p) => <AsciiTide color={p.color} speed={p.speed} />,
   "eclipse-hero": (p) => (
     <EclipseHero
@@ -383,11 +390,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
     const src = p.image || "/images/architecture.jpg";
     return <AsciiImage src={src} alt={images[src]} color={p.color} />;
   },
-  "ascii-decode": (p) => (
-    <div className="decode-specimen">
-      <AsciiDecode as="h3" text={p.title || "Signal acquired."} />
-    </div>
-  ),
+
   "telemetry-card": (p) => <TelemetryDemo color={p.color} />,
 };
 const buttons: Record<

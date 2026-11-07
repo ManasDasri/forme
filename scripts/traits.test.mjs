@@ -17,7 +17,7 @@ const evidence = {
     [...s.matchAll(/(?:from|import)\s+"([^"]+)"/g)].every(([, spec]) => spec.startsWith(".") || spec === "react"),
 };
 // Animations that run once and end, so they need no offscreen pause.
-const finite = new Set(["ascii-decode", "scramble-button", "hold-button", "number-ticker", "text-reveal"]);
+const finite = new Set(["scramble-button", "hold-button", "number-ticker", "text-reveal"]);
 
 test("catalog and registry describe the same components", () => {
   assert.deepEqual(catalog.map((c) => c.slug), registry.items.map((i) => i.name));

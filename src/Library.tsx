@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { catalog, categories, type Category } from "./catalog";
 import { Demo } from "./Demo";
-import { Icon, Lazy, installCommand, sizeOf } from "./ui";
+import { Icon, Lazy, cardHandlers, installCommand, sizeOf } from "./ui";
 import { toast } from "./registry/toast";
 import { filterLibrary, restoreBookmarks } from "./library-state";
 
@@ -76,7 +76,7 @@ export function LibraryBrowser({
           const isSaved = saved.includes(c.slug);
           return (
             <article className="card" key={c.slug}>
-              <div className="card-preview">
+              <div className="card-preview" {...cardHandlers(`/docs/${c.slug}/`)}>
                 <Lazy className="card-live">
                   <Demo slug={c.slug} />
                 </Lazy>

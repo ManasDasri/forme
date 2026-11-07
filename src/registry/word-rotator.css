@@ -1,0 +1,53 @@
+.forme-rotator {
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.forme-rotator-window {
+  display: inline-block;
+  overflow: hidden;
+  /* Room for descenders and the slide. */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: bottom;
+  white-space: nowrap;
+  transition: width 0.5s cubic-bezier(0.3, 1.1, 0.4, 1);
+}
+.forme-rotator-word {
+  display: inline-block;
+  animation: forme-rotator-in 0.55s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+@keyframes forme-rotator-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(60%);
+  }
+}
+.forme-rotator-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.forme-rotator-measure > span {
+  position: absolute;
+}
+.forme-rotator-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-rotator-window {
+    transition: none;
+  }
+  .forme-rotator-word {
+    animation: none;
+  }
+}

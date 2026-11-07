@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "word-rotator",
+  "type": "registry:component",
+  "title": "Word rotator",
+  "description": "Rotates words in a headline while the line eases to fit each one.",
+  "files": [
+    {
+      "path": "src/registry/word-rotator.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/word-rotator.tsx",
+      "content": "\"use client\";\nimport { useEffect, useLayoutEffect, useRef, useState } from \"react\";\nimport \"./word-rotator.css\";\n\n/** Cycles through words in place. The line eases to each word's width, so the sentence never jumps. */\nexport function WordRotator({\n  words,\n  interval = 2400,\n  className = \"\",\n}: {\n  words: string[];\n  interval?: number;\n  className?: string;\n}) {\n  const [index, setIndex] = useState(0);\n  const [width, setWidth] = useState<number | undefined>(undefined);\n  const measure = useRef<HTMLSpanElement>(null);\n  const root = useRef<HTMLSpanElement>(null);\n  useEffect(() => {\n    if (words.length < 2 || matchMedia(\"(prefers-reduced-motion:reduce)\").matches) return;\n    let timer = 0;\n    // Only cycle while on screen.\n    const observer = new IntersectionObserver(([entry]) => {\n      clearInterval(timer);\n      if (entry.isIntersecting) timer = window.setInterval(() => setIndex((i) => (i + 1) % words.length), interval);\n    });\n    observer.observe(root.current!);\n    return () => {\n      observer.disconnect();\n      clearInterval(timer);\n    };\n  }, [words.length, interval]);\n  useLayoutEffect(() => {\n    const el = measure.current?.children[index] as HTMLElement | undefined;\n    if (el) setWidth(el.getBoundingClientRect().width);\n  }, [index, words]);\n  return (\n    <span ref={root} className={`forme-rotator ${className}`}>\n      <span className=\"forme-rotator-sr\">{words.join(\", \")}</span>\n      <span className=\"forme-rotator-window\" aria-hidden=\"true\" style={{ width }}>\n        <span key={index} className=\"forme-rotator-word\">\n          {words[index]}\n        </span>\n      </span>\n      {/* Hidden copies measure each word in the surrounding font. */}\n      <span ref={measure} className=\"forme-rotator-measure\" aria-hidden=\"true\">\n        {words.map((w) => (\n          <span key={w}>{w}</span>\n        ))}\n      </span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/word-rotator.css",
+      "type": "registry:file",
+      "target": "@components/forme/word-rotator.css",
+      "content": ".forme-rotator {\n  position: relative;\n  display: inline-block;\n  vertical-align: bottom;\n}\n.forme-rotator-window {\n  display: inline-block;\n  overflow: hidden;\n  /* Room for descenders and the slide. */\n  padding-bottom: 0.12em;\n  margin-bottom: -0.12em;\n  vertical-align: bottom;\n  white-space: nowrap;\n  transition: width 0.5s cubic-bezier(0.3, 1.1, 0.4, 1);\n}\n.forme-rotator-word {\n  display: inline-block;\n  animation: forme-rotator-in 0.55s cubic-bezier(0.2, 0.9, 0.2, 1);\n}\n@keyframes forme-rotator-in {\n  from {\n    opacity: 0;\n    filter: blur(8px);\n    transform: translateY(60%);\n  }\n}\n.forme-rotator-measure {\n  position: absolute;\n  top: 0;\n  left: 0;\n  visibility: hidden;\n  white-space: nowrap;\n  pointer-events: none;\n}\n.forme-rotator-measure > span {\n  position: absolute;\n}\n.forme-rotator-sr {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  overflow: hidden;\n  clip: rect(0 0 0 0);\n  white-space: nowrap;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-rotator-window {\n    transition: none;\n  }\n  .forme-rotator-word {\n    animation: none;\n  }\n}\n"
+    }
+  ]
+}

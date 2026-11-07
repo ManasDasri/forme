@@ -3,10 +3,13 @@ import { catalog, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
 import { Toaster } from "./registry/toast";
 import { EclipseHero } from "./registry/eclipse-hero";
+import { WordRotator } from "./registry/word-rotator";
+import { NumberTicker } from "./registry/number-ticker";
+import { AsciiBanner } from "./registry/ascii-banner";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
-import { Code, Footer, Header, Icon, Lazy, installCommand, sizeOf, useCopy } from "./ui";
+import { Code, Footer, Header, Icon, Lazy, cardHandlers, installCommand, medianSize, sizeOf, useCopy } from "./ui";
 
 const groups = [
   { name: "Buttons", slug: "buttons" },
@@ -38,7 +41,7 @@ function Showcase() {
   return (
     <div className="bento">
       {showcase.map(({ slug, area }) => (
-        <figure className="bento-tile" key={slug} style={{ gridArea: area }}>
+        <figure className="bento-tile" key={slug} style={{ gridArea: area }} {...cardHandlers(`/docs/${slug}/`)}>
           <Lazy className="bento-live">
             <Demo slug={slug} />
           </Lazy>
@@ -58,7 +61,11 @@ function HomePage() {
     <main id="main" tabIndex={-1}>
       <div className="hero">
         <EclipseHero
-          title="Components for interfaces that feel alive."
+          title={
+            <>
+              Components for interfaces that <WordRotator words={["feel alive.", "glow.", "move.", "people remember."]} interval={2600} />
+            </>
+          }
           subtitle="Shaders, ASCII, navigation, inputs, and feedback for React. Install the source with one command, then make it yours."
           actions={
             <>
@@ -72,6 +79,29 @@ function HomePage() {
           }
         />
       </div>
+
+      <section className="stats-strip shell" aria-label="Forme in numbers">
+        <div>
+          <strong>
+            <NumberTicker value={catalog.length} />
+          </strong>
+          <span>components, all free</span>
+        </div>
+        <div>
+          <strong>
+            <NumberTicker value={catalog.filter((c) => c.traits.includes("zero-deps")).length} />
+          </strong>
+          <span>with zero dependencies</span>
+        </div>
+        <div>
+          <strong>2</strong>
+          <span>frameworks every component is installed into on each change</span>
+        </div>
+        <div>
+          <strong>{medianSize()}</strong>
+          <span>median install, gzipped</span>
+        </div>
+      </section>
 
       <section className="section shell" aria-labelledby="library-title">
         <header className="section-head">
@@ -290,6 +320,9 @@ export default function App() {
     <>
       <Header onSearch={() => setSearch(true)} />
       {page}
+      <div className="footer-banner" aria-hidden="true">
+        <AsciiBanner as="p" text="FORME" color="#8a8a93" speed={0.6} />
+      </div>
       <Footer />
       {search && <SearchDialog close={() => setSearch(false)} />}
       <Toaster />

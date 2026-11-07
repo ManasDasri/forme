@@ -41,11 +41,11 @@ import { PlasmaButton } from "@/components/forme/plasma-button";
 import { AsciiTide } from "@/components/forme/ascii-tide";
 import { TelemetryCard } from "@/components/forme/telemetry-card";
 import { ScrambleButton } from "@/components/forme/scramble-button";
-import { AsciiOrbit } from "@/components/forme/ascii-orbit";
+import { AsciiBanner } from "@/components/forme/ascii-banner";
+import { WordRotator } from "@/components/forme/word-rotator";
 import { Oscilloscope } from "@/components/forme/oscilloscope";
 import { AuroraShader } from "@/components/forme/aurora-shader";
 import { PrismButton } from "@/components/forme/prism-button";
-import { AsciiDecode } from "@/components/forme/ascii-decode";
 import { DitherShader } from "@/components/forme/dither-shader";
 import { MagneticButton } from "@/components/forme/magnetic-button";
 import { AsciiImage } from "@/components/forme/ascii-image";
@@ -109,11 +109,11 @@ export const fixtures: Record<string, () => ReactNode> = {
   "ascii-tide": () => <AsciiTide />,
   "telemetry-card": () => <TelemetryCard value={42.5} unit="MB/s" />,
   "scramble-button": () => <ScrambleButton>Scramble</ScrambleButton>,
-  "ascii-orbit": () => <AsciiOrbit />,
+  "ascii-banner": () => <AsciiBanner text="FORME" />,
+  "word-rotator": () => <WordRotator words={["one", "two", "three"]} />,
   oscilloscope: () => <Oscilloscope />,
   "aurora-shader": () => <AuroraShader />,
   "prism-button": () => <PrismButton>Prism</PrismButton>,
-  "ascii-decode": () => <AsciiDecode text="Decoded" />,
   "dither-shader": () => <DitherShader />,
   "magnetic-button": () => <MagneticButton>Magnetic</MagneticButton>,
   "ascii-image": () => <AsciiImage src={pixel} alt="Pixel" />,

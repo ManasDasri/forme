@@ -669,6 +669,42 @@
       ]
     },
     {
+      "name": "word-rotator",
+      "type": "registry:component",
+      "title": "Word rotator",
+      "description": "Rotates words in a headline while the line eases to fit each one.",
+      "files": [
+        {
+          "path": "src/registry/word-rotator.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/word-rotator.tsx"
+        },
+        {
+          "path": "src/registry/word-rotator.css",
+          "type": "registry:file",
+          "target": "@components/forme/word-rotator.css"
+        }
+      ]
+    },
+    {
+      "name": "ascii-banner",
+      "type": "registry:component",
+      "title": "ASCII banner",
+      "description": "Any text drawn as dense ASCII art, with a slow light sweeping across it.",
+      "files": [
+        {
+          "path": "src/registry/ascii-banner.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/ascii-banner.tsx"
+        },
+        {
+          "path": "src/registry/ascii-banner.css",
+          "type": "registry:file",
+          "target": "@components/forme/ascii-banner.css"
+        }
+      ]
+    },
+    {
       "name": "silk-shader",
       "type": "registry:component",
       "title": "Silk field",
@@ -774,24 +810,6 @@
       ]
     },
     {
-      "name": "ascii-orbit",
-      "type": "registry:component",
-      "title": "ASCII orbit",
-      "description": "A dense, dimensional object, drawn entirely from characters.",
-      "files": [
-        {
-          "path": "src/registry/ascii-orbit.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/ascii-orbit.tsx"
-        },
-        {
-          "path": "src/registry/ascii-orbit.css",
-          "type": "registry:file",
-          "target": "@components/forme/ascii-orbit.css"
-        }
-      ]
-    },
-    {
       "name": "oscilloscope",
       "type": "registry:component",
       "title": "Oscilloscope",
@@ -847,24 +865,6 @@
           "path": "src/registry/prism-button.css",
           "type": "registry:file",
           "target": "@components/forme/prism-button.css"
-        }
-      ]
-    },
-    {
-      "name": "ascii-decode",
-      "type": "registry:component",
-      "title": "Decode text",
-      "description": "Headlines that resolve letter by letter as they scroll into view.",
-      "files": [
-        {
-          "path": "src/registry/ascii-decode.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/ascii-decode.tsx"
-        },
-        {
-          "path": "src/registry/ascii-decode.css",
-          "type": "registry:file",
-          "target": "@components/forme/ascii-decode.css"
         }
       ]
     },
