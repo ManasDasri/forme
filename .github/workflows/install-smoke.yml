@@ -1,0 +1,32 @@
+name: Install smoke test
+# Installs every component with the real shadcn CLI into fresh Next.js and Vite
+# apps, builds both in strict TypeScript, and renders all of them in Chromium.
+on:
+  pull_request:
+  push:
+    branches: [main]
+concurrency:
+  group: install-smoke-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright@1.64.0
+          npx playwright install --with-deps chromium
+      - name: Serve the built registry
+        run: |
+          npx vite preview --port 4173 --strictPort --host 127.0.0.1 &
+          npx --yes wait-on@8 http://127.0.0.1:4173/registry.json
+      - name: Install, build, and render every component
+        run: node scripts/smoke/run.mjs http://127.0.0.1:4173

@@ -34,7 +34,18 @@ npm run build
 | Feedback | Toast, Tooltip |
 | Text | Text reveal, Number ticker, Gradient text |
 
-Run `node scripts/generate-registry.mjs` after adding or removing a component.
+Run `node scripts/generate-registry.mjs` after adding or removing a component, and add a sample render for it in `scripts/smoke/fixtures.tsx` (a test fails until you do).
+
+## Install smoke test
+
+`.github/workflows/install-smoke.yml` runs on every pull request and push to `main`. It builds the registry, creates fresh Next.js and Vite apps, installs every component with the real shadcn CLI, builds both in strict TypeScript, and renders every component in Chromium. It fails on install, type, build, page, or console errors, or if a component renders nothing. To run it locally:
+
+```sh
+npm run build
+npm install --no-save playwright@1.64.0 && npx playwright install chromium
+npx vite preview --port 4173 &
+node scripts/smoke/run.mjs http://127.0.0.1:4173
+```
 
 ## The edge: verifiable quality
 
