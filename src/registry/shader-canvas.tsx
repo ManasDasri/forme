@@ -10,6 +10,8 @@ export interface ShaderCanvasProps {
   interactive?: boolean;
   /** Up to four extra colors, read in the shader as u_palette[0..3]. */
   palette?: string[];
+  /** Cap on device pixels per CSS pixel; raise it for fine detail such as glyphs. Read as u_ratio. */
+  maxPixelRatio?: number;
 }
 const toRgb = (color: string) => {
   const hex = /^#[0-9a-f]{6}$/i.test(color) ? color : "#5376ff";
@@ -24,6 +26,7 @@ export function ShaderCanvas({
   label = "Interactive shader",
   interactive = true,
   palette = [],
+  maxPixelRatio = 1.25,
 }: ShaderCanvasProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const live = useRef({ rgb: toRgb(color), palette: [] as number[], speed, redraw: () => {} });
@@ -104,7 +107,9 @@ export function ShaderCanvas({
       time = gl.getUniformLocation(program, "u_time"),
       mouse = gl.getUniformLocation(program, "u_mouse"),
       tint = gl.getUniformLocation(program, "u_color"),
-      paletteAt = gl.getUniformLocation(program, "u_palette");
+      paletteAt = gl.getUniformLocation(program, "u_palette"),
+      ratioAt = gl.getUniformLocation(program, "u_ratio");
+    let ratio = 1;
     const render = () => {
       if (disposed || gl.isContextLost()) return;
       const { rgb } = live.current;
@@ -114,6 +119,7 @@ export function ShaderCanvas({
       gl.uniform2f(mouse, pointer[0], pointer[1]);
       gl.uniform3f(tint, rgb[0], rgb[1], rgb[2]);
       if (paletteAt) gl.uniform3fv(paletteAt, live.current.palette);
+      if (ratioAt) gl.uniform1f(ratioAt, ratio);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
     const draw = (now: number) => {
@@ -138,7 +144,7 @@ export function ShaderCanvas({
     live.current.redraw = render;
     const resize = new ResizeObserver(() => {
       const r = node.getBoundingClientRect();
-      const ratio = Math.min(devicePixelRatio || 1, 1.25);
+      ratio = Math.min(devicePixelRatio || 1, Math.max(1, Math.min(maxPixelRatio, 3)));
       node.width = Math.max(1, Math.round(r.width * ratio));
       node.height = Math.max(1, Math.round(r.height * ratio));
       render();
@@ -192,7 +198,7 @@ export function ShaderCanvas({
       media.removeEventListener("change", start);
       if (!gl.isContextLost()) release();
     };
-  }, [fragment, revision, interactive]);
+  }, [fragment, revision, interactive, maxPixelRatio]);
   // Paused or reduced-motion canvases still reflect a new color immediately.
   useEffect(() => live.current.redraw(), [color, palette.join()]);
   return (

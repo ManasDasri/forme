@@ -252,6 +252,10 @@ export function Footer() {
     <footer className="footer">
       <div className="shell">
         <div className="footer-cta">
+          {/* Saturn rises behind the closing line, its sea ending at the divider. */}
+          <div className="footer-art">
+            <PlanetShader />
+          </div>
           <h2>Make something people remember.</h2>
           <div className="footer-cta-actions">
             <a className="btn" href="/components/">
@@ -302,9 +306,6 @@ export function Footer() {
           </nav>
         </div>
         <p className="footer-legal">© {new Date().getFullYear()} Forme</p>
-      </div>
-      <div className="footer-art">
-        <PlanetShader />
       </div>
     </footer>
   );
