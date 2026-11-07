@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { catalog, exportName, traitInfo, type Trait } from "./catalog";
 import { Demo } from "./Demo";
-import { Code, Icon, Traits, installCommand, sizeOf, useCopy } from "./ui";
+import { Code, Icon, Traits, installCommand, proof, sizeOf, useCopy } from "./ui";
 import registry from "../registry.json";
 
 const sources = import.meta.glob("./registry/*.{tsx,css}", {
@@ -275,9 +275,18 @@ function Quality() {
     <div className="prose">
       <h2>Badges you can audit</h2>
       <p>
-        Every badge on this site maps to a concrete check in <code>scripts/traits.test.mjs</code>. The test reads each
-        component's installed files and fails the build if a claimed behavior is missing from the source. It also fails if
-        a render loop has no offscreen pause. CI runs it on every push.
+        Every badge on this site maps to a concrete check in{" "}
+        <a href={proof.traitTest}>
+          <code>scripts/traits.test.mjs</code>
+        </a>
+        . The test reads each component's installed files and fails the build if a claimed behavior is missing from the
+        source. It also fails if a render loop has no offscreen pause. CI runs it on every push, and{" "}
+        <a href={proof.checkRuns}>every run is public</a>.
+      </p>
+      <p>
+        A second job, <a href={proof.installRunner}>the install test</a>, creates fresh Next.js and Vite apps, installs every
+        component with the shadcn CLI, builds both, and renders each component in a browser. It fails on any build error
+        or page crash. <a href={proof.installRuns}>See its runs</a>.
       </p>
       <ul className="check-list">
         {traits.map((t) => (

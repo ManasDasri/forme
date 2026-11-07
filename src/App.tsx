@@ -9,7 +9,7 @@ import { TextReveal } from "./registry/text-reveal";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
-import { Code, Footer, Header, Icon, Lazy, cardHandlers, installCommand, medianSize, sizeOf, useCopy } from "./ui";
+import { Code, Footer, Header, proof, Icon, Lazy, cardHandlers, installCommand, medianSize, sizeOf, useCopy } from "./ui";
 
 const groups = [
   { name: "Buttons", slug: "buttons" },
@@ -95,7 +95,9 @@ function HomePage() {
         </div>
         <div>
           <strong>2</strong>
-          <span>frameworks every component is installed into on each change</span>
+          <span>
+            frameworks every component is installed into on each change. <a href={proof.installRuns}>See the runs</a>
+          </span>
         </div>
         <div>
           <strong>{medianSize()}</strong>
@@ -180,9 +182,17 @@ function HomePage() {
             </tbody>
           </table>
         </div>
-        <a className="link" href="/docs/quality/">
-          See the checks for all {catalog.length} components
-        </a>
+        <div className="proof-links">
+          <a className="link" href="/docs/quality/">
+            See the checks for all {catalog.length} components
+          </a>
+          <a className="link" href={proof.traitTest}>
+            Read the test
+          </a>
+          <a className="link" href={proof.checkRuns}>
+            Latest test runs
+          </a>
+        </div>
       </section>
 
       <section className="section shell split" aria-labelledby="free-title">

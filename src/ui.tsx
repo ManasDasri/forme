@@ -1,4 +1,4 @@
-import { AsciiBanner } from "./registry/ascii-banner";
+import { FooterArt } from "./FooterArt";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
 import type React from "react";
@@ -39,8 +39,23 @@ export function Arrow({
     </svg>
   );
 }
-export function Icon({ name }: { name: "search" | "bookmark" | "bookmark-filled" | "copy" | "check" | "sun" | "moon" }) {
+export const REPO = "https://github.com/ManasDasri/forme";
+/** Where each claim on the site can be checked. */
+export const proof = {
+  traitTest: `${REPO}/blob/main/scripts/traits.test.mjs`,
+  checkRuns: `${REPO}/actions/workflows/check.yml`,
+  installRuns: `${REPO}/actions/workflows/install-smoke.yml`,
+  installRunner: `${REPO}/blob/main/scripts/smoke/run.mjs`,
+};
+export function Icon({ name }: { name: "search" | "bookmark" | "bookmark-filled" | "copy" | "check" | "sun" | "moon" | "github" }) {
   const paths = {
+    github: (
+      <path
+        fill="currentColor"
+        stroke="none"
+        d="M12 2.5a9.5 9.5 0 0 0-3 18.52c.47.09.65-.2.65-.46v-1.6c-2.64.57-3.2-1.27-3.2-1.27-.43-1.1-1.05-1.4-1.05-1.4-.86-.59.07-.58.07-.58.95.07 1.45.98 1.45.98.85 1.45 2.22 1.03 2.76.79.09-.61.33-1.03.6-1.27-2.1-.24-4.32-1.05-4.32-4.69 0-1.04.37-1.88.98-2.55-.1-.24-.42-1.2.1-2.5 0 0 .8-.26 2.6.97a9 9 0 0 1 4.74 0c1.8-1.23 2.6-.97 2.6-.97.52 1.3.2 2.26.1 2.5.6.67.97 1.51.97 2.55 0 3.65-2.22 4.45-4.34 4.68.34.3.65.88.65 1.78v2.64c0 .26.17.56.66.46A9.5 9.5 0 0 0 12 2.5Z"
+      />
+    ),
     search: (
       <>
         <circle cx="10.5" cy="10.5" r="6.5" />
@@ -198,6 +213,9 @@ export function Header({ onSearch }: { onSearch: () => void }) {
               <span>Search</span>
               <kbd>⌘K</kbd>
             </button>
+            <a className="icon-button" href={REPO} aria-label="Forme on GitHub">
+              <Icon name="github" />
+            </a>
             <a className="icon-button" href="/bookmarks/" aria-label="Bookmarks">
               <Icon name="bookmark" />
             </a>
@@ -251,7 +269,8 @@ export function Footer() {
               forme
             </a>
             <p>
-              {catalog.length} components for React. Free, MIT licensed, and installed into real Next.js and Vite apps on every change.
+              {catalog.length} components for React. Free, MIT licensed, and{" "}
+              <a href={proof.installRuns}>installed into real Next.js and Vite apps</a> on every change.
             </p>
           </div>
           <nav aria-label="Library">
@@ -277,15 +296,14 @@ export function Footer() {
           </nav>
           <nav aria-label="Project">
             <h3>Project</h3>
-            <a href="https://github.com/ManasDasri/forme">GitHub</a>
-            <a href="https://github.com/ManasDasri/forme/blob/main/LICENSE">MIT license</a>
+            <a href={REPO}>GitHub</a>
+            <a href={`${REPO}/blob/main/LICENSE`}>MIT license</a>
+            <a href={proof.checkRuns}>Test runs</a>
           </nav>
         </div>
         <p className="footer-legal">© {new Date().getFullYear()} Forme</p>
       </div>
-      <div className="footer-banner" aria-hidden="true">
-        <AsciiBanner as="p" text="FORME" color="#d4d4d8" speed={0.6} reflect />
-      </div>
+      <FooterArt />
     </footer>
   );
 }

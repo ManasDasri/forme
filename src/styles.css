@@ -1148,12 +1148,12 @@ main:focus {
   color: var(--ink-3);
   font-size: 13px;
 }
-.footer-banner {
-  height: clamp(230px, 34vw, 480px);
-  margin-top: 24px;
-}
-.footer-banner .forme-ascii-banner {
-  height: 100%;
+/* Full-bleed art at the very end; its top fades into the footer. */
+.footer-art {
+  height: clamp(340px, 46vw, 680px);
+  margin-top: 8px;
+  -webkit-mask-image: linear-gradient(transparent, #000 22%);
+  mask-image: linear-gradient(transparent, #000 22%);
 }
 @media (max-width: 860px) {
   .footer-grid {
@@ -1696,4 +1696,21 @@ a.fact:hover {
   .workbench-stage {
     transition: none;
   }
+}
+
+.proof-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+.stats-strip > div > span a,
+.footer-brand p a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+.stats-strip > div > span a:hover,
+.footer-brand p a:hover {
+  text-decoration-color: currentColor;
 }
