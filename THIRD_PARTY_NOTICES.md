@@ -1,6 +1,6 @@
 # Third-party notices
 
-Original application source is reserved under the repository LICENSE. Dependencies and assets are subject to their own licenses:
+Original source is released under the MIT License in LICENSE. Dependencies and assets are subject to their own licenses:
 
 - React and React DOM: MIT — https://github.com/facebook/react
 - Motion: MIT — https://github.com/motiondivision/motion

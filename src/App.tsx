@@ -155,7 +155,7 @@ function HomePage() {
         <div className="split-text">
           <h2 id="free-title">All of it is free</h2>
           <p>
-            Every component, from the buttons to the black hole, with full source. No account and no package to depend on.
+            Every component, from the buttons to the black hole, with full source under the MIT license. No account and no package to depend on.
           </p>
           <a className="btn btn-secondary" href="/components/">
             Browse components

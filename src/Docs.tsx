@@ -415,6 +415,11 @@ function Guide({ slug }: { slug: string }) {
           }
         />
         <p>Magnetic button installs Motion. Every other component uses React and browser APIs only.</p>
+        <h2>License</h2>
+        <p>
+          Every component is MIT licensed. Use it in personal and commercial projects, change it however you like, and
+          keep the MIT copyright notice with the code.
+        </p>
         <h2>Copy manually</h2>
         <p>Open the Source tab and copy every listed file into one folder. Keep relative imports intact.</p>
       </div>
@@ -423,7 +428,7 @@ function Guide({ slug }: { slug: string }) {
     <div className="prose">
       <h2>Install your first component</h2>
       <p>
-        Forme has {catalog.length} components, from shaders and ASCII to navigation, inputs, and feedback. All of them are free and include installable source.
+        Forme has {catalog.length} components, from shaders and ASCII to navigation, inputs, and feedback. All of them are free, MIT licensed, and include installable source.
       </p>
       <Code text={command} />
       <Code
