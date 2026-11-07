@@ -230,7 +230,7 @@ export const catalog: CatalogItem[] = [
     usage:
       '<Dock items={[\n  { label: "Home", icon: <HomeIcon />, href: "/", active: true },\n  { label: "Search", icon: <SearchIcon />, onClick: openSearch },\n]} />',
     props:
-      "items take label, icon, and either href or onClick; active marks the current one. Renders a nav landmark with real links and buttons, and labels appear on hover and keyboard focus. Magnification runs only for a mouse and switches off for reduced motion. Inherits your text color.",
+      "items take label, icon, and either href or onClick; active marks the current one. Renders a nav landmark with real links and buttons, and labels appear on hover and keyboard focus. Magnification runs only for a mouse and switches off for reduced motion. The bar grows upward into reserved space as icons swell, and the swell shrinks to fit narrow containers, so it never overflows or shifts the page. Inherits your text color.",
     traits: ["reduced-motion", "keyboard", "zero-deps"],
     adaptive: true,
   },
