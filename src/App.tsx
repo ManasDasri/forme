@@ -5,6 +5,7 @@ import { Toaster } from "./registry/toast";
 import { EclipseHero } from "./registry/eclipse-hero";
 import { WordRotator } from "./registry/word-rotator";
 import { NumberTicker } from "./registry/number-ticker";
+import { TextReveal } from "./registry/text-reveal";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
@@ -121,6 +122,13 @@ function HomePage() {
             View all {catalog.length}
           </a>
         </nav>
+      </section>
+
+      <section className="manifesto shell" aria-label="Why Forme">
+        <TextReveal
+          as="p"
+          text="Most libraries hand you rectangles. These glow, bend, count, and listen, and every one still works from a keyboard."
+        />
       </section>
 
       <section className="section shell proof" aria-labelledby="proof-title">

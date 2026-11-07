@@ -284,7 +284,7 @@ export function Footer() {
         <p className="footer-legal">© {new Date().getFullYear()} Forme</p>
       </div>
       <div className="footer-banner" aria-hidden="true">
-        <AsciiBanner as="p" text="FORME" color="#a1a1aa" speed={0.6} />
+        <AsciiBanner as="p" text="FORME" color="#d4d4d8" speed={0.6} reflect />
       </div>
     </footer>
   );

@@ -313,7 +313,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "caustic-shader": (p) => <CausticShader color={p.color} speed={p.speed} />,
   "ascii-black-hole": (p) => <AsciiBlackHole speed={p.speed} />,
   "contours-shader": (p) => <ContoursShader color={p.color} speed={p.speed} />,
-  "ascii-banner": (p) => <AsciiBanner text={p.title || "FORME"} color={p.color} speed={p.speed} />,
+  "ascii-banner": (p) => <AsciiBanner text={p.title || "FORME"} color={p.color} speed={p.speed} reflect />,
   "word-rotator": () => (
     <div className="specimen">
       <h3 className="rotator-specimen">

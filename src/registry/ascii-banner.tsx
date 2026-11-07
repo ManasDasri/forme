@@ -15,6 +15,7 @@ export function AsciiBanner({
   color = "#e4e4e7",
   font = "800 100px system-ui, sans-serif",
   speed = 1,
+  reflect = false,
   className = "",
 }: {
   text: string;
@@ -22,6 +23,8 @@ export function AsciiBanner({
   color?: string;
   font?: string;
   speed?: number;
+  /** Sets the text on a waterline above a rippling reflection; a hovering pointer stirs the water. */
+  reflect?: boolean;
   className?: string;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -48,6 +51,7 @@ export function AsciiBanner({
       cellW = 5.4,
       cols = 0,
       rows = 0,
+      textRows = 0,
       coverage = new Float32Array(0),
       // Pointer spotlight in 0..1 page-relative coordinates; strength eases in and out.
       px = 0.5,
@@ -60,9 +64,10 @@ export function AsciiBanner({
     const rasterize = () => {
       cols = Math.max(1, Math.floor(width / cellW));
       rows = Math.max(1, Math.floor(height / fontSize));
+      textRows = reflect ? Math.max(1, Math.round(rows * 0.56)) : rows;
       sample.width = cols;
-      sample.height = rows;
-      sctx.clearRect(0, 0, cols, rows);
+      sample.height = textRows;
+      sctx.clearRect(0, 0, cols, textRows);
       sctx.font = font;
       const m = sctx.measureText(text);
       const textH = (m.actualBoundingBoxAscent || 72) + (m.actualBoundingBoxDescent || 0);
@@ -70,18 +75,19 @@ export function AsciiBanner({
       // Each sample pixel paints as one cell, which is taller than wide, so squash the
       // text vertically by the cell aspect to keep letters in proportion on screen.
       const aspect = cellW / fontSize;
-      const scale = Math.min((cols * 0.94) / m.width, (rows * 0.86) / (textH * aspect));
+      const scale = Math.min((cols * 0.94) / m.width, (textRows * (reflect ? 0.8 : 0.86)) / (textH * aspect));
       sctx.save();
-      sctx.translate(cols / 2, rows / 2);
+      // With a reflection the letters stand on the waterline; otherwise they sit centered.
+      sctx.translate(cols / 2, reflect ? textRows - 1 : textRows / 2);
       sctx.scale(scale, scale * aspect);
       sctx.textAlign = "center";
-      sctx.textBaseline = "middle";
+      sctx.textBaseline = reflect ? "alphabetic" : "middle";
       sctx.fillStyle = "#fff";
       sctx.fillText(text, 0, 0);
       sctx.restore();
-      const data = sctx.getImageData(0, 0, cols, rows).data;
-      coverage = new Float32Array(cols * rows);
-      for (let i = 0; i < cols * rows; i++) coverage[i] = data[i * 4 + 3] / 255;
+      const data = sctx.getImageData(0, 0, cols, textRows).data;
+      coverage = new Float32Array(cols * textRows);
+      for (let i = 0; i < cols * textRows; i++) coverage[i] = data[i * 4 + 3] / 255;
     };
     const paint = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
@@ -97,8 +103,24 @@ export function AsciiBanner({
       const lines: string[][] = Array.from({ length: LEVELS }, () => []);
       for (let r = 0; r < rows; r++) {
         const parts: string[][] = Array.from({ length: LEVELS }, () => []);
+        const water = r >= textRows,
+          depth = water ? (r - textRows) / Math.max(1, rows - textRows) : 0,
+          // Rows below the line mirror the text, shortened a little for perspective.
+          src = water ? textRows - 1 - Math.floor((r - textRows) * 1.25) : r;
         for (let c = 0; c < cols; c++) {
-          const cov = coverage[r * cols + c];
+          let cov = 0;
+          if (!water) cov = coverage[r * cols + c];
+          else if (src >= 0) {
+            const dx = c / cols - px,
+              dy = (r / rows - py) * ratio;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            // Swell grows with depth; the pointer adds rings that spread from it.
+            const wave = Math.sin(r * 0.8 - t * 2.4) * (1 + depth * 5) + hover * Math.sin(dist * 70 - t * 9) * Math.exp(-dist * 9) * 4;
+            const sc = Math.min(cols - 1, Math.max(0, Math.round(c + wave)));
+            const streak = 0.6 + 0.4 * Math.sin(r * 2.3 + c * 0.07 + t * 1.5);
+            cov = coverage[src * cols + sc] * 0.62 * (1 - depth) * streak;
+          }
+          if (water && r === textRows && cov < 0.08) cov = 0.1;
           let k = 0;
           if (cov > 0.02) {
             const x = c / cols + (r / rows) * 0.25;
@@ -109,6 +131,11 @@ export function AsciiBanner({
             const light = Math.max(sweepLight, spot);
             const grain = 0.88 + 0.12 * Math.sin(c * 12.9898 + r * 78.233 + Math.floor(t * 6));
             k = Math.min(1, cov * (0.55 + 0.45 * light) * grain + light * 0.35 * cov);
+          }
+          // A few slow stars over the letters.
+          if (reflect && !water && k < 0.04) {
+            const h = Math.sin(c * 91.7 + r * 47.3) * 43758.5;
+            if (h - Math.floor(h) > 0.996) k = 0.12 + 0.1 * Math.sin(t * 2 + c);
           }
           const level = Math.min(LEVELS - 1, Math.floor(k * LEVELS));
           const ch = k < 0.04 ? " " : ramp[Math.min(ramp.length - 1, 1 + Math.floor(k * (ramp.length - 1)))];
@@ -176,7 +203,7 @@ export function AsciiBanner({
       document.removeEventListener("visibilitychange", start);
       media.removeEventListener("change", start);
     };
-  }, [text, color, font, speed]);
+  }, [text, color, font, speed, reflect]);
   return createElement(
     as,
     { className: `forme-ascii-banner ${className}` },

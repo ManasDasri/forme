@@ -467,10 +467,10 @@ export const catalog: CatalogItem[] = [
     slug: "ascii-banner",
     name: "ASCII banner",
     category: "ASCII",
-    description: "Any text drawn as dense ASCII art, with a light that sweeps across it or follows your pointer.",
+    description: "Any text drawn as dense ASCII art, with a light that follows your pointer and an optional rippling reflection.",
     usage: '<div style={{ height: 220 }}>\n  <AsciiBanner as="h1" text="FORME" color="#e4e4e7" />\n</div>',
     props:
-      "text is required; as, color, font, and speed are optional. The text is rasterized once per size and redrawn as batched glyphs. It renders as a real heading whose text assistive technology and search can read. Stops offscreen and in hidden tabs, and holds still for reduced motion.",
+      "text is required; as, color, font, and speed are optional, and reflect stands the text on a waterline above a rippling reflection. A hovering mouse pointer moves the light and stirs the water. The text is rasterized once per size and redrawn as batched glyphs. It renders as a real heading whose text assistive technology and search can read. Stops offscreen and in hidden tabs, and holds still for reduced motion.",
     traits: ["reduced-motion", "offscreen-pause", "zero-deps"],
     color: "#e4e4e7",
     speed: true,

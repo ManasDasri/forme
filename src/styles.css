@@ -352,7 +352,7 @@ main:focus {
   color: #fff;
 }
 /* The recording's own tag competes with the tile caption here. */
-.bento-tile .category-links {
+.category-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1062,6 +1062,20 @@ main:focus {
   color: var(--ink);
 }
 
+/* Manifesto */
+.manifesto {
+  padding-top: 160px;
+}
+.manifesto .forme-reveal {
+  max-width: 22ch;
+  margin: 0;
+  font-size: clamp(36px, 5.6vw, 76px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
 /* Footer */
 .footer {
   position: relative;
@@ -1134,10 +1148,9 @@ main:focus {
   color: var(--ink-3);
   font-size: 13px;
 }
-/* The wordmark bleeds off the bottom edge of the page. */
 .footer-banner {
-  height: clamp(130px, 21vw, 300px);
-  margin: 8px 0 calc(clamp(130px, 21vw, 300px) * -0.18);
+  height: clamp(230px, 34vw, 480px);
+  margin-top: 24px;
 }
 .footer-banner .forme-ascii-banner {
   height: 100%;
