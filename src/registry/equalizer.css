@@ -1,0 +1,27 @@
+.forme-equalizer {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+}
+.forme-equalizer i {
+  width: 4px;
+  height: 100%;
+  border-radius: 99px;
+  background: currentColor;
+  transform-origin: bottom;
+  animation: forme-equalizer 1s ease-in-out infinite alternate;
+}
+@keyframes forme-equalizer {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-equalizer i {
+    animation: none;
+    transform: scaleY(0.6);
+  }
+}

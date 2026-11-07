@@ -1,0 +1,37 @@
+.forme-infinity {
+  display: inline-block;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.forme-infinity svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.forme-infinity path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+.forme-infinity-track {
+  opacity: 0.14;
+}
+.forme-infinity-comet {
+  stroke-dasharray: 22 78;
+  animation: forme-infinity 1.8s linear infinite;
+}
+@keyframes forme-infinity {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-infinity-comet {
+    animation: forme-infinity-fade 2s ease-in-out infinite;
+  }
+  @keyframes forme-infinity-fade {
+    50% {
+      opacity: 0.3;
+    }
+  }
+}

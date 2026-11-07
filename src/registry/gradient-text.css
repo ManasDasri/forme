@@ -1,0 +1,24 @@
+.forme-gradient-text {
+  background: var(--forme-gradient);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Room for descenders, which background-clip would otherwise cut. */
+  padding-bottom: 0.12em;
+  animation: forme-gradient-shift var(--forme-gradient-duration, 8s) ease-in-out infinite alternate;
+}
+@keyframes forme-gradient-shift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-gradient-text {
+    animation: none;
+    background-size: 100% 100%;
+  }
+}

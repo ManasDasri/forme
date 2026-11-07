@@ -1,0 +1,29 @@
+.forme-skeleton {
+  display: block;
+  background: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in srgb, currentColor 10%, transparent) 50%,
+      transparent 70%
+    )
+    0 0 / 250% 100%,
+    color-mix(in srgb, currentColor 9%, transparent);
+  animation: forme-skeleton 1.6s ease-in-out infinite;
+}
+.forme-skeleton-group {
+  display: grid;
+  gap: 10px;
+}
+@keyframes forme-skeleton {
+  from {
+    background-position: 125% 0, 0 0;
+  }
+  to {
+    background-position: -125% 0, 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-skeleton {
+    animation: none;
+  }
+}

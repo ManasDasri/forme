@@ -788,6 +788,72 @@ main:focus {
   justify-content: center;
   gap: 10px;
 }
+.dot-specimen {
+  padding: 0;
+}
+.dot-specimen .forme-dot-grid {
+  position: absolute;
+  inset: 0;
+}
+.dot-specimen-copy {
+  position: relative;
+  color: inherit;
+  font-size: 13px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.gradient-specimen {
+  max-width: 14ch;
+  font-size: clamp(32px, 4.6vw, 58px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+.chat-specimen {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  width: min(320px, 100%);
+}
+.chat-bubble {
+  justify-self: end;
+  padding: 10px 14px;
+  border-radius: 16px 16px 4px 16px;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  font-size: 14px;
+}
+.loader-row {
+  align-items: center;
+  gap: 28px;
+}
+.loader-row .btn {
+  gap: 8px;
+}
+.now-playing {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.skeleton-card {
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 10%, transparent);
+}
+.skeleton-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.skeleton-lines {
+  display: grid;
+  flex: 1;
+  gap: 8px;
+}
 .specimen-hint {
   position: absolute;
   bottom: 18px;

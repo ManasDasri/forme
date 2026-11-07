@@ -8,6 +8,8 @@ export interface ShaderCanvasProps {
   speed?: number;
   label?: string;
   interactive?: boolean;
+  /** Up to four extra colors, read in the shader as u_palette[0..3]. */
+  palette?: string[];
 }
 const toRgb = (color: string) => {
   const hex = /^#[0-9a-f]{6}$/i.test(color) ? color : "#5376ff";
@@ -21,10 +23,12 @@ export function ShaderCanvas({
   speed = 1,
   label = "Interactive shader",
   interactive = true,
+  palette = [],
 }: ShaderCanvasProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const live = useRef({ rgb: toRgb(color), speed, redraw: () => {} });
+  const live = useRef({ rgb: toRgb(color), palette: [] as number[], speed, redraw: () => {} });
   live.current.rgb = toRgb(color);
+  live.current.palette = [0, 1, 2, 3].flatMap((i) => toRgb(palette[i] ?? palette[palette.length - 1] ?? color));
   live.current.speed = Math.max(0, Math.min(speed, 3));
   const [fallback, setFallback] = useState(false);
   const [revision, setRevision] = useState(0);
@@ -99,7 +103,8 @@ export function ShaderCanvas({
     const resolution = gl.getUniformLocation(program, "u_resolution"),
       time = gl.getUniformLocation(program, "u_time"),
       mouse = gl.getUniformLocation(program, "u_mouse"),
-      tint = gl.getUniformLocation(program, "u_color");
+      tint = gl.getUniformLocation(program, "u_color"),
+      paletteAt = gl.getUniformLocation(program, "u_palette");
     const render = () => {
       if (disposed || gl.isContextLost()) return;
       const { rgb } = live.current;
@@ -108,6 +113,7 @@ export function ShaderCanvas({
       gl.uniform1f(time, media.matches ? 0 : phase);
       gl.uniform2f(mouse, pointer[0], pointer[1]);
       gl.uniform3f(tint, rgb[0], rgb[1], rgb[2]);
+      if (paletteAt) gl.uniform3fv(paletteAt, live.current.palette);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
     const draw = (now: number) => {
@@ -188,7 +194,7 @@ export function ShaderCanvas({
     };
   }, [fragment, revision, interactive]);
   // Paused or reduced-motion canvases still reflect a new color immediately.
-  useEffect(() => live.current.redraw(), [color]);
+  useEffect(() => live.current.redraw(), [color, palette.join()]);
   return (
     <div
       className="forme-shader"

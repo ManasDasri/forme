@@ -19,20 +19,20 @@ npm run build
 
 ## Signal, the first drop
 
-46 components across ten categories, all free.
+51 components across ten categories, all free.
 
 | Category | Components |
 | -------- | ---------- |
 | Buttons | Lens, Plasma, Hold to confirm, Scramble, Prism, Magnetic, Shutter |
-| Shaders | Horizon, Liquid chrome, Aurora, Silk field, Dither terrain, Singularity, Caustic glass |
-| ASCII | ASCII globe, ASCII tide, Decode text, ASCII orbit, ASCII reveal, ASCII black hole, ASCII surface |
-| HUD | Telemetry card, Radar sweep, Oscilloscope, Orbit gauge |
-| Surfaces | Eclipse hero, Spotlight card, Beam card, Accordion, Marquee, Image compare |
+| Shaders | Horizon, Mesh gradient, Light rays, Aurora, Silk field, Dither terrain, Caustic glass |
+| ASCII | ASCII tide, Decode text, ASCII orbit, ASCII reveal, ASCII black hole, ASCII surface |
+| HUD | Telemetry card, Radar sweep, Oscilloscope |
+| Surfaces | Eclipse hero, Spotlight card, Beam card, Dot grid, Accordion, Marquee, Image compare |
 | Inputs | Command palette, Glow input, Segmented switch, Signal slider, OTP input, Copy button |
-| Loaders | Orbit loader, Shimmer text, Progress beam |
+| Loaders | Orbit loader, Infinity loader, Spinner, Typing dots, Equalizer, Skeleton, Shimmer text, Progress beam |
 | Navigation | Dock, Animated tabs |
 | Feedback | Toast, Tooltip |
-| Text | Text reveal, Number ticker |
+| Text | Text reveal, Number ticker, Gradient text |
 
 Run `node scripts/generate-registry.mjs` after adding or removing a component.
 

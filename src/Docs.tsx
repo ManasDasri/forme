@@ -339,7 +339,7 @@ function Guide({ slug }: { slug: string }) {
           Shaders, ASCII pieces, and HUD instruments accept a six-digit hex color and, where animated, a speed from 0 to 3.
           Their container controls the size. Shader color and speed update a uniform without recompiling the program.
         </p>
-        <Code text={'<div style={{ height: 480 }}>\n  <ChromeShader color="#ff9b5c" speed={0.6} />\n</div>'} />
+        <Code text={'<div style={{ height: 480 }}>\n  <LightRaysShader color="#ffd7a8" speed={0.6} />\n</div>'} />
         <h2>Buttons</h2>
         <p>Buttons inherit your font. Most expose CSS variables for their accents; everything else lives in the scoped CSS file.</p>
         <Code
@@ -362,7 +362,7 @@ function Guide({ slug }: { slug: string }) {
         </p>
         <h2>Pause, keyboard, and touch</h2>
         <p>
-          Canvas pieces include a visible pause control. Radar sweep responds to Enter and Space; the ASCII globe, oscilloscope, command palette, and segmented switch
+          Canvas pieces include a visible pause control. Radar sweep responds to Enter and Space; the oscilloscope, command palette, segmented switch, and animated tabs
           respond to arrow keys. Buttons are native button elements with focus and disabled states.
           Hold to confirm works by holding Space or Enter and announces the confirmation.
         </p>

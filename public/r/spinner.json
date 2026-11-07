@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:component",
+  "title": "Spinner",
+  "description": "The classic spoke spinner, in your text color at any size.",
+  "files": [
+    {
+      "path": "src/registry/spinner.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/spinner.tsx",
+      "content": "\"use client\";\nimport \"./spinner.css\";\n\n/** The classic spoke spinner, drawn in your text color at any size. */\nexport function Spinner({\n  size = 24,\n  label = \"Loading\",\n  className = \"\",\n}: {\n  size?: number;\n  label?: string;\n  className?: string;\n}) {\n  return (\n    <span role=\"status\" aria-label={label} className={`forme-spinner ${className}`} style={{ width: size, height: size }}>\n      {Array.from({ length: 8 }, (_, i) => (\n        <i key={i} style={{ transform: `rotate(${i * 45}deg)`, animationDelay: `${-0.9 + i * 0.1125}s` }} />\n      ))}\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/spinner.css",
+      "type": "registry:file",
+      "target": "@components/forme/spinner.css",
+      "content": ".forme-spinner {\n  position: relative;\n  display: inline-block;\n}\n.forme-spinner i {\n  position: absolute;\n  top: 0;\n  left: calc(50% - 6%);\n  width: 12%;\n  height: 28%;\n  border-radius: 99px;\n  background: currentColor;\n  transform-origin: 50% 178%;\n  animation: forme-spinner 0.9s linear infinite;\n}\n@keyframes forme-spinner {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0.15;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-spinner i {\n    animation-duration: 2.4s;\n  }\n}\n"
+    }
+  ]
+}

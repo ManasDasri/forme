@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "infinity-loader",
+  "type": "registry:component",
+  "title": "Infinity loader",
+  "description": "A comet of light tracing a figure eight.",
+  "files": [
+    {
+      "path": "src/registry/infinity-loader.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/infinity-loader.tsx",
+      "content": "\"use client\";\nimport \"./infinity-loader.css\";\n\n/** A comet of light tracing a figure eight over a faint track. */\nexport function InfinityLoader({\n  size = 72,\n  color = \"#8ab4ff\",\n  label = \"Loading\",\n  className = \"\",\n}: {\n  size?: number;\n  color?: string;\n  label?: string;\n  className?: string;\n}) {\n  const path = \"M12 12c-3-4.5-9-4.5-9 0s6 4.5 9 0 9-4.5 9 0-6 4.5-9 0Z\";\n  return (\n    <span role=\"status\" aria-label={label} className={`forme-infinity ${className}`} style={{ width: size, color }}>\n      <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n        <path d={path} pathLength=\"100\" className=\"forme-infinity-track\" />\n        <path d={path} pathLength=\"100\" className=\"forme-infinity-comet\" />\n      </svg>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/infinity-loader.css",
+      "type": "registry:file",
+      "target": "@components/forme/infinity-loader.css",
+      "content": ".forme-infinity {\n  display: inline-block;\n  filter: drop-shadow(0 0 4px currentColor);\n}\n.forme-infinity svg {\n  display: block;\n  width: 100%;\n  overflow: visible;\n}\n.forme-infinity path {\n  fill: none;\n  stroke: currentColor;\n  stroke-width: 1.3;\n  stroke-linecap: round;\n}\n.forme-infinity-track {\n  opacity: 0.14;\n}\n.forme-infinity-comet {\n  stroke-dasharray: 22 78;\n  animation: forme-infinity 1.8s linear infinite;\n}\n@keyframes forme-infinity {\n  to {\n    stroke-dashoffset: -100;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-infinity-comet {\n    animation: forme-infinity-fade 2s ease-in-out infinite;\n  }\n  @keyframes forme-infinity-fade {\n    50% {\n      opacity: 0.3;\n    }\n  }\n}\n"
+    }
+  ]
+}

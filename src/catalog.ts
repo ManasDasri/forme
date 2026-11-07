@@ -88,18 +88,7 @@ export const catalog: CatalogItem[] = [
     text: "Request access",
   },
 
-  {
-    slug: "ascii-globe",
-    name: "ASCII globe",
-    category: "ASCII",
-    description: "A planet of characters. Drag it, spin it, steer it with keys.",
-    usage: '<AsciiGlobe color="#8fd3ff" speed={1} />',
-    props:
-      "color, speed, and label are optional. Drag to spin with inertia, or focus and use the arrow keys. Includes pause, stops offscreen and in hidden tabs, and stops auto-rotation for reduced motion while keeping manual control.",
-    traits: canvas,
-    color: "#8fd3ff",
-    speed: true,
-  },
+
   {
     slug: "hold-button",
     name: "Hold to confirm",
@@ -358,6 +347,101 @@ export const catalog: CatalogItem[] = [
     traits: ["reduced-motion", "keyboard", "zero-deps"],
   },
   {
+    slug: "mesh-gradient-shader",
+    name: "Mesh gradient",
+    category: "Shaders",
+    description: "Four soft colors drifting through each other, with fine grain.",
+    usage: '<MeshGradientShader colors={["#3b1dd4", "#e2187a", "#ff8a3d", "#0aa5c8"]} speed={1} />',
+    props: `colors takes up to four hex colors and speed is clamped to 0–3; both update uniforms without recompiling. Ambient: no pointer response. Pauses offscreen and in hidden tabs, renders a still frame for reduced motion, and falls back to a static gradient without WebGL.`,
+    traits: shader,
+    speed: true,
+  },
+  {
+    slug: "light-rays-shader",
+    name: "Light rays",
+    category: "Shaders",
+    description: "Shafts of light falling from above, with dust drifting through them.",
+    usage: '<LightRaysShader color="#c8d8ff" speed={1} />',
+    props: `${shaderProps} Ambient: no pointer response.`,
+    traits: shader,
+    color: "#c8d8ff",
+    speed: true,
+  },
+  {
+    slug: "dot-grid",
+    name: "Dot grid",
+    category: "Surfaces",
+    description: "A dot-matrix background that glows softly around the pointer.",
+    usage: '<div style={{ position: "relative" }}>\n  <DotGrid spacing={22} />\n  <YourContent />\n</div>',
+    props:
+      "spacing is optional. Dots take the host's text color, so the grid suits light and dark pages. A slow swell runs while visible; the glow follows the pointer with easing. Stops offscreen and in hidden tabs, and holds still for reduced motion.",
+    traits: ["reduced-motion", "offscreen-pause", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "gradient-text",
+    name: "Gradient text",
+    category: "Text",
+    description: "Headings filled with a slowly moving gradient.",
+    usage: '<GradientText as="h1" text="Ship it." colors={["#7c9cff", "#e879f9", "#fb923c", "#7c9cff"]} />',
+    props:
+      "text is required; as, colors, and duration are optional. Real, selectable text clipped to the gradient. Reduced motion holds the gradient still.",
+    traits: ["reduced-motion", "zero-deps"],
+    text: "Build something unforgettable.",
+  },
+  {
+    slug: "typing-dots",
+    name: "Typing dots",
+    category: "Loaders",
+    description: "Three dots that lift in turn, like someone is typing.",
+    usage: '<TypingDots label="Assistant is typing" />',
+    props: "label is announced as a status. Draws in your text color. Reduced motion swaps the bounce for a fade.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "spinner",
+    name: "Spinner",
+    category: "Loaders",
+    description: "The classic spoke spinner, in your text color at any size.",
+    usage: '<Spinner size={24} label="Saving" />',
+    props: "size and label are optional. A status with your label. Reduced motion slows it down rather than hiding activity.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "skeleton",
+    name: "Skeleton",
+    category: "Loaders",
+    description: "Shimmering placeholders that sketch the content on its way.",
+    usage:
+      '<SkeletonGroup label="Loading profile">\n  <Skeleton width={48} height={48} radius="50%" />\n  <Skeleton width="60%" />\n  <Skeleton width="90%" />\n</SkeletonGroup>',
+    props:
+      "Skeleton takes width, height, and radius. Wrap them in SkeletonGroup so screen readers hear one loading status. Draws from your text color. Reduced motion removes the sheen.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
+    slug: "infinity-loader",
+    name: "Infinity loader",
+    category: "Loaders",
+    description: "A comet of light tracing a figure eight.",
+    usage: '<InfinityLoader size={72} label="Syncing" />',
+    props: "size, color, and label are optional. CSS only, exposed as a status. Reduced motion swaps the trace for a slow fade.",
+    traits: ["reduced-motion", "zero-deps"],
+    color: "#8ab4ff",
+  },
+  {
+    slug: "equalizer",
+    name: "Equalizer",
+    category: "Loaders",
+    description: "Bars that rise and fall like an audio meter.",
+    usage: '<Equalizer bars={5} height={28} label="Now playing" />',
+    props: "bars, height, and label are optional. A status in your text color. Reduced motion holds the bars still.",
+    traits: ["reduced-motion", "zero-deps"],
+    adaptive: true,
+  },
+  {
     slug: "silk-shader",
     name: "Silk field",
     category: "Shaders",
@@ -405,17 +489,7 @@ export const catalog: CatalogItem[] = [
     color: "#8ab4ff",
   },
 
-  {
-    slug: "chrome-shader",
-    name: "Liquid chrome",
-    category: "Shaders",
-    description: "Beads of mercury that merge and pinch apart, reflecting a photo studio.",
-    usage: '<ChromeShader color="#7c9cff" speed={1} />',
-    props: `${shaderProps} color tints the reflected floor; one small bead drifts after the pointer and joins the others.`,
-    traits: shader,
-    color: "#7c9cff",
-    speed: true,
-  },
+
 
   {
     slug: "scramble-button",
@@ -523,28 +597,8 @@ export const catalog: CatalogItem[] = [
     traits: button,
     color: "#b7c3df",
   },
-  {
-    slug: "singularity-shader",
-    name: "Singularity",
-    category: "Shaders",
-    description: "A black hole, its far side bent into a halo of light.",
-    usage: '<SingularityShader color="#e8a25c" speed={1} />',
-    props: `${shaderProps} The pointer shifts the observer.`,
-    traits: shader,
-    color: "#e8a25c",
-    speed: true,
-  },
-  {
-    slug: "orbit-gauge",
-    name: "Orbit gauge",
-    category: "HUD",
-    description: "Concentric precision arcs that ease to every new value.",
-    usage:
-      '<OrbitGauge title="Capacity" metrics={[\n  { label: "CPU", value: 0.72, color: "#8ab4ff" },\n  { label: "Memory", value: 0.48, color: "#c4b5fd" },\n  { label: "Disk", value: 0.31, color: "#5eead4" },\n]} />',
-    props:
-      "metrics takes up to three { label, value (0–1), color } entries; title labels the center. Arcs ease to new values and the center rolls to the first metric. The whole gauge is described to assistive technology as text. Reduced motion jumps straight to each value.",
-    traits: ["reduced-motion", "zero-deps"],
-  },
+
+
 
   {
     slug: "ascii-black-hole",

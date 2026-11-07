@@ -20,18 +20,18 @@ const groups = [
   { name: "Feedback", slug: "feedback" },
   { name: "Text", slug: "text" },
 ];
-const proofRows = ["hold-button", "ascii-globe", "chrome-shader", "radar-sweep", "lens-button", "telemetry-card"];
+const proofRows = ["hold-button", "animated-tabs", "mesh-gradient-shader", "radar-sweep", "otp-input", "toast"];
 const proofTraits: Trait[] = ["reduced-motion", "keyboard", "offscreen-pause", "zero-deps"];
 
 // Curated, not exhaustive: size follows how much each piece has to show.
 const showcase = [
-  { slug: "chrome-shader", area: "chrome" },
+  { slug: "mesh-gradient-shader", area: "chrome" },
   { slug: "command-palette", area: "command" },
   { slug: "telemetry-card", area: "telemetry" },
   { slug: "ascii-black-hole", area: "hole" },
   { slug: "hold-button", area: "hold" },
   { slug: "segmented-switch", area: "segment" },
-  { slug: "orbit-loader", area: "orbit" },
+  { slug: "infinity-loader", area: "orbit" },
   { slug: "lens-button", area: "lens" },
 ];
 function Showcase() {
@@ -150,7 +150,7 @@ function HomePage() {
 
       <section className="section shell split" aria-labelledby="free-title">
         <Lazy className="split-media">
-          <Demo slug="singularity-shader" />
+          <Demo slug="light-rays-shader" />
         </Lazy>
         <div className="split-text">
           <h2 id="free-title">All of it is free</h2>
