@@ -69,6 +69,4 @@ Repeat the alias step after each CLI deployment. The project permits anonymous a
 
 ## License
 
-All components are published for free through the public registry, but a license has not been chosen yet: `LICENSE` still reserves all rights. Choose and publish one before promoting the library.
-
-Copyright © 2026 ManasDasri. All rights reserved. Third-party assets retain their licenses. See [LICENSE](LICENSE), [CREDITS.md](CREDITS.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+[MIT](LICENSE). Use, change, and ship the components in personal and commercial projects; keep the copyright notice. Third-party assets keep their own licenses: the Unsplash photos used in previews (not included in installs) and the Instrument Sans font. See [CREDITS.md](CREDITS.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
