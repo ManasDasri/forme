@@ -1,5 +1,9 @@
-.forme-dock ul {
+.forme-dock {
   display: flex;
+  justify-content: center;
+}
+.forme-dock ul {
+  display: inline-flex;
   align-items: flex-end;
   gap: 8px;
   height: 64px;
