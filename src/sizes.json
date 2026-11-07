@@ -1,6 +1,6 @@
 {
   "horizon-shader": 3442,
-  "lens-button": 1272,
+  "lens-button": 1551,
   "hold-button": 1965,
   "radar-sweep": 2939,
   "eclipse-hero": 4193,
@@ -33,6 +33,7 @@
   "skeleton": 737,
   "infinity-loader": 678,
   "equalizer": 609,
+  "contours-shader": 3568,
   "silk-shader": 3125,
   "plasma-button": 980,
   "ascii-tide": 2510,
@@ -48,6 +49,5 @@
   "ascii-image": 1935,
   "ascii-black-hole": 3093,
   "caustic-shader": 3429,
-  "shutter-button": 899,
-  "ascii-surface": 3219
+  "shutter-button": 899
 }

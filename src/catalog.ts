@@ -442,6 +442,17 @@ export const catalog: CatalogItem[] = [
     adaptive: true,
   },
   {
+    slug: "contours-shader",
+    name: "Contours",
+    category: "Shaders",
+    description: "Topographic lines drifting over a slowly shifting landscape.",
+    usage: '<ContoursShader color="#6ee7b7" speed={1} />',
+    props: `${shaderProps} Lines stay crisp at any size because their width comes from the terrain's slope; every fifth is a brighter index line. The pointer nudges the map slightly.`,
+    traits: shader,
+    color: "#6ee7b7",
+    speed: true,
+  },
+  {
     slug: "silk-shader",
     name: "Silk field",
     category: "Shaders",
@@ -637,19 +648,7 @@ export const catalog: CatalogItem[] = [
     traits: button,
     text: "Open the future",
   },
-  {
-    slug: "ascii-surface",
-    name: "ASCII surface",
-    category: "ASCII",
-    description:
-      "A terrain of characters in perspective. Press into it or send a ripple.",
-    usage: '<AsciiSurface color="#a6d5df" speed={1} />',
-    props:
-      "color, speed, and label are optional. Glyphs are lit by the surface normal and shrink and fade with distance. The pointer presses a lens into the ground where it points; click, tap, Enter, or Space sends a ripple. Includes pause, stops offscreen and in hidden tabs, and holds still for reduced motion.",
-    traits: canvas,
-    color: "#9ecbff",
-    speed: true,
-  },
+
 ];
 export const code = (slug: string) =>
   `S-${String(catalog.findIndex((c) => c.slug === slug) + 1).padStart(2, "0")}`;
