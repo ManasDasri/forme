@@ -5,7 +5,6 @@ import { Toaster } from "./registry/toast";
 import { EclipseHero } from "./registry/eclipse-hero";
 import { WordRotator } from "./registry/word-rotator";
 import { NumberTicker } from "./registry/number-ticker";
-import { AsciiBanner } from "./registry/ascii-banner";
 import { LibraryBrowser } from "./Library";
 import { SearchDialog } from "./SearchDialog";
 import { DocsPage } from "./Docs";
@@ -63,7 +62,7 @@ function HomePage() {
         <EclipseHero
           title={
             <>
-              Components for interfaces that <WordRotator words={["feel alive.", "glow.", "move.", "people remember."]} interval={2600} />
+              Components for interfaces that <WordRotator words={["feel alive.", "glow.", "move.", "stick in your head."]} interval={2800} from="#c7d2fe" to="#fde68a" />
             </>
           }
           subtitle="Shaders, ASCII, navigation, inputs, and feedback for React. Install the source with one command, then make it yours."
@@ -320,9 +319,6 @@ export default function App() {
     <>
       <Header onSearch={() => setSearch(true)} />
       {page}
-      <div className="footer-banner" aria-hidden="true">
-        <AsciiBanner as="p" text="FORME" color="#8a8a93" speed={0.6} />
-      </div>
       <Footer />
       {search && <SearchDialog close={() => setSearch(false)} />}
       <Toaster />

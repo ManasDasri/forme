@@ -678,17 +678,9 @@ main:focus {
   font-size: 14px;
   line-height: 1.4;
 }
-.footer-banner {
-  height: clamp(120px, 18vw, 240px);
-  margin-top: 140px;
-  -webkit-mask-image: linear-gradient(#000 40%, transparent);
-  mask-image: linear-gradient(#000 40%, transparent);
-}
-.hero .forme-rotator-word {
-  background: linear-gradient(90deg, #c7d2fe, #f5d0fe 60%, #fde68a);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* The rotating phrase gets its own line, so the line above never reflows. */
+.hero .forme-rotator {
+  display: grid;
 }
 .card-live {
   position: absolute;
@@ -987,12 +979,6 @@ main:focus {
   letter-spacing: -0.035em;
   text-align: center;
 }
-.rotator-specimen .forme-rotator-word {
-  background: linear-gradient(90deg, #a5b4fc, #f0abfc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
 .specimen-hint {
   position: absolute;
   bottom: 18px;
@@ -1072,30 +1058,91 @@ main:focus {
 
 /* Footer */
 .footer {
+  position: relative;
+  margin-top: 160px;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  background: radial-gradient(60% 50% at 50% 100%, rgb(129 140 248 / 0.07), transparent 70%);
+}
+.footer-cta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 16px 32px;
-  margin-top: 0;
-  padding: 28px 0 40px;
-  border-top: 1px solid var(--line);
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--line);
+}
+.footer-cta h2 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(36px, 5.4vw, 68px);
+  font-weight: 600;
+  font-stretch: 85%;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.footer-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
+  gap: 40px 32px;
+  padding: 56px 0 24px;
+}
+.footer-brand p {
+  max-width: 34ch;
+  margin: 14px 0 0;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.55;
 }
 .footer nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.footer h3 {
+  margin: 0 0 4px;
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .footer nav a {
   color: var(--ink-2);
   font-size: 14px;
+  transition: color 0.15s;
 }
 .footer nav a:hover {
   color: var(--ink);
 }
-.footer p {
-  margin-left: auto;
+.footer-legal {
+  margin: 0;
+  padding-top: 24px;
   color: var(--ink-3);
   font-size: 13px;
+}
+/* The wordmark bleeds off the bottom edge of the page. */
+.footer-banner {
+  height: clamp(130px, 21vw, 300px);
+  margin: 8px 0 calc(clamp(130px, 21vw, 300px) * -0.18);
+}
+.footer-banner .forme-ascii-banner {
+  height: 100%;
+}
+@media (max-width: 860px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Inner pages */
@@ -1609,9 +1656,6 @@ a.fact:hover {
   }
   .workbench-stage {
     height: 400px;
-  }
-  .footer p {
-    margin-left: 0;
   }
 }
 @media (max-width: 560px) {

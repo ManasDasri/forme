@@ -456,10 +456,10 @@ export const catalog: CatalogItem[] = [
     slug: "word-rotator",
     name: "Word rotator",
     category: "Text",
-    description: "Rotates words in a headline while the line eases to fit each one.",
+    description: "Rotates words or whole phrases in a headline, letter by letter.",
     usage: '<h1>\n  Build <WordRotator words={["faster", "better", "together"]} />\n</h1>',
     props:
-      "words is required; interval sets the time per word. Each word measures itself in your font, so the line resizes smoothly instead of jumping. Cycles only while on screen. Screen readers hear every word once. Reduced motion shows the first word.",
+      "words is required; interval sets the time per phrase, and from and to add an optional color gradient. Phrases are real text, so long ones wrap between words instead of overflowing, the box keeps the size of the longest phrase so the layout never shifts, and longer phrases stagger faster so each one enters in about the same time. Cycles only while on screen. Screen readers hear every phrase once. Reduced motion shows the first one.",
     traits: ["reduced-motion", "zero-deps"],
     adaptive: true,
   },
@@ -467,7 +467,7 @@ export const catalog: CatalogItem[] = [
     slug: "ascii-banner",
     name: "ASCII banner",
     category: "ASCII",
-    description: "Any text drawn as dense ASCII art, with a slow light sweeping across it.",
+    description: "Any text drawn as dense ASCII art, with a light that sweeps across it or follows your pointer.",
     usage: '<div style={{ height: 220 }}>\n  <AsciiBanner as="h1" text="FORME" color="#e4e4e7" />\n</div>',
     props:
       "text is required; as, color, font, and speed are optional. The text is rasterized once per size and redrawn as batched glyphs. It renders as a real heading whose text assistive technology and search can read. Stops offscreen and in hidden tabs, and holds still for reduced motion.",

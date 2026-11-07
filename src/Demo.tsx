@@ -317,7 +317,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "word-rotator": () => (
     <div className="specimen">
       <h3 className="rotator-specimen">
-        Build interfaces <WordRotator words={["faster", "together", "that feel alive", "people remember"]} />
+        Build interfaces <WordRotator words={["faster", "together", "that feel alive the moment they load", "people remember"]} from="#a5b4fc" to="#f0abfc" />
       </h3>
     </div>
   ),

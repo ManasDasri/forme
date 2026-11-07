@@ -1,3 +1,4 @@
+import { AsciiBanner } from "./registry/ascii-banner";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
 import type React from "react";
@@ -221,21 +222,70 @@ export function Header({ onSearch }: { onSearch: () => void }) {
     </>
   );
 }
+const footerGuides = [
+  ["/docs/", "Getting started"],
+  ["/docs/theming/", "Theming"],
+  ["/docs/accessibility/", "Motion & accessibility"],
+  ["/docs/registry/", "Using the registry"],
+];
 export function Footer() {
+  const recent = catalog.slice(-4).reverse();
   return (
-    <footer className="footer shell">
-      <a className="wordmark" href="/">
-        <Mark />
-        forme
-      </a>
-      <nav aria-label="Footer navigation">
-        <a href="/components/">Components</a>
-        <a href="/docs/">Docs</a>
-        <a href="/docs/quality/">How we verify</a>
-      </nav>
-      <p>
-        © {new Date().getFullYear()} Forme. {catalog.length} components, all free.
-      </p>
+    <footer className="footer">
+      <div className="shell">
+        <div className="footer-cta">
+          <h2>Make something people remember.</h2>
+          <div className="footer-cta-actions">
+            <a className="btn" href="/components/">
+              Browse components
+            </a>
+            <a className="btn btn-secondary" href="/docs/">
+              Read the docs
+            </a>
+          </div>
+        </div>
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <a className="wordmark" href="/">
+              <Mark />
+              forme
+            </a>
+            <p>
+              {catalog.length} components for React. Free, MIT licensed, and installed into real Next.js and Vite apps on every change.
+            </p>
+          </div>
+          <nav aria-label="Library">
+            <h3>Library</h3>
+            <a href="/components/">All components</a>
+            <a href="/docs/quality/">How we verify</a>
+          </nav>
+          <nav aria-label="Guides">
+            <h3>Guides</h3>
+            {footerGuides.map(([href, label]) => (
+              <a key={href} href={href}>
+                {label}
+              </a>
+            ))}
+          </nav>
+          <nav aria-label="Recently added">
+            <h3>Recently added</h3>
+            {recent.map((c) => (
+              <a key={c.slug} href={`/docs/${c.slug}/`}>
+                {c.name}
+              </a>
+            ))}
+          </nav>
+          <nav aria-label="Project">
+            <h3>Project</h3>
+            <a href="https://github.com/ManasDasri/forme">GitHub</a>
+            <a href="https://github.com/ManasDasri/forme/blob/main/LICENSE">MIT license</a>
+          </nav>
+        </div>
+        <p className="footer-legal">© {new Date().getFullYear()} Forme</p>
+      </div>
+      <div className="footer-banner" aria-hidden="true">
+        <AsciiBanner as="p" text="FORME" color="#a1a1aa" speed={0.6} />
+      </div>
     </footer>
   );
 }
