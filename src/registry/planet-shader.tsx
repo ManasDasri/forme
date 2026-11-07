@@ -9,20 +9,34 @@ precision highp float;
 #else
 precision mediump float;
 #endif
-uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time; uniform vec3 u_color;
-const vec2 CELL = vec2(7.0, 12.0);
-const float HORIZON = -0.16;
+uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time; uniform vec3 u_color; uniform float u_ratio;
+// Cell size in CSS pixels; the canvas renders at device resolution so small glyphs stay crisp.
+const vec2 CELL_CSS = vec2(4.5, 7.5);
+// Whole device pixels, so every glyph lands on the pixel grid. Below 1.5x there are too
+// few pixels to draw a glyph that small, so standard screens use a slightly larger cell.
+#define CELL (u_ratio>1.5?floor(CELL_CSS*u_ratio+.5):vec2(6.,10.))
+const float HORIZON = -0.24;
 float hash(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
 float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
 float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p*=2.03;a*=.5;}return v;}
 mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
 
-vec3 violet=vec3(.33,.27,.62), pale=vec3(.78,.82,1.0), amber=vec3(1.0,.86,.55);
-const vec2 PLANET=vec2(0.0,HORIZON+.06);
-const float R=.4;
+vec3 violet=vec3(.33,.27,.62), pale=vec3(.84,.86,1.0), amber=vec3(1.0,.84,.56);
+const vec2 PLANET=vec2(0.0,HORIZON+.31);
+const float R=.2;
+const float TILT=-.3;
 
-vec3 lightDir(){return normalize(vec3((u_mouse.x-.5)*2.6,.55,.7));}
+vec3 lightDir(){return normalize(vec3((u_mouse.x-.5)*2.6,.5,.75));}
+
+// Brightness across the ring, from its inner edge (0) to its outer edge (1): a faint inner
+// ring, the bright main ring, the dark Cassini division, then the outer ring with a thin gap.
+float ringProfile(float r){
+ float c=smoothstep(.0,.05,r)*smoothstep(.2,.16,r)*.35;
+ float b=smoothstep(.16,.2,r)*smoothstep(.6,.58,r)*(.85+.15*sin(r*60.));
+ float a=smoothstep(.65,.67,r)*smoothstep(1.,.97,r)*.62*(1.-.8*smoothstep(.85,.86,r)*smoothstep(.88,.87,r));
+ return c+b+a;
+}
 
 // Everything above the waterline: stars, horizon glow, the planet, and its ring.
 vec3 sky(vec2 p, vec2 cell){
@@ -30,36 +44,45 @@ vec3 sky(vec2 p, vec2 cell){
  vec3 L=lightDir(), ice=u_color, col=vec3(0.0);
  vec2 c=PLANET;
  float s=hash(cell);
- col+=step(.985,s)*(.35+.3*sin(t*1.6+s*60.))*vec3(.85,.88,1.);
- col+=ice*.22*exp(-max(p.y-HORIZON,0.)*9.)*(.6+.4*exp(-abs(p.x-c.x)*1.4));
- vec2 q=(p-c)/R;
+ col+=step(.986,s)*(.3+.3*sin(t*1.6+s*60.))*vec3(.85,.88,1.);
+ col+=ice*.2*exp(-max(p.y-HORIZON,0.)*9.)*(.6+.4*exp(-abs(p.x-c.x)*1.4));
+ // Planet frame: x along the ring, y along the spin axis.
+ vec2 q=rot(TILT)*(p-c)/R;
  float r2=dot(q,q);
- // Ring, tilted; its back half hides behind the planet.
- vec2 rq=rot(-.2)*(p-c);
- float e=length(vec2(rq.x/(R*2.05),rq.y/(R*.34)));
- float band=smoothstep(.66,.7,e)*smoothstep(1.0,.95,e)*(.72+.28*sin(e*90.))*(1.-.6*smoothstep(.8,.84,e)*smoothstep(.88,.84,e));
- bool behind=rq.y>0.0 && r2<1.0;
- float ringLight=.6+.4*clamp(.5+.5*dot(normalize(vec3(rq.x,0.,.4)),L),0.,1.);
+ // The ring plane, seen from slightly above: inner edge 1.25R, outer edge 2.3R.
+ float e=length(vec2(q.x,q.y/.22));
+ float ringR=(e-1.25)/(2.3-1.25);
+ float ring=ringR>0.&&ringR<1.?ringProfile(ringR):0.;
+ bool behind=q.y>0.0 && r2<1.0;
  if(r2<1.0){
   float z=sqrt(1.-r2);
-  vec3 n=vec3(q,z);
-  float diff=max(dot(n,L),0.);
-  // Cloud bands drift with latitude; turbulence bends them.
-  float lon=atan(q.x,z)+t*.04;
+  vec3 n=vec3(rot(-TILT)*q,z);
+  float diff=smoothstep(-.08,.5,dot(n,L));
+  // Soft latitude bands that drift slowly, darker toward the limb.
   float lat=q.y;
-  float b=sin(lat*13.+fbm(vec2(lon*2.4,lat*5.)+t*.03)*3.2);
-  vec3 surf=mix(violet,pale,.5+.5*b);
-  surf=mix(surf,amber,smoothstep(.55,1.,fbm(vec2(lon*4.,lat*9.)))*.55);
-  // The ring's shadow falls across the disc.
-  float shadow=1.-.65*smoothstep(.06,.0,abs(q.y+.05+q.x*.2))*step(0.,L.y);
-  col=surf*(.03+.78*diff)*shadow;
-  col+=ice*pow(1.-z,3.)*(.2+.7*diff);
+  float lon=atan(q.x,z)+t*.05;
+  float b=sin(lat*8.+fbm(vec2(lon*1.5,lat*3.)+t*.02)*1.3)*.5+sin(lat*21.)*.12;
+  vec3 surf=mix(mix(pale,amber,.45),violet*1.3,.5-.5*b);
+  surf=mix(surf,pale,smoothstep(.75,1.,lat)*.5);
+  // The ring throws a thin shadow across the disc just below its line.
+  float shade=1.-.55*smoothstep(.07,.0,abs(q.y+.16+q.x*.05))*step(.2,diff);
+  col=surf*(.03+.72*diff)*pow(z,.3)*shade;
+  col+=ice*pow(1.-z,4.)*.35*diff;
  } else {
   float d=sqrt(r2)-1.;
-  float lit=max(dot(vec3(normalize(q),0.),L),0.);
-  col+=ice*exp(-d*14.)*(.12+.8*lit);
+  float lit=max(dot(vec3(rot(-TILT)*normalize(q),0.),L),0.);
+  col+=ice*exp(-d*22.)*(.08+.55*lit);
  }
- if(!behind) col+=mix(pale,amber,.35)*band*ringLight*.7;
+ if(!behind && ring>0.){
+  // The planet's shadow falls on the far side of the ring, away from the light.
+  vec2 toPlanet=q;
+  vec2 away=normalize((rot(TILT)*-L.xy)+1e-4);
+  float along=dot(toPlanet,away);
+  float across=length(toPlanet-away*along);
+  float planetShadow=r2>1.&&along>0.&&across<1.?.15:1.;
+  vec3 ringCol=mix(mix(pale,amber,.45),vec3(1.),.25);
+  col=mix(col,ringCol*(.3+.95*ring)*planetShadow,clamp(ring*1.7,0.,1.));
+ }
  return col;
 }
 
@@ -130,7 +153,8 @@ void main(){
  vec2 p=(center-.5*u_resolution)/u_resolution.y;
  vec3 col=scene(p,cell);
  float lum=dot(col,vec3(.3,.59,.11));
- float level=floor(clamp(lum*1.05,0.,1.)*7.99);
+ // Lift the midtones so lit surfaces fill with denser glyphs.
+ float level=floor(pow(clamp(lum*1.05,0.,1.),.78)*7.99);
  float g=glyph(fract(gl_FragCoord.xy/CELL),level);
  vec3 tone=mix(col/max(lum,.04)*.8,vec3(1.),clamp((lum-.7)*2.,0.,.6));
  vec3 o=tone*g*clamp(.35+lum*1.4,0.,1.)+col*.06;
@@ -146,5 +170,5 @@ export function PlanetShader({
   speed?: number;
   label?: string;
 }) {
-  return <ShaderCanvas fragment={fragment} color={color} speed={speed} label={label} />;
+  return <ShaderCanvas fragment={fragment} color={color} speed={speed} label={label} maxPixelRatio={2} />;
 }
