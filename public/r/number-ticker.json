@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "number-ticker",
+  "type": "registry:component",
+  "title": "Number ticker",
+  "description": "Counts up when it scrolls into view, then eases between values.",
+  "files": [
+    {
+      "path": "src/registry/number-ticker.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/number-ticker.tsx",
+      "content": "\"use client\";\nimport { useEffect, useRef, useState } from \"react\";\nimport \"./number-ticker.css\";\n\n/** Counts to its value when it scrolls into view, and eases between later values. */\nexport function NumberTicker({\n  value,\n  duration = 1600,\n  locale,\n  format,\n  className = \"\",\n}: {\n  value: number;\n  duration?: number;\n  locale?: string;\n  format?: Intl.NumberFormatOptions;\n  className?: string;\n}) {\n  const ref = useRef<HTMLSpanElement>(null);\n  const shown = useRef(0);\n  const [display, setDisplay] = useState(0);\n  const [seen, setSeen] = useState(false);\n  const formatter = new Intl.NumberFormat(locale, format);\n  useEffect(() => {\n    const observer = new IntersectionObserver(([entry]) => {\n      if (!entry.isIntersecting) return;\n      setSeen(true);\n      observer.disconnect();\n    });\n    observer.observe(ref.current!);\n    return () => observer.disconnect();\n  }, []);\n  useEffect(() => {\n    if (!seen) return;\n    if (matchMedia(\"(prefers-reduced-motion:reduce)\").matches) {\n      shown.current = value;\n      return setDisplay(value);\n    }\n    const from = shown.current,\n      began = performance.now();\n    let frame = 0;\n    const tick = (now: number) => {\n      const k = Math.min(1, (now - began) / duration);\n      shown.current = from + (value - from) * (1 - Math.pow(1 - k, 4));\n      setDisplay(shown.current);\n      if (k < 1) frame = requestAnimationFrame(tick);\n    };\n    frame = requestAnimationFrame(tick);\n    return () => cancelAnimationFrame(frame);\n  }, [seen, value, duration]);\n  return (\n    <span ref={ref} className={`forme-ticker ${className}`}>\n      <span aria-hidden=\"true\">{formatter.format(display)}</span>\n      <span className=\"forme-ticker-sr\">{formatter.format(value)}</span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/number-ticker.css",
+      "type": "registry:file",
+      "target": "@components/forme/number-ticker.css",
+      "content": ".forme-ticker {\n  font-variant-numeric: tabular-nums;\n}\n.forme-ticker-sr {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  overflow: hidden;\n  clip: rect(0 0 0 0);\n  white-space: nowrap;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-ticker {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

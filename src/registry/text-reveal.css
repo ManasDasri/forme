@@ -1,0 +1,15 @@
+.forme-reveal-word {
+  --forme-reveal: 0;
+  opacity: calc(0.16 + var(--forme-reveal) * 0.84);
+  filter: blur(calc((1 - var(--forme-reveal)) * 2px));
+  transition:
+    opacity 0.25s,
+    filter 0.25s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-reveal-word {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}

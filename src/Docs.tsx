@@ -76,6 +76,7 @@ export function Workbench({ slug }: { slug: string }) {
   const [color, setColor] = useState(component.color);
   const [speed, setSpeed] = useState(1);
   const [mobile, setMobile] = useState(false);
+  const [light, setLight] = useState(false);
   const [replay, setReplay] = useState(0);
   const [copied, copy] = useCopy();
   const tabs = ["preview", "usage", "source"];
@@ -101,22 +102,29 @@ export function Workbench({ slug }: { slug: string }) {
             </button>
           ))}
         </div>
-        <button className="btn btn-secondary btn-small" onClick={() => copy(agentPrompt(slug), "Copied prompt for your coding agent")}>
-          <Icon name="copy" /> Copy prompt
-        </button>
+        <div className="workbench-actions">
+          <button className="btn btn-secondary btn-small" onClick={() => copy(agentPrompt(slug), "Copied prompt for your coding agent")}>
+            <Icon name="copy" /> Copy prompt
+          </button>
         {tab === "preview" && (
           <div className="segmented">
+            {component.adaptive && (
+              <button onClick={() => setLight(!light)} aria-pressed={light}>
+                Light page
+              </button>
+            )}
             <button onClick={() => setMobile(!mobile)} aria-pressed={mobile}>
               Narrow
             </button>
             <button onClick={() => setReplay((n) => n + 1)}>Replay</button>
           </div>
         )}
+        </div>
       </div>
       {tab === "preview" && (
         <>
           <div className="workbench-canvas">
-            <div className={`workbench-stage${mobile ? " is-narrow" : ""}`} key={replay}>
+            <div className={`workbench-stage${mobile ? " is-narrow" : ""}${light ? " is-light" : ""}`} key={replay}>
               <Demo slug={slug} title={title} image={image || undefined} color={color} speed={speed} hint />
             </div>
           </div>
@@ -155,6 +163,7 @@ export function Workbench({ slug }: { slug: string }) {
                   setTitle("");
                   setImage("");
                   setMobile(false);
+                  setLight(false);
                   setColor(component.color);
                   setSpeed(1);
                   setReplay((n) => n + 1);
@@ -414,7 +423,7 @@ function Guide({ slug }: { slug: string }) {
     <div className="prose">
       <h2>Install your first component</h2>
       <p>
-        Forme has {catalog.length} components across buttons, shaders, ASCII, HUD, surfaces, inputs, and loaders. All of them are free and include installable source.
+        Forme has {catalog.length} components, from shaders and ASCII to navigation, inputs, and feedback. All of them are free and include installable source.
       </p>
       <Code text={command} />
       <Code

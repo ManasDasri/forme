@@ -1,0 +1,74 @@
+.forme-otp-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+.forme-otp-cells {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--forme-otp-length), 48px);
+  gap: 8px;
+}
+/* The real input covers the cells invisibly and receives every keystroke and paste. */
+.forme-otp-cells input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-size: 16px;
+  letter-spacing: 48px;
+  cursor: text;
+}
+.forme-otp-cell {
+  display: grid;
+  place-items: center;
+  height: 56px;
+  border-radius: 12px;
+  background: color-mix(in srgb, currentColor 5%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent);
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition:
+    box-shadow 0.18s,
+    transform 0.18s;
+}
+.forme-otp-cell[data-filled] {
+  animation: forme-otp-pop 0.22s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.forme-otp-cell[data-active] {
+  box-shadow:
+    inset 0 0 0 1.5px currentColor,
+    0 0 0 4px color-mix(in srgb, currentColor 12%, transparent);
+}
+.forme-otp-cell[data-active]:empty::after {
+  content: "";
+  width: 2px;
+  height: 22px;
+  background: currentColor;
+  animation: forme-otp-caret 1s steps(1) infinite;
+}
+@keyframes forme-otp-pop {
+  from {
+    transform: scale(0.85);
+  }
+}
+@keyframes forme-otp-caret {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-otp-cell,
+  .forme-otp-cell[data-filled],
+  .forme-otp-cell[data-active]:empty::after {
+    transition: none;
+    animation: none;
+  }
+}

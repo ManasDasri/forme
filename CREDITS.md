@@ -1,14 +1,12 @@
 # Photography
 
-These Unsplash images are used in the ASCII reveal playground and are not included in registry payloads. Replace them with appropriately licensed project assets.
+These Unsplash images are used in the ASCII reveal and Image compare previews and are not included in registry payloads. Replace them with appropriately licensed project assets.
 
 - Interior: https://images.unsplash.com/photo-1600210492486-724fe5c67fb0
 - Architecture: https://images.unsplash.com/photo-1511818966892-d7d671e672a2
-- Landscape: https://images.unsplash.com/photo-1470770841072-f978cf4d019e
+- Landscape: https://images.unsplash.com/photo-1470770841072-f978cf4d019e (landscape-raw.jpg is the same photo with its color grade flattened, for the Image compare preview)
 
 License: https://unsplash.com/license
-
-The older Object and Kinetic studies are retained as unused image files:
 
 - Desk lamp: https://images.unsplash.com/photo-1507473885765-e6ed057f782c
 - City lighting: https://images.unsplash.com/photo-1519608487953-e999c86e7455

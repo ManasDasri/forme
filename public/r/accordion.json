@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:component",
+  "title": "Accordion",
+  "description": "Disclosure rows that open with a smooth height change.",
+  "files": [
+    {
+      "path": "src/registry/accordion.tsx",
+      "type": "registry:component",
+      "target": "@components/forme/accordion.tsx",
+      "content": "\"use client\";\nimport type { ReactNode } from \"react\";\nimport { useId, useState } from \"react\";\nimport \"./accordion.css\";\n\nexport interface AccordionItem {\n  id: string;\n  title: ReactNode;\n  content: ReactNode;\n}\n/** Disclosure rows that open with a smooth height change. One open at a time, or many. */\nexport function Accordion({\n  items,\n  multiple = false,\n  defaultOpen = [],\n  className = \"\",\n}: {\n  items: AccordionItem[];\n  multiple?: boolean;\n  defaultOpen?: string[];\n  className?: string;\n}) {\n  const base = useId();\n  const [open, setOpen] = useState<string[]>(defaultOpen);\n  const toggle = (id: string) =>\n    setOpen((o) => (o.includes(id) ? o.filter((x) => x !== id) : multiple ? [...o, id] : [id]));\n  return (\n    <div className={`forme-accordion ${className}`}>\n      {items.map((item) => {\n        const isOpen = open.includes(item.id);\n        return (\n          <div key={item.id} className=\"forme-accordion-item\" data-open={isOpen || undefined}>\n            <h3>\n              <button\n                type=\"button\"\n                id={`${base}-${item.id}-trigger`}\n                aria-expanded={isOpen}\n                aria-controls={`${base}-${item.id}-panel`}\n                onClick={() => toggle(item.id)}\n              >\n                <span>{item.title}</span>\n                <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n                  <path d=\"M12 5v14M5 12h14\" />\n                </svg>\n              </button>\n            </h3>\n            <div\n              id={`${base}-${item.id}-panel`}\n              role=\"region\"\n              aria-labelledby={`${base}-${item.id}-trigger`}\n              className=\"forme-accordion-panel\"\n              inert={!isOpen}\n            >\n              <div className=\"forme-accordion-inner\">{item.content}</div>\n            </div>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n"
+    },
+    {
+      "path": "src/registry/accordion.css",
+      "type": "registry:file",
+      "target": "@components/forme/accordion.css",
+      "content": ".forme-accordion {\n  width: 100%;\n}\n.forme-accordion-item {\n  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);\n}\n.forme-accordion h3 {\n  margin: 0;\n  font: inherit;\n}\n.forme-accordion button {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  width: 100%;\n  padding: 18px 2px;\n  border: 0;\n  background: none;\n  color: inherit;\n  font: inherit;\n  font-size: 15px;\n  font-weight: 500;\n  text-align: left;\n  cursor: pointer;\n}\n.forme-accordion button:focus-visible {\n  border-radius: 6px;\n  outline: 2px solid currentColor;\n  outline-offset: 2px;\n}\n.forme-accordion svg {\n  flex-shrink: 0;\n  width: 16px;\n  height: 16px;\n  fill: none;\n  stroke: currentColor;\n  stroke-width: 1.8;\n  stroke-linecap: round;\n  opacity: 0.6;\n  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.forme-accordion-item[data-open] svg {\n  transform: rotate(135deg);\n}\n/* Animating grid rows from 0fr to 1fr gives a true height transition with no measuring. */\n.forme-accordion-panel {\n  display: grid;\n  grid-template-rows: 0fr;\n  transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.forme-accordion-item[data-open] .forme-accordion-panel {\n  grid-template-rows: 1fr;\n}\n.forme-accordion-inner {\n  min-height: 0;\n  overflow: hidden;\n  opacity: 0;\n  transition: opacity 0.25s;\n}\n.forme-accordion-item[data-open] .forme-accordion-inner {\n  padding-bottom: 18px;\n  opacity: 0.72;\n  transition-delay: 0.08s;\n}\n@media (prefers-reduced-motion: reduce) {\n  .forme-accordion svg,\n  .forme-accordion-panel,\n  .forme-accordion-inner {\n    transition: none;\n  }\n}\n"
+    }
+  ]
+}

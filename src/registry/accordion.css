@@ -1,0 +1,72 @@
+.forme-accordion {
+  width: 100%;
+}
+.forme-accordion-item {
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.forme-accordion h3 {
+  margin: 0;
+  font: inherit;
+}
+.forme-accordion button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 2px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+.forme-accordion button:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.forme-accordion svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  opacity: 0.6;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.forme-accordion-item[data-open] svg {
+  transform: rotate(135deg);
+}
+/* Animating grid rows from 0fr to 1fr gives a true height transition with no measuring. */
+.forme-accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.forme-accordion-item[data-open] .forme-accordion-panel {
+  grid-template-rows: 1fr;
+}
+.forme-accordion-inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.forme-accordion-item[data-open] .forme-accordion-inner {
+  padding-bottom: 18px;
+  opacity: 0.72;
+  transition-delay: 0.08s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-accordion svg,
+  .forme-accordion-panel,
+  .forme-accordion-inner {
+    transition: none;
+  }
+}
