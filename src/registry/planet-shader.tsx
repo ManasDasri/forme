@@ -26,6 +26,11 @@ vec3 violet=vec3(.33,.27,.62), pale=vec3(.84,.86,1.0), amber=vec3(1.0,.84,.56);
 const vec2 PLANET=vec2(0.0,HORIZON+.31);
 const float R=.2;
 const float TILT=-.3;
+// The ring plane seen from slightly above: depth d in the plane shows on screen as d*RING_SIN.
+// RING_D points across the plane toward its far side; RING_N is the plane's normal.
+const float RING_SIN=.22;
+const vec3 RING_D=vec3(0.,.22,-.9755);
+const vec3 RING_N=vec3(0.,.9755,.22);
 
 vec3 lightDir(){return normalize(vec3((u_mouse.x-.5)*2.6,.5,.75));}
 
@@ -48,9 +53,10 @@ vec3 sky(vec2 p, vec2 cell){
  col+=ice*.2*exp(-max(p.y-HORIZON,0.)*9.)*(.6+.4*exp(-abs(p.x-c.x)*1.4));
  // Planet frame: x along the ring, y along the spin axis.
  vec2 q=rot(TILT)*(p-c)/R;
+ vec3 Lp=vec3(rot(TILT)*L.xy,L.z); // the light in the planet's frame
  float r2=dot(q,q);
  // The ring plane, seen from slightly above: inner edge 1.25R, outer edge 2.3R.
- float e=length(vec2(q.x,q.y/.22));
+ float e=length(vec2(q.x,q.y/RING_SIN));
  float ringR=(e-1.25)/(2.3-1.25);
  float ring=ringR>0.&&ringR<1.?ringProfile(ringR):0.;
  bool behind=q.y>0.0 && r2<1.0;
@@ -64,8 +70,16 @@ vec3 sky(vec2 p, vec2 cell){
   float b=sin(lat*8.+fbm(vec2(lon*1.5,lat*3.)+t*.02)*1.3)*.5+sin(lat*21.)*.12;
   vec3 surf=mix(mix(pale,amber,.45),violet*1.3,.5-.5*b);
   surf=mix(surf,pale,smoothstep(.75,1.,lat)*.5);
-  // The ring throws a thin shadow across the disc just below its line.
-  float shade=1.-.55*smoothstep(.07,.0,abs(q.y+.16+q.x*.05))*step(.2,diff);
+  // The ring's shadow: follow the ray from this point toward the light to the ring plane,
+  // and darken by how dense the ring is where it crosses. Gaps let the light through.
+  vec3 np=vec3(q,z);
+  float t1=-dot(np,RING_N)/dot(Lp,RING_N);
+  float shade=1.;
+  if(t1>0.){
+   vec3 X=np+Lp*t1;
+   float rr=(length(vec2(X.x,dot(X,RING_D)))-1.25)/(2.3-1.25);
+   if(rr>0.&&rr<1.) shade=1.-.7*ringProfile(rr)*smoothstep(.0,.25,diff);
+  }
   col=surf*(.03+.72*diff)*pow(z,.3)*shade;
   col+=ice*pow(1.-z,4.)*.35*diff;
  } else {
@@ -74,12 +88,13 @@ vec3 sky(vec2 p, vec2 cell){
   col+=ice*exp(-d*22.)*(.08+.55*lit);
  }
  if(!behind && ring>0.){
-  // The planet's shadow falls on the far side of the ring, away from the light.
-  vec2 toPlanet=q;
-  vec2 away=normalize((rot(TILT)*-L.xy)+1e-4);
-  float along=dot(toPlanet,away);
-  float across=length(toPlanet-away*along);
-  float planetShadow=r2>1.&&along>0.&&across<1.?.15:1.;
+  // The planet's shadow on the ring: from this ring point, does the ray toward the light
+  // pass through the planet? Soft at the edge, and it lands mostly on the far side.
+  vec3 P=vec3(q.x,0.,0.)+RING_D*(q.y/RING_SIN);
+  float bb=dot(P,Lp);
+  float closest=sqrt(max(dot(P,P)-bb*bb,0.));
+  float inShadow=(1.-smoothstep(.93,1.05,closest))*smoothstep(0.,-.2,bb);
+  float planetShadow=1.-.82*inShadow;
   vec3 ringCol=mix(mix(pale,amber,.45),vec3(1.),.25);
   col=mix(col,ringCol*(.3+.95*ring)*planetShadow,clamp(ring*1.7,0.,1.));
  }

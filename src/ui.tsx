@@ -246,6 +246,8 @@ const footerGuides = [
   ["/docs/accessibility/", "Motion & accessibility"],
   ["/docs/registry/", "Using the registry"],
 ];
+// The Forme components this site's own interface is made of, in the order a visitor meets them.
+const siteComponents = ["eclipse-hero", "word-rotator", "number-ticker", "text-reveal", "toast", "signal-slider", "planet-shader"];
 export function Footer() {
   const recent = catalog.slice(-4).reverse();
   return (
@@ -265,6 +267,16 @@ export function Footer() {
               Read the docs
             </a>
           </div>
+          <p className="footer-made">
+            This site is built from its own library:{" "}
+            {siteComponents.map((slug, i) => (
+              <span key={slug}>
+                {i > 0 && (i === siteComponents.length - 1 ? ", and the " : ", ")}
+                <a href={`/docs/${slug}/`}>{catalog.find((c) => c.slug === slug)?.name}</a>
+              </span>
+            ))}{" "}
+            in this footer. Every preview on the site is the real component, running live.
+          </p>
         </div>
         <div className="footer-grid">
           <div className="footer-brand">

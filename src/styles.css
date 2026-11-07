@@ -1108,6 +1108,23 @@ main:focus {
   line-height: 1;
   letter-spacing: -0.04em;
 }
+.footer-made {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--ink-3);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.footer-made a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+.footer-made a:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
 .footer-cta-actions {
   display: flex;
   flex-wrap: wrap;
