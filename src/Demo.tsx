@@ -14,6 +14,7 @@ import { AsciiBanner } from "./registry/ascii-banner";
 import { WordRotator } from "./registry/word-rotator";
 import { AsciiImage } from "./registry/ascii-image";
 import { AsciiTide } from "./registry/ascii-tide";
+import { PlanetShader } from "./registry/planet-shader";
 import { EclipseHero } from "./registry/eclipse-hero";
 import { SpotlightCard } from "./registry/spotlight-card";
 import { BeamCard } from "./registry/beam-card";
@@ -310,6 +311,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "dither-shader": (p) => <DitherShader color={p.color} speed={p.speed} />,
   "horizon-shader": (p) => <HorizonShader color={p.color} speed={p.speed} />,
   "aurora-shader": (p) => <AuroraShader color={p.color} speed={p.speed} />,
+  "planet-shader": (p) => <PlanetShader color={p.color} speed={p.speed} />,
   "caustic-shader": (p) => <CausticShader color={p.color} speed={p.speed} />,
   "ascii-black-hole": (p) => <AsciiBlackHole speed={p.speed} />,
   "contours-shader": (p) => <ContoursShader color={p.color} speed={p.speed} />,

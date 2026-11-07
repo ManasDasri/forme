@@ -19,13 +19,13 @@ npm run build
 
 ## Signal, the first drop
 
-51 components across ten categories, all free.
+52 components across ten categories, all free.
 
 | Category | Components |
 | -------- | ---------- |
 | Buttons | Lens, Plasma, Hold to confirm, Scramble, Prism, Magnetic, Shutter |
 | Shaders | Horizon, Mesh gradient, Light rays, Aurora, Silk field, Dither terrain, Caustic glass, Contours |
-| ASCII | ASCII banner, ASCII tide, ASCII reveal, ASCII black hole |
+| ASCII | ASCII banner, ASCII tide, ASCII reveal, ASCII black hole, ASCII planet |
 | HUD | Telemetry card, Radar sweep, Oscilloscope |
 | Surfaces | Eclipse hero, Spotlight card, Beam card, Dot grid, Accordion, Marquee, Image compare |
 | Inputs | Command palette, Glow input, Segmented switch, Signal slider, OTP input, Copy button |

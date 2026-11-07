@@ -3,7 +3,7 @@
   "name": "ascii-tide",
   "type": "registry:component",
   "title": "ASCII tide",
-  "description": "A night sea in dense characters, with a moonlit glint.",
+  "description": "A moonlit ocean in dense characters, with a glittering moon path.",
   "files": [
     {
       "path": "src/registry/ascii-tide.tsx",

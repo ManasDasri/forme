@@ -45,6 +45,7 @@ import { AsciiBanner } from "@/components/forme/ascii-banner";
 import { WordRotator } from "@/components/forme/word-rotator";
 import { Oscilloscope } from "@/components/forme/oscilloscope";
 import { AuroraShader } from "@/components/forme/aurora-shader";
+import { PlanetShader } from "@/components/forme/planet-shader";
 import { PrismButton } from "@/components/forme/prism-button";
 import { DitherShader } from "@/components/forme/dither-shader";
 import { MagneticButton } from "@/components/forme/magnetic-button";
@@ -113,6 +114,7 @@ export const fixtures: Record<string, () => ReactNode> = {
   "word-rotator": () => <WordRotator words={["one", "two", "three"]} />,
   oscilloscope: () => <Oscilloscope />,
   "aurora-shader": () => <AuroraShader />,
+  "planet-shader": () => <PlanetShader />,
   "prism-button": () => <PrismButton>Prism</PrismButton>,
   "dither-shader": () => <DitherShader />,
   "magnetic-button": () => <MagneticButton>Magnetic</MagneticButton>,

@@ -614,6 +614,17 @@ export const catalog: CatalogItem[] = [
 
 
   {
+    slug: "planet-shader",
+    name: "ASCII planet",
+    category: "ASCII",
+    description: "A ringed planet rising over a glyph sea, drawn as ASCII on the GPU.",
+    usage: '<PlanetShader color="#a5b4fc" speed={0.8} />',
+    props: `${shaderProps} color tints the atmosphere, rim, and sea glow. Every glyph is drawn inside the shader, so it fills a full-width section at full frame rate. The pointer moves the sunlight across the planet, and over the water it sends out ripples. label sets the accessible name.`,
+    traits: shader,
+    color: "#a5b4fc",
+    speed: true,
+  },
+  {
     slug: "ascii-black-hole",
     name: "ASCII black hole",
     category: "ASCII",

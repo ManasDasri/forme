@@ -3,7 +3,7 @@
   "name": "word-rotator",
   "type": "registry:component",
   "title": "Word rotator",
-  "description": "Rotates words in a headline while the line eases to fit each one.",
+  "description": "Rotates words or whole phrases in a headline, letter by letter.",
   "files": [
     {
       "path": "src/registry/word-rotator.tsx",

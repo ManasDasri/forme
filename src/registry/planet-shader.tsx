@@ -1,14 +1,15 @@
-import { ShaderCanvas } from "./registry/shader-canvas";
+"use client";
+import { ShaderCanvas } from "./shader-canvas";
 
-// The footer finale: a ringed gas giant rising over a glyph sea, rendered as ASCII inside
-// the shader. Each cell samples the scene once and draws a glyph whose density is its light.
-// The pointer moves the sunlight and sends ripples across the sea.
+// A ringed gas giant rising over a sea, drawn as ASCII inside the shader: each cell samples
+// the scene once and draws a glyph whose density is its light. The pointer moves the
+// sunlight and, over the water, sends out ripples.
 const fragment = `#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 #else
 precision mediump float;
 #endif
-uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time;
+uniform vec2 u_resolution; uniform vec2 u_mouse; uniform float u_time; uniform vec3 u_color;
 const vec2 CELL = vec2(7.0, 12.0);
 const float HORIZON = -0.16;
 float hash(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
@@ -24,7 +25,7 @@ vec3 scene(vec2 p, vec2 cell){
  vec3 L=normalize(vec3(lx,.55,.7));
  vec2 c=vec2(0.0,HORIZON+.06);
  float R=.4;
- vec3 violet=vec3(.33,.27,.62), pale=vec3(.78,.82,1.0), amber=vec3(1.0,.86,.55), ice=vec3(.65,.71,1.0);
+ vec3 violet=vec3(.33,.27,.62), pale=vec3(.78,.82,1.0), amber=vec3(1.0,.86,.55), ice=u_color;
  vec3 col=vec3(0.0);
 
  if(p.y>HORIZON){
@@ -68,18 +69,20 @@ vec3 scene(vec2 p, vec2 cell){
   float z=.32/(v+.012);
   float wx=p.x*z;
   float h=sin(wx*2.2+z*1.7-t*1.1)*.5+sin(wx*-1.3+z*2.9+t*.8)*.35+sin(wx*4.7-z*.9+t*1.7)*.15;
+  // Pointer ripples, measured on screen and flattened into ellipses so they lie on the water.
+  // They fade in as the pointer drops below the horizon instead of switching on.
   vec2 m=vec2((u_mouse.x-.5)*aspect,u_mouse.y-.5);
-  if(m.y<HORIZON){
-   float mz=.32/(HORIZON-m.y+.012);
-   vec2 w=vec2(wx,z)-vec2(m.x*mz,mz);
-   float dist=length(w*vec2(1.,.6));
-   h+=sin(dist*7.-t*4.)*exp(-dist*.55)*.9;
-  }
+  float onSea=smoothstep(HORIZON-.02,HORIZON-.14,m.y);
+  float dist=length((p-m)*vec2(1.,2.6));
+  float wave=sin(dist*34.-t*4.5);
+  h+=onSea*wave*exp(-dist*4.5)*1.1;
+  float rings=onSea*pow(max(wave,0.),3.)*exp(-dist*2.2)*smoothstep(0.,.03,dist);
   float path=exp(-pow((p.x-c.x-lx*.12)/(.05+v*.9),2.));
   float glint=pow(max(h*.5+.5,0.),5.);
   col+=mix(ice,amber,.4)*path*(.15+1.4*glint)*(1.-v*.9);
   col+=violet*glint*.35*exp(-v*2.5);
   col+=ice*.28*exp(-v*14.);
+  col+=mix(pale,ice,.5)*rings*.85;
   col+=pale*(.13*glint+.08*(h*.5+.5))*exp(-v*1.6);
  }
  return col;
@@ -118,10 +121,14 @@ void main(){
  gl_FragColor=vec4(o,1.);
 }`;
 
-export function FooterArt() {
-  return (
-    <div className="footer-art">
-      <ShaderCanvas fragment={fragment} label="A ringed planet rising over a sea, drawn in ASCII" speed={0.8} />
-    </div>
-  );
+export function PlanetShader({
+  color = "#a5b4fc",
+  speed = 0.8,
+  label = "A ringed planet rising over a sea, drawn in ASCII",
+}: {
+  color?: string;
+  speed?: number;
+  label?: string;
+}) {
+  return <ShaderCanvas fragment={fragment} color={color} speed={speed} label={label} />;
 }

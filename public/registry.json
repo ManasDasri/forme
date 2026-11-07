@@ -672,7 +672,7 @@
       "name": "word-rotator",
       "type": "registry:component",
       "title": "Word rotator",
-      "description": "Rotates words in a headline while the line eases to fit each one.",
+      "description": "Rotates words or whole phrases in a headline, letter by letter.",
       "files": [
         {
           "path": "src/registry/word-rotator.tsx",
@@ -690,7 +690,7 @@
       "name": "ascii-banner",
       "type": "registry:component",
       "title": "ASCII banner",
-      "description": "Any text drawn as dense ASCII art, with a slow light sweeping across it.",
+      "description": "Any text drawn as dense ASCII art, with a light that follows your pointer and an optional rippling reflection.",
       "files": [
         {
           "path": "src/registry/ascii-banner.tsx",
@@ -749,7 +749,7 @@
       "name": "ascii-tide",
       "type": "registry:component",
       "title": "ASCII tide",
-      "description": "A night sea in dense characters, with a moonlit glint.",
+      "description": "A moonlit ocean in dense characters, with a glittering moon path.",
       "files": [
         {
           "path": "src/registry/ascii-tide.tsx",
@@ -927,6 +927,29 @@
           "path": "src/registry/ascii-image.css",
           "type": "registry:file",
           "target": "@components/forme/ascii-image.css"
+        }
+      ]
+    },
+    {
+      "name": "planet-shader",
+      "type": "registry:component",
+      "title": "ASCII planet",
+      "description": "A ringed planet rising over a glyph sea, drawn as ASCII on the GPU.",
+      "files": [
+        {
+          "path": "src/registry/planet-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/planet-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
         }
       ]
     },

@@ -1,4 +1,4 @@
-import { FooterArt } from "./FooterArt";
+import { PlanetShader } from "./registry/planet-shader";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
 import type React from "react";
@@ -303,7 +303,9 @@ export function Footer() {
         </div>
         <p className="footer-legal">© {new Date().getFullYear()} Forme</p>
       </div>
-      <FooterArt />
+      <div className="footer-art">
+        <PlanetShader />
+      </div>
     </footer>
   );
 }

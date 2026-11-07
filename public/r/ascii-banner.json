@@ -3,7 +3,7 @@
   "name": "ascii-banner",
   "type": "registry:component",
   "title": "ASCII banner",
-  "description": "Any text drawn as dense ASCII art, with a slow light sweeping across it.",
+  "description": "Any text drawn as dense ASCII art, with a light that follows your pointer and an optional rippling reflection.",
   "files": [
     {
       "path": "src/registry/ascii-banner.tsx",
