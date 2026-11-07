@@ -646,6 +646,29 @@
       ]
     },
     {
+      "name": "contours-shader",
+      "type": "registry:component",
+      "title": "Contours",
+      "description": "Topographic lines drifting over a slowly shifting landscape.",
+      "files": [
+        {
+          "path": "src/registry/contours-shader.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/contours-shader.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/shader-canvas.tsx"
+        },
+        {
+          "path": "src/registry/shader-canvas.css",
+          "type": "registry:file",
+          "target": "@components/forme/shader-canvas.css"
+        }
+      ]
+    },
+    {
       "name": "silk-shader",
       "type": "registry:component",
       "title": "Silk field",
@@ -963,24 +986,6 @@
           "path": "src/registry/shutter-button.css",
           "type": "registry:file",
           "target": "@components/forme/shutter-button.css"
-        }
-      ]
-    },
-    {
-      "name": "ascii-surface",
-      "type": "registry:component",
-      "title": "ASCII surface",
-      "description": "A terrain of characters in perspective. Press into it or send a ripple.",
-      "files": [
-        {
-          "path": "src/registry/ascii-surface.tsx",
-          "type": "registry:component",
-          "target": "@components/forme/ascii-surface.tsx"
-        },
-        {
-          "path": "src/registry/ascii-surface.css",
-          "type": "registry:file",
-          "target": "@components/forme/ascii-surface.css"
         }
       ]
     }

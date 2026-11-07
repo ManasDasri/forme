@@ -52,7 +52,7 @@ import { AsciiImage } from "@/components/forme/ascii-image";
 import { AsciiBlackHole } from "@/components/forme/ascii-black-hole";
 import { CausticShader } from "@/components/forme/caustic-shader";
 import { ShutterButton } from "@/components/forme/shutter-button";
-import { AsciiSurface } from "@/components/forme/ascii-surface";
+import { ContoursShader } from "@/components/forme/contours-shader";
 
 const pixel = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";
 
@@ -120,7 +120,7 @@ export const fixtures: Record<string, () => ReactNode> = {
   "ascii-black-hole": () => <AsciiBlackHole />,
   "caustic-shader": () => <CausticShader />,
   "shutter-button": () => <ShutterButton>Shutter</ShutterButton>,
-  "ascii-surface": () => <AsciiSurface />,
+  "contours-shader": () => <ContoursShader />,
 };
 
 export function Smoke() {

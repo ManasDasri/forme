@@ -24,7 +24,7 @@ import { OrbitLoader } from "./registry/orbit-loader";
 import { ShimmerText } from "./registry/shimmer-text";
 import { ProgressBeam } from "./registry/progress-beam";
 import { AsciiBlackHole } from "./registry/ascii-black-hole";
-import { AsciiSurface } from "./registry/ascii-surface";
+import { ContoursShader } from "./registry/contours-shader";
 import { CausticShader } from "./registry/caustic-shader";
 import { ShutterButton } from "./registry/shutter-button";
 import { Dock } from "./registry/dock";
@@ -168,24 +168,43 @@ const live: Record<string, (p: Props) => ReactNode> = {
   ),
   toast: () => (
     <div className="specimen">
-      <div className="row">
-        <LensButton onClick={() => toast("Changes saved", { description: "Your profile is up to date." })}>Show toast</LensButton>
-        <LensButton
-          onClick={() =>
-            toast("Deployed to production", {
-              description: "Build 412 is live.",
-              tone: "success",
-              action: { label: "Open", onClick: () => toast("Opening the site") },
-            })
-          }
-        >
-          Success with action
-        </LensButton>
-        <LensButton onClick={() => toast("Payment failed", { description: "Your card was declined.", tone: "error" })}>
-          Error
-        </LensButton>
+      <div className="specimen-card toast-scene">
+        <div className="toast-scene-row">
+          <div>
+            <strong>Launch checklist</strong>
+            <span>Edited 2 minutes ago</span>
+          </div>
+          <button className="toast-scene-button is-primary" onClick={() => toast("Changes saved", { description: "Launch checklist is up to date.", tone: "success" })}>
+            Save
+          </button>
+        </div>
+        <div className="toast-scene-row">
+          <div>
+            <strong>Q3 report.pdf</strong>
+            <span>2.4 MB</span>
+          </div>
+          <button
+            className="toast-scene-button"
+            onClick={() =>
+              toast("File deleted", {
+                description: "Q3 report.pdf",
+                action: { label: "Undo", onClick: () => toast("File restored", { tone: "success" }) },
+              })
+            }
+          >
+            Delete
+          </button>
+        </div>
+        <div className="toast-scene-row">
+          <div>
+            <strong>Production</strong>
+            <span>Build 412</span>
+          </div>
+          <button className="toast-scene-button" onClick={() => toast("Deploy failed", { description: "Build 412 exited with code 1.", tone: "error" })}>
+            Deploy
+          </button>
+        </div>
       </div>
-      <span className="specimen-hint">Stack a few, then hover them. Swipe right to dismiss.</span>
     </div>
   ),
   tooltip: () => (
@@ -293,7 +312,7 @@ const live: Record<string, (p: Props) => ReactNode> = {
   "aurora-shader": (p) => <AuroraShader color={p.color} speed={p.speed} />,
   "caustic-shader": (p) => <CausticShader color={p.color} speed={p.speed} />,
   "ascii-black-hole": (p) => <AsciiBlackHole speed={p.speed} />,
-  "ascii-surface": (p) => <AsciiSurface color={p.color} speed={p.speed} />,
+  "contours-shader": (p) => <ContoursShader color={p.color} speed={p.speed} />,
   "ascii-orbit": (p) => <AsciiOrbit color={p.color} speed={p.speed} />,
   "ascii-tide": (p) => <AsciiTide color={p.color} speed={p.speed} />,
   "eclipse-hero": (p) => (
