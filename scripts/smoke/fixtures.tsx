@@ -17,6 +17,7 @@ import { OrbitLoader } from "@/components/forme/orbit-loader";
 import { ShimmerText } from "@/components/forme/shimmer-text";
 import { ProgressBeam } from "@/components/forme/progress-beam";
 import { Dock } from "@/components/forme/dock";
+import { GlassNav } from "@/components/forme/glass-nav";
 import { AnimatedTabs } from "@/components/forme/animated-tabs";
 import { Toaster, toast } from "@/components/forme/toast";
 import { Tooltip } from "@/components/forme/tooltip";
@@ -72,6 +73,7 @@ export const fixtures: Record<string, () => ReactNode> = {
   "orbit-loader": () => <OrbitLoader />,
   "shimmer-text": () => <ShimmerText>Working</ShimmerText>,
   "progress-beam": () => <ProgressBeam value={40} />,
+  "glass-nav": () => <GlassNav brand="Halo" links={[{ label: "Home", href: "#", active: true }, { label: "Pricing", href: "#pricing" }]} actions={<a href="#start" data-primary>Start</a>} />,
   dock: () => <Dock items={[{ label: "Home", icon: <span>H</span>, href: "#", active: true }, { label: "Mail", icon: <span>M</span> }]} />,
   "animated-tabs": () => <AnimatedTabs tabs={[{ id: "a", label: "One", content: <p>First</p> }, { id: "b", label: "Two", content: <p>Second</p> }]} />,
   toast: () => <Toaster />,

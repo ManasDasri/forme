@@ -294,6 +294,24 @@
       ]
     },
     {
+      "name": "glass-nav",
+      "type": "registry:component",
+      "title": "Glass nav",
+      "description": "A floating glass bar that refracts the page behind it at its rim.",
+      "files": [
+        {
+          "path": "src/registry/glass-nav.tsx",
+          "type": "registry:component",
+          "target": "@components/forme/glass-nav.tsx"
+        },
+        {
+          "path": "src/registry/glass-nav.css",
+          "type": "registry:file",
+          "target": "@components/forme/glass-nav.css"
+        }
+      ]
+    },
+    {
       "name": "animated-tabs",
       "type": "registry:component",
       "title": "Animated tabs",

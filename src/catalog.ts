@@ -235,6 +235,17 @@ export const catalog: CatalogItem[] = [
     adaptive: true,
   },
   {
+    slug: "glass-nav",
+    name: "Glass nav",
+    category: "Navigation",
+    description: "A floating glass bar that refracts the page behind it at its rim.",
+    usage:
+      '<GlassNav\n  brand={<a href="/">Halo Studio</a>}\n  links={[\n    { label: "Process", href: "/process", active: true },\n    { label: "Pricing", href: "/pricing" },\n  ]}\n  actions={<a href="/start" data-primary>Start a project</a>}\n/>',
+    props:
+      "brand and links are required; actions holds buttons or links for the right, and data-primary makes one a light pill. Frosted glass everywhere, and on Chromium a displacement filter bends the backdrop at the rim like a lens; liquid={false} turns that off. Below 680px of its own width the links fold into a menu button with aria-expanded, which Escape closes. A nav landmark with real links, and aria-current on the active one.",
+    traits: ["reduced-motion", "keyboard", "zero-deps"],
+  },
+  {
     slug: "animated-tabs",
     name: "Animated tabs",
     category: "Navigation",

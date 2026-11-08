@@ -1,0 +1,214 @@
+.forme-glass-nav {
+  --forme-glass-ink: #f3f1ec;
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  container-type: inline-size;
+  color: var(--forme-glass-ink);
+}
+/* Frosted glass: a bright translucent fill, heavy blur and saturation, an inner top
+   highlight, and a specular rim that is brightest at the top left. */
+.forme-glass-bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  height: 62px;
+  padding: 0 9px 0 22px;
+  border-radius: 40px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.05) 55%, rgb(255 255 255 / 0.07));
+  -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.08);
+  backdrop-filter: blur(26px) saturate(190%) brightness(1.08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.32),
+    inset 0 -1px 0 rgb(255 255 255 / 0.06),
+    inset 0 0 22px rgb(255 255 255 / 0.05),
+    0 12px 40px -14px rgb(0 0 0 / 0.65);
+  transition:
+    background 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.forme-glass-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.1) 32%, rgb(255 255 255 / 0.03) 60%, rgb(255 255 255 / 0.28));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+/* Liquid: the backdrop is refracted at the rim, so the fill gets clearer and the edges
+   carry the light instead. */
+.forme-glass-bar.is-liquid {
+  /* A faint dark tint under the light keeps labels readable over busy content. */
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.02) 60%, rgb(255 255 255 / 0.05)),
+    rgb(12 12 16 / 0.22);
+  box-shadow:
+    inset 1.5px 1.5px 1px -1px rgb(255 255 255 / 0.75),
+    inset -1px -1px 1px -0.5px rgb(255 255 255 / 0.28),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1),
+    inset 0 -10px 18px -12px rgb(255 255 255 / 0.12),
+    0 10px 30px -10px rgb(0 0 0 / 0.55),
+    0 2px 6px -2px rgb(0 0 0 / 0.4);
+}
+.forme-glass-bar.is-liquid::before {
+  opacity: 0.45;
+}
+.forme-glass-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.forme-glass-brand a {
+  color: inherit;
+  text-decoration: none;
+}
+.forme-glass-links {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+/* Links are glass pills inside the bar: faint on hover, lit when current. */
+.forme-glass-links a,
+.forme-glass-menu a {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 30px;
+  color: rgb(243 241 236 / 0.72);
+  text-decoration: none;
+  transition:
+    color 0.3s,
+    background 0.3s,
+    box-shadow 0.3s;
+}
+.forme-glass-links a:hover,
+.forme-glass-menu a:hover {
+  color: var(--forme-glass-ink);
+  background: rgb(255 255 255 / 0.08);
+}
+.forme-glass-links a[data-active],
+.forme-glass-menu a[aria-current="page"] {
+  color: var(--forme-glass-ink);
+  background: rgb(255 255 255 / 0.14);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+.forme-glass-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Glass chips and a light pill for whatever goes on the right. */
+.forme-glass-actions > :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  min-width: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 30px;
+  color: rgb(243 241 236 / 0.85);
+  background: rgb(255 255 255 / 0.08);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1);
+  font: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.3s,
+    background 0.3s;
+}
+.forme-glass-actions > :is(a, button):hover {
+  color: var(--forme-glass-ink);
+  background: rgb(255 255 255 / 0.15);
+}
+.forme-glass-actions > [data-primary] {
+  color: #111;
+  background: #f3f1ec;
+  box-shadow:
+    inset 0 -1px 0 rgb(0 0 0 / 0.12),
+    0 4px 18px -6px rgb(243 241 236 / 0.35);
+}
+.forme-glass-actions > [data-primary]:hover {
+  color: #111;
+  background: #fff;
+}
+.forme-glass-nav :is(a, button):focus-visible {
+  outline: 2px solid var(--forme-glass-ink);
+  outline-offset: 2px;
+}
+.forme-glass-actions > .forme-glass-menu-button {
+  display: none;
+}
+.forme-glass-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 8px;
+  border-radius: 24px;
+  list-style: none;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.06));
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  backdrop-filter: blur(26px) saturate(190%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1),
+    0 18px 40px -14px rgb(0 0 0 / 0.65);
+}
+.forme-glass-menu[hidden] {
+  display: none;
+}
+.forme-glass-menu a {
+  display: block;
+  font-size: 15px;
+}
+/* Narrow: the links fold into a menu, and only the first action stays. */
+@container (max-width: 680px) {
+  .forme-glass-bar {
+    grid-template-columns: 1fr auto;
+    height: 54px;
+    gap: 12px;
+  }
+  .forme-glass-links,
+  .forme-glass-actions > :not(.forme-glass-menu-button, :first-child) {
+    display: none;
+  }
+  .forme-glass-actions > .forme-glass-menu-button {
+    display: inline-flex;
+  }
+}
+@container (min-width: 681px) {
+  .forme-glass-menu {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forme-glass-bar,
+  .forme-glass-nav a,
+  .forme-glass-nav button {
+    transition: none;
+  }
+}
