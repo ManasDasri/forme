@@ -30,6 +30,7 @@ import { ContoursShader } from "./registry/contours-shader";
 import { CausticShader } from "./registry/caustic-shader";
 import { ShutterButton } from "./registry/shutter-button";
 import { Dock } from "./registry/dock";
+import { GlassNav } from "./registry/glass-nav";
 import { AnimatedTabs } from "./registry/animated-tabs";
 import { toast } from "./registry/toast";
 import { Tooltip } from "./registry/tooltip";
@@ -149,6 +150,40 @@ const live: Record<string, (p: Props) => ReactNode> = {
           active: i === 0,
           onClick: () => toast(label, { description: "Dock items are real links or buttons." }),
         }))}
+      />
+    </div>
+  ),
+  "glass-nav": () => (
+    <div className="glass-specimen">
+      <span className="glass-blob glass-blob-a" aria-hidden="true" />
+      <span className="glass-blob glass-blob-b" aria-hidden="true" />
+      <p className="glass-backdrop-text" aria-hidden="true">
+        Glass that bends
+        <br />
+        what's behind it
+      </p>
+      <GlassNav
+        brand={
+          <a href="#" onClick={(e) => e.preventDefault()}>
+            <span className="glass-logo" aria-hidden="true" /> Halo Studio
+          </a>
+        }
+        links={[
+          { label: "Services", href: "#services" },
+          { label: "Process", href: "#process", active: true },
+          { label: "Lab", href: "#lab" },
+          { label: "Pricing", href: "#pricing" },
+        ]}
+        actions={
+          <>
+            <button type="button" aria-label="Open command menu" onClick={() => toast("Command menu", { description: "Wire this to your own palette." })}>
+              ⌘K
+            </button>
+            <a href="#start" data-primary onClick={(e) => e.preventDefault()}>
+              Start a project
+            </a>
+          </>
+        }
       />
     </div>
   ),

@@ -19,7 +19,7 @@ npm run build
 
 ## Signal, the first drop
 
-52 components across ten categories, all free.
+53 components across ten categories, all free.
 
 | Category | Components |
 | -------- | ---------- |
@@ -30,7 +30,7 @@ npm run build
 | Surfaces | Eclipse hero, Spotlight card, Beam card, Dot grid, Accordion, Marquee, Image compare |
 | Inputs | Command palette, Glow input, Segmented switch, Signal slider, OTP input, Copy button |
 | Loaders | Orbit loader, Infinity loader, Spinner, Typing dots, Equalizer, Skeleton, Shimmer text, Progress beam |
-| Navigation | Dock, Animated tabs |
+| Navigation | Dock, Glass nav, Animated tabs |
 | Feedback | Toast, Tooltip |
 | Text | Word rotator, Text reveal, Number ticker, Gradient text |
 
